@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+
+    <div class="dx-viewport" style="margin-top: 10rem;">
+        <div id="DataTickets">
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+
+    $(function () {
+
+        var orderStore = new DevExpress.data.CustomStore({
+            load: function () {
+                var datos = $.getJSON("/TicketsEditoriales/GetDataTickets");
+                //console.log(datos);
+                return datos;
+                
+            }
+        })
+
+        $("#DataTickets").dxDataGrid({
+            dataSource: orderStore,
+            dataSource: orderStore,
+            repaintChangesOnly: true,
+            filterRow: { visible: true },
+            headerFilter: { visible: true },
+            Columns: [
+                { dataField: "NombreTicket" },
+                { dataField: "NivelIncidencia" },
+                { dataField: "FechaCreacion" },
+                { dataField: "NombreResponsable" },
+                { dataField: "Email" },
+                { dataField: "Area" },
+                { dataField: "Editorial" },
+                {
+                    dataField: "CerrarTicketNegativo",
+                    caption: "CerrarTicketNegativo",
+                    cellTemplate: function (container, options) {
+                        console.log(options);
+                    }
+                },
+                { dataField: "CerrarTicketPositivo" },
+                { dataField: "Observaciones" }
+            ],
+            columnAutoWidth: true,
+            allowColumnReordering: true,
+            allowColumnResizing: true,
+            searchPanel: {
+                visible: true,
+                highlightCaseSensitive: true
+            },
+        })
+    });
+
+
+</script>

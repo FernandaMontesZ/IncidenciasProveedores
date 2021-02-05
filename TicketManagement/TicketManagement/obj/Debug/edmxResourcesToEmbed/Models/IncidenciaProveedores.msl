@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GlobalModelStoreContainer" CdmEntityContainer="GlobalEntities">
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="GlobalModel.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+          <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Maestro_AreasId" ColumnName="Maestro_AreasId" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers_Alternative">
+      <EntityTypeMapping TypeName="GlobalModel.AspNetUsers_Alternative">
+        <MappingFragment StoreEntitySet="AspNetUsers_Alternative">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+          <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Maestro_AreasId" ColumnName="Maestro_AreasId" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Areas">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Areas">
+        <MappingFragment StoreEntitySet="Maestro_Areas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Editoriales">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Editoriales">
+        <MappingFragment StoreEntitySet="Maestro_Editoriales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias_Nivel">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias_Nivel">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias_Nivel">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TipoNivel" ColumnName="TipoNivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias_Orden">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias_Orden">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias_Orden">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Maestro_OrdenId" ColumnName="Maestro_OrdenId" />
+          <ScalarProperty Name="Maestro_IncidenciasId" ColumnName="Maestro_IncidenciasId" />
+          <ScalarProperty Name="Maestro_Incidencias_NivelId" ColumnName="Maestro_Incidencias_NivelId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Updated_At" ColumnName="Updated_At" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias_Orden_Areas">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias_Orden_Areas">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias_Orden_Areas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Maestro_inc_OrdenID" ColumnName="Maestro_inc_OrdenID" />
+          <ScalarProperty Name="Maestro_AreasId" ColumnName="Maestro_AreasId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Updated_At" ColumnName="Updated_At" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias_Orden_Areas_Users">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias_Orden_Areas_Users">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias_Orden_Areas_Users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Maestro_Incidencias_Orden_AreasId" ColumnName="Maestro_Incidencias_Orden_AreasId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Updated_At" ColumnName="Updated_At" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias_OrdenDictamen">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias_OrdenDictamen">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias_OrdenDictamen">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias_OrdenDictamenClosed">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias_OrdenDictamenClosed">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias_OrdenDictamenClosed">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Maestro_Incidencias_OrdenDictamenId" ColumnName="Maestro_Incidencias_OrdenDictamenId" />
+          <ScalarProperty Name="Maestro_OrdenId" ColumnName="Maestro_OrdenId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias_Seguimiento">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias_Seguimiento">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias_Seguimiento">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Maestro_Incidencias_OrdenId" ColumnName="Maestro_Incidencias_OrdenId" />
+          <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Updated_At" ColumnName="Updated_At" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Incidencias_Seguimiento_DI">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Incidencias_Seguimiento_DI">
+        <MappingFragment StoreEntitySet="Maestro_Incidencias_Seguimiento_DI">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Maestro_Incidencias_SeguimientoId" ColumnName="Maestro_Incidencias_SeguimientoId" />
+          <ScalarProperty Name="path" ColumnName="path" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Maestro_Orden">
+      <EntityTypeMapping TypeName="GlobalModel.Maestro_Orden">
+        <MappingFragment StoreEntitySet="Maestro_Orden">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Maestro_EditorialesId" ColumnName="Maestro_EditorialesId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Updated_At" ColumnName="Updated_At" />
+          <ScalarProperty Name="IsReadyForWork" ColumnName="IsReadyForWork" />
+          <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+          <ScalarProperty Name="IsClosed_Successfully" ColumnName="IsClosed_Successfully" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
