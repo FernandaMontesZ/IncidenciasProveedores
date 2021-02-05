@@ -42,7 +42,6 @@ namespace TicketManagement.Controllers
 
             }).ToList();
 
-
             return Json(listTicketsEditoriales, JsonRequestBehavior.AllowGet);
         }
     }

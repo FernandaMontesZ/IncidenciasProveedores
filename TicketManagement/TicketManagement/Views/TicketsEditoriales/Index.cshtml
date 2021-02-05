@@ -6,7 +6,9 @@
 <div class="container">
 
     <div class="dx-viewport" style="margin-top: 10rem;">
-        <div id="DataTickets">
+        <div id="TabPanel">
+        </div>
+        <div id="gridContainer">
 
         </div>
     </div>
@@ -19,48 +21,187 @@
 
     $(function () {
 
-        var orderStore = new DevExpress.data.CustomStore({
-            load: function () {
-                var datos = $.getJSON("/TicketsEditoriales/GetDataTickets");
-                //console.log(datos);
-                return datos;
-                
-            }
+
+        $("#TabPanel").dxTabPanel({
+            dataSource: [{
+                title: "Tickets Editoriales",
+                template: function () {
+                    $("#gridContainer").dxDataGrid({
+                        dataSource: new DevExpress.data.DataSource({
+                            load: function () {
+                                return $.getJSON("/TicketsEditoriales/GetDataTickets");
+                            }
+                        }),
+                        showBorders: true,
+                        paging: {
+                            pageSize: 15
+                        },
+                        columnChooser: {
+                            mode: "select",
+                            width: 400,
+                            height: 800,
+                            allowSearch: true,
+                            enabled: true
+                        },
+                        pager: {
+                            showPageSizeSelector: true,
+                            allowedPageSizes: [15, 30, 50, 100],
+                            showInfo: true
+                        },
+                        remoteOperations: false,
+                        filterRow: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        groupPanel: {
+                            visible: true
+                        },
+                        searchPanel: {
+                            visible: true,
+                            width: 240,
+                            placeholder: "Buscar..."
+                        },
+                        filterRow: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        headerFilter: { visible: true },
+                        showBorders: true,
+                        allowColumnReordering: true,
+                        allowColumnResizing: true,
+                        onRowExpanding: function (e) {
+                            e.component.collapseAll(-1);
+                        },
+                        columnChooser: {
+                            enabled: true,
+                            mode: "select"
+                        },
+                        sorting: {
+                            mode: "multiple"
+                        },
+                        columns: [
+                            { dataField: "NombreTicket" },
+                            { dataField: "DescripcionIncidencia" },
+                            {
+                                dataField: "NivelIncidencia",
+                                cellTemplate: function (container, options) {
+                                    var r = $("<div class='dropdown-content'></div>");
+
+                                    let nivel;
+                                    let bgColor;
+                                    let textColor;
+                                    let borderColor;
+
+                                    switch (options.data.NivelIncidencia) {
+
+                                        case 'Alto':
+                                            nivel = "Alto";
+                                            bgColor = "#f7b7d6";
+                                            textColor = "#ff1f5a";
+                                            borderColor = "2px solid #ff1f5a";
+                                            break;
+
+                                        case 'Medio':
+                                            nivel = "Medio";
+                                            bgColor = "#fae3ac";
+                                            textColor = "#ff7700";
+                                            borderColor = "2px solid #ff7700";
+                                            break;
+                                        case 'Bajo':
+                                            nivel = "Bajo";
+                                            bgColor = "#a3e7ff";
+                                            textColor = "#00aeff";
+                                            borderColor = "2px solid #00aeff";
+                                            break;
+
+                                    }
+                                    var x = $("<div class='dropdown'>")
+                                        .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${nivel} " style="background-color: ${bgColor}; border:${borderColor};  height: unset!important; width: unset!important; margin: 1px;"><label style="color: ${textColor} !important;" id="textEstatus">${nivel}</label></button>`)
+                                        .append(r);
+
+                                    //$.each(RolsData[0], function (key, value) {
+                                    //    if (options.data.AreaId != value.Id) {
+                                    //        var c = $("<div>")
+                                    //            .append("<button class='btn btn-default dropbtn2' style='background-color: #white;'  onclick='UpdateArea(\"" + options.data.UserId + "\", \"" + value.Id + "\")'><label style=\"color: #AE1ED8!important; \" id=\"textEstatus\">" + value.Nombre + "</label></button>")
+                                    //            .appendTo(r);
+                                    //    }
+                                    //});
+
+                                    //console.log(options);
+                                    x.appendTo(container);
+                                    return x;
+
+
+
+                                }
+                            },
+                            {
+                                dataField: "FechaCreacion",
+                            },
+                            {
+                                dataField: "NombreResponsable",
+                            },
+                            { dataField: "Email" },
+                            { dataField: "Area" },
+                            { dataField: "Editorial" },
+                            {
+                                dataField: "CerrarTicketNegativo",
+                                cellTemplate: function (container, options) {
+                                    if (options.data.CerrarTicketNegativo == true) {
+                                        $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
+                                            .appendTo(container);
+                                    } else {
+                                        $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
+                                            .appendTo(container);
+                                    }
+                                    console.log(options);
+                                }
+                            },
+                            {
+                                dataField: "CerrarTicketPositivo",
+                                cellTemplate: function (container, options) {
+                                    if (options.data.CerrarTicketPositivo == true) {
+                                        $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
+                                            .appendTo(container);
+                                    } else {
+                                        $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
+                                            .appendTo(container);
+                                    }
+                                    console.log(options);
+                                }
+                            },
+                            { dataField: "Observaciones" },
+                            { dataField: "Forum" },
+                        ],
+                        masterDetail: {
+                            enabled: true,
+                            template: masterDetailTemplate
+                        },
+
+
+                    })
+                }
+            }]
+
+
         })
 
-        $("#DataTickets").dxDataGrid({
-            dataSource: orderStore,
-            dataSource: orderStore,
-            repaintChangesOnly: true,
-            filterRow: { visible: true },
-            headerFilter: { visible: true },
-            Columns: [
-                { dataField: "NombreTicket" },
-                { dataField: "NivelIncidencia" },
-                { dataField: "FechaCreacion" },
-                { dataField: "NombreResponsable" },
-                { dataField: "Email" },
-                { dataField: "Area" },
-                { dataField: "Editorial" },
-                {
-                    dataField: "CerrarTicketNegativo",
-                    caption: "CerrarTicketNegativo",
-                    cellTemplate: function (container, options) {
-                        console.log(options);
-                    }
-                },
-                { dataField: "CerrarTicketPositivo" },
-                { dataField: "Observaciones" }
-            ],
-            columnAutoWidth: true,
-            allowColumnReordering: true,
-            allowColumnResizing: true,
-            searchPanel: {
-                visible: true,
-                highlightCaseSensitive: true
-            },
-        })
+
+        function masterDetailTemplate(_, masterDetailOptions) {
+            return $("<div>").dxTabPanel({
+                items: [{
+                    title: "Orders",
+                    template: createOrdersTabTemplate(masterDetailOptions.data)
+                }, {
+                    title: "Address",
+                    template: createAddressTabTemplate(masterDetailOptions.data),
+                }]
+            });
+        }
+
     });
+
+
 
 
 </script>
