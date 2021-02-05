@@ -3,6 +3,523 @@
     ViewBag.Title = "Index";
 }
 
+
+<style>
+    .celColor {
+        color: #0E041E;
+        font-weight: bold;
+    }
+
+    .button-container {
+        display: inline-block;
+        position: relative;
+    }
+
+        .button-container .aa {
+            position: absolute;
+            top: -10%;
+            right: 4%;
+            border-radius: 1px;
+            color: white;
+            text-transform: uppercase;
+            padding: 2px 1.5px;
+        }
+
+        .button-container .aaa {
+            position: absolute;
+            top: -10%;
+            left: 4%;
+            border-radius: 1px;
+            color: white;
+            text-transform: uppercase;
+            padding: 2px 1.5px;
+        }
+
+    body {
+        font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    #gridContainer {
+        height: 620px;
+    }
+
+    .dx-datagrid-rowsview .dx-master-detail-row:not(.dx-datagrid-edit-form) > .dx-datagrid-group-space,
+    .dx-datagrid-rowsview .dx-master-detail-row:not(.dx-datagrid-edit-form) .dx-master-detail-cell {
+        background-color: white !important;
+    }
+
+    .dx-tabpanel-container {
+        background-color: white !important;
+    }
+
+    .dx-form .dx-widget .dx-visibility-change-handler {
+        background-color: white;
+    }
+
+    .dx-cell-focus-disabled .dx-master-detail-cell {
+        background-color: white !important;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .address-form label {
+        font-weight: bold;
+    }
+
+    .cb-p {
+        cursor: pointer;
+    }
+
+    .edit-i {
+        cursor: pointer;
+    }
+
+    .cont-img {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .image-margin {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #title-modal {
+        text-align: center;
+    }
+
+    .a-si {
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: absolute !important;
+    }
+
+    .dropbtn {
+        position: absolute;
+        top: -17px;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute !important;
+        background-color: #f1f1f1;
+        min-width: 100px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        top: 17px
+    }
+
+        .dropdown-content div {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+        position: fixed;
+    }
+
+    .popup-class-w {
+        width: 100em !important;
+    }
+
+    .content-class-c {
+        text-align: left !important;
+    }
+
+    .inp-date {
+        line-height: 10px !important;
+    }
+
+    .dp-n {
+        display: none;
+    }
+
+    .f-ac {
+        min-width: 100%;
+    }
+
+    .lbl-img {
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .opc-img {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 3px !important;
+    }
+
+    .inv-ic-0 {
+        display: none !important;
+    }
+
+    .a-opc-img {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .im-pr-0 {
+        border: 2px solid #f7b522;
+    }
+    /*swichi style*/
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 25px;
+        height: 12px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #878787;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 10px;
+            left: -1px;
+            bottom: 1px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #32B216;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(16px);
+        -ms-transform: translateX(16px);
+        transform: translateX(16px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    /*swichi style*/
+    /*swichi style2*/
+    .switch2 {
+        pointer-events: none;
+        position: relative;
+        display: inline-block;
+        width: 25px;
+        height: 12px;
+    }
+
+        .switch2 input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider2 {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #C5C5C5;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider2:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 10px;
+            left: -1px;
+            bottom: 1px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider2 {
+        background-color: #C5C5C5;
+    }
+
+    input:focus + .slider2 {
+        box-shadow: 0 0 1px #C5C5C5;
+    }
+
+    input:checked + .slider2:before {
+        -webkit-transform: translateX(16px);
+        -ms-transform: translateX(16px);
+        transform: translateX(16px);
+    }
+
+    /* Rounded sliders */
+    .slider2.round2 {
+        border-radius: 34px;
+    }
+
+        .slider2.round2:before {
+            border-radius: 50%;
+        }
+    /*swichi style2*/
+    /*swichi style3*/
+    .switch3 {
+        position: relative;
+        display: inline-block;
+        width: 25px;
+        height: 12px;
+    }
+
+        .switch3 input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider3 {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #c23516;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider3:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 10px;
+            left: -1px;
+            bottom: 1px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider3 {
+        background-color: #32B216;
+    }
+
+    input:focus + .slider3 {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider3:before {
+        -webkit-transform: translateX(16px);
+        -ms-transform: translateX(16px);
+        transform: translateX(16px);
+    }
+
+    /* Rounded sliders */
+    .slider3.round3 {
+        border-radius: 34px;
+    }
+
+        .slider3.round3:before {
+            border-radius: 50%;
+        }
+    /*swichi style3*/
+    /*swichi style4*/
+    .switch4 {
+        pointer-events: none;
+        position: relative;
+        display: inline-block;
+        width: 25px;
+        height: 12px;
+    }
+
+        .switch4 input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider4 {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #878787;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider4:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 10px;
+            left: -1px;
+            bottom: 1px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider4 {
+        background-color: #32B216;
+    }
+
+    input:focus + .slider4 {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider4:before {
+        -webkit-transform: translateX(16px);
+        -ms-transform: translateX(16px);
+        transform: translateX(16px);
+    }
+
+    /* Rounded sliders */
+    .slider4.round4 {
+        border-radius: 34px;
+    }
+
+        .slider4.round4:before {
+            border-radius: 50%;
+        }
+    /*swichi style4*/
+
+    #textFond {
+        font-family: Arial;
+        color: #DD4030;
+        font-weight: bold;
+    }
+
+        #textFond:hover {
+            text-decoration: underline;
+        }
+
+    .buttonCadena {
+        line-height: 12px;
+        width: 18px;
+        font-size: 8pt;
+        font-family: tahoma;
+        margin-top: 1px;
+        margin-right: 2px;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .buttonCadenaAling .iii {
+        position: absolute;
+        top: 25%;
+        left: 90%;
+        border-radius: 1px;
+        text-transform: uppercase;
+        /*padding: 2px 1.5px;*/
+    }
+
+
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 10;
+        max-height: 250px;
+    }
+
+
+
+        .dropdown-content::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+        }
+
+
+
+        .dropdown-content::-webkit-scrollbar {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+
+
+
+        .dropdown-content::-webkit-scrollbar-thumb {
+            background-color: #74bfeb;
+            background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent)
+        }
+
+
+
+        .dropdown-content div {
+            color: black;
+            padding: 15px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+        position: fixed;
+        overflow-y: auto;
+        z-index: 11;
+    }
+
+    button.btn.btn-default.dropbtn2 {
+        margin-top: -17px;
+        font-size: 13px !important;
+        width: 129px !important;
+        height: 29px !important;
+        font-weight: 400;
+    }
+</style>
+
+
 <div class="container">
 
     <div class="dx-viewport" style="margin-top: 10rem;">
@@ -11,9 +528,13 @@
         <div id="gridContainer">
 
         </div>
+
+        <div id="master"></div>
     </div>
 
 </div>
+
+
 
 
 
@@ -87,39 +608,14 @@
                                 cellTemplate: function (container, options) {
                                     var r = $("<div class='dropdown-content'></div>");
 
-                                    let nivel;
-                                    let bgColor;
-                                    let textColor;
-                                    let borderColor;
-
-                                    switch (options.data.NivelIncidencia) {
-
-                                        case 'Alto':
-                                            nivel = "Alto";
-                                            bgColor = "#f7b7d6";
-                                            textColor = "#ff1f5a";
-                                            borderColor = "2px solid #ff1f5a";
-                                            break;
-
-                                        case 'Medio':
-                                            nivel = "Medio";
-                                            bgColor = "#fae3ac";
-                                            textColor = "#ff7700";
-                                            borderColor = "2px solid #ff7700";
-                                            break;
-                                        case 'Bajo':
-                                            nivel = "Bajo";
-                                            bgColor = "#a3e7ff";
-                                            textColor = "#00aeff";
-                                            borderColor = "2px solid #00aeff";
-                                            break;
-
-                                    }
                                     var x = $("<div class='dropdown'>")
-                                        .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${nivel} " style="background-color: ${bgColor}; border:${borderColor};  height: unset!important; width: unset!important; margin: 1px;"><label style="color: ${textColor} !important;" id="textEstatus">${nivel}</label></button>`)
+                                        .append('<button class=" btn btn-default dropbtn2" id="btnEstatus" value="' + options.data.NivelIncidencia + '" style="background-color : white;"><label style="color: #AE1ED8 !important;" id="textEstatus">' + options.data.NivelIncidencia + '</label></button>')
                                         .append(r);
 
-                                    //$.each(RolsData[0], function (key, value) {
+                                    //$.each(RolsData[0],function (key, value) {
+
+                                    //    console.log(value);
+
                                     //    if (options.data.AreaId != value.Id) {
                                     //        var c = $("<div>")
                                     //            .append("<button class='btn btn-default dropbtn2' style='background-color: #white;'  onclick='UpdateArea(\"" + options.data.UserId + "\", \"" + value.Id + "\")'><label style=\"color: #AE1ED8!important; \" id=\"textEstatus\">" + value.Nombre + "</label></button>")
@@ -127,7 +623,7 @@
                                     //    }
                                     //});
 
-                                    //console.log(options);
+                                    console.log(options);
                                     x.appendTo(container);
                                     return x;
 
@@ -154,7 +650,7 @@
                                         $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
                                             .appendTo(container);
                                     }
-                                    console.log(options);
+                                    //console.log(options);
                                 }
                             },
                             {
@@ -167,7 +663,7 @@
                                         $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
                                             .appendTo(container);
                                     }
-                                    console.log(options);
+                                    //console.log(options);
                                 }
                             },
                             { dataField: "Observaciones" },
@@ -188,15 +684,16 @@
 
 
         function masterDetailTemplate(_, masterDetailOptions) {
-            return $("<div>").dxTabPanel({
-                items: [{
-                    title: "Orders",
-                    template: createOrdersTabTemplate(masterDetailOptions.data)
-                }, {
-                    title: "Address",
-                    template: createAddressTabTemplate(masterDetailOptions.data),
-                }]
-            });
+            //
+            //return $("#master").dxTabPanel({
+            //    items: [{
+            //        title: "Orders",
+
+            //    }, {
+            //        title: "Address",
+
+            //    }]
+            //});
         }
 
     });
