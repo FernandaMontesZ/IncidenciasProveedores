@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GlobalModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ApellidoPaterno" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ApellidoMaterno" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Nombres" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Maestro_AreasId" Type="Int32" />
+    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Maestro_Areas" Relationship="Self.FK_dbo_AspNetUsers_dbo_Maestro_Areas" FromRole="AspNetUsers" ToRole="Maestro_Areas" />
+  </EntityType>
+  <EntityType Name="Maestro_Areas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUsers_dbo_Maestro_Areas" FromRole="Maestro_Areas" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="Maestro_Editoriales">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Maestro_Incidencias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TiempoRespuesta" Type="Double" />
+  </EntityType>
+  <EntityType Name="Maestro_Incidencias_Orden">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Maestro_OrdenId" Type="Int32" />
+    <Property Name="Maestro_IncidenciasId" Type="Int32" />
+    <Property Name="Maestro_Incidencias_NivelId" Type="Int32" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Updated_At" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Maestro_Incidencias_Orden_Areas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Maestro_Incidencias_OrdenId" Type="Int32" />
+    <Property Name="Maestro_AreasId" Type="Int32" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Updated_At" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Maestro_Incidencias_Orden_Areas_Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Maestro_Incidencias_Orden_AreasId" Type="Int32" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Updated_At" Type="DateTime" Precision="3" />
+    <Property Name="Maestro_Incidencias_OrdenId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Maestro_Incidencias_OrdenDictamen">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Maestro_Incidencias_OrdenDictamenClosed">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Maestro_Incidencias_OrdenDictamenId" Type="Int32" />
+    <Property Name="Maestro_OrdenId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Maestro_Incidencias_Seguimiento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Maestro_Incidencias_OrdenId" Type="Int32" />
+    <Property Name="Observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Updated_At" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Maestro_Incidencias_Seguimiento_DI">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Maestro_Incidencias_SeguimientoId" Type="Int32" />
+    <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUsers_dbo_Maestro_Areas">
+    <End Role="Maestro_Areas" Type="Self.Maestro_Areas" Multiplicity="0..1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Maestro_Areas">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="Maestro_AreasId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GlobalEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+    <EntitySet Name="Maestro_Areas" EntityType="Self.Maestro_Areas" />
+    <EntitySet Name="Maestro_Editoriales" EntityType="Self.Maestro_Editoriales" />
+    <EntitySet Name="Maestro_Incidencias" EntityType="Self.Maestro_Incidencias" />
+    <EntitySet Name="Maestro_Incidencias_Orden" EntityType="Self.Maestro_Incidencias_Orden" />
+    <EntitySet Name="Maestro_Incidencias_Orden_Areas" EntityType="Self.Maestro_Incidencias_Orden_Areas" />
+    <EntitySet Name="Maestro_Incidencias_Orden_Areas_Users" EntityType="Self.Maestro_Incidencias_Orden_Areas_Users" />
+    <EntitySet Name="Maestro_Incidencias_OrdenDictamen" EntityType="Self.Maestro_Incidencias_OrdenDictamen" />
+    <EntitySet Name="Maestro_Incidencias_OrdenDictamenClosed" EntityType="Self.Maestro_Incidencias_OrdenDictamenClosed" />
+    <EntitySet Name="Maestro_Incidencias_Seguimiento" EntityType="Self.Maestro_Incidencias_Seguimiento" />
+    <EntitySet Name="Maestro_Incidencias_Seguimiento_DI" EntityType="Self.Maestro_Incidencias_Seguimiento_DI" />
+    <AssociationSet Name="FK_dbo_AspNetUsers_dbo_Maestro_Areas" Association="Self.FK_dbo_AspNetUsers_dbo_Maestro_Areas">
+      <End Role="Maestro_Areas" EntitySet="Maestro_Areas" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

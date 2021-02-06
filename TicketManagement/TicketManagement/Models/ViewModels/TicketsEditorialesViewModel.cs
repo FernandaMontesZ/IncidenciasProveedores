@@ -10,15 +10,14 @@ namespace TicketManagement.Models.ViewModels
         public int OrdenId { get; set; }
         public string NombreTicket { get; set; }
         public string DescripcionIncidencia { get; set; }
-        public string NivelIncidencia { get; set; }
+        public string PrioridadTicket { get; set; }
         public string FechaCreacion { get; set; }
         public string NombreResponsable { get; set; }
-        public string Email { get; set; }
         public string Area { get; set; }
         public string Editorial { get; set; }
         public bool CerrarTicketNegativo { get; set; }
         public bool CerrarTicketPositivo { get; set; }
         public string Observaciones { get; set; }
-
+        public string TiempoRespuestaHoras { get; set; }
     }
 }
