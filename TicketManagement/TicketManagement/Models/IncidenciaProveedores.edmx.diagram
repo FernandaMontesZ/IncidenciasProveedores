@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dd39540111774a0c8ec57d145228f082" Name="Diagram1" ZoomLevel="96">
+        <EntityTypeShape EntityType="GlobalModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.AspNetUsers_Alternative" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Areas" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Editoriales" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias_Nivel" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias_Orden" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias_Orden_Areas" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias_Orden_Areas_Users" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias_OrdenDictamen" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias_OrdenDictamenClosed" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias_Seguimiento" Width="1.5" PointX="5.125" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Incidencias_Seguimiento_DI" Width="1.5" PointX="9.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GlobalModel.Maestro_Orden" Width="1.5" PointX="7.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="GlobalModel.FK_dbo_AspNetUsers_dbo_Maestro_Areas" ManuallyRouted="false" />
+        <AssociationConnector Association="GlobalModel.FK_dbo_AspNetUsers_Alternative_dbo_Maestro_Areas" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

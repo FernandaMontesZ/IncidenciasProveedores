@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -121,9 +129,84 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TicketsEditorialesController.cs" />
+    <Compile Include="DataAccess\SqlData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers_Alternative.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidenciaProveedores.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncidenciaProveedores.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidenciaProveedores.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidenciaProveedores.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncidenciaProveedores.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Areas.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Editoriales.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias_Nivel.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias_Orden.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias_OrdenDictamen.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias_OrdenDictamenClosed.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias_Orden_Areas.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias_Orden_Areas_Users.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias_Seguimiento.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Incidencias_Seguimiento_DI.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Maestro_Orden.cs">
+      <DependentUpon>IncidenciaProveedores.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\TicketsEditorialesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -135,8 +218,42 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\IncidenciaProveedores.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IncidenciaProveedores.Context.cs</LastGenOutput>
+      <DependentUpon>IncidenciaProveedores.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\IncidenciaProveedores.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IncidenciaProveedores.edmx</DependentUpon>
+      <LastGenOutput>IncidenciaProveedores.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\IncidenciaProveedores.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>IncidenciaProveedores.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\IncidenciaProveedores.edmx.diagram">
+      <DependentUpon>IncidenciaProveedores.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -162,10 +279,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\TicketsEditoriales\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -179,6 +296,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
