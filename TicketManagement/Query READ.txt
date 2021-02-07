@@ -1,0 +1,57 @@
+Use Global 
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE Tickets_Editoriales
+@Accion varchar(max) null
+
+AS
+BEGIN
+
+
+IF @Accion = 'READ_TICKET'
+
+      SELECT  
+	    a.Id as OrdenId
+	   ,b.Nombre as NombreTicket
+	   ,f.Nombre as DescripcionIncidencia
+	   ,g.Prioridad as PrioridadIncidencia
+	   ,f.TiempoRespuesta as TiempoRespuesta
+	   ,a.Updated_At as FechaCreacion
+	   ,isnull(c.ApellidoPaterno,'') + ' ' + isnull(c.ApellidoMaterno,'') + ' ' + isnull(c.Nombres,'') as NombreResponsable
+	   ,c.UserName as Email
+	   ,d.Nombre as Area
+	   ,e.Nombre as Edtorial
+	   ,b.IsClosed as CerrarTicketNegativo
+	   ,b.IsClosed_Successfully AS CerrarTicketPositivo
+	   ,h.Observaciones
+	FROM [Global].[dbo].[Maestro_Incidencias_Orden] a
+
+	left outer join [Global].[dbo].[Maestro_Orden]b 
+	on a.Maestro_OrdenId = b.id
+
+	left outer join [Global].[dbo].[AspNetUsers] c 
+	on b.UserId = c.Id
+	
+	left outer join [Global].[dbo].[Maestro_Areas] d
+	on c.Maestro_AreasId = d.Id
+
+	left outer join [Global].[dbo].[Maestro_Editoriales] e 
+	on b.Maestro_EditorialesId = e.Id
+
+	 left outer join [Global].[dbo].[Maestro_Incidencias] f
+	on f.id = a.Maestro_IncidenciasId
+
+	left outer join [Global].[dbo].[Maestro_Orden_Prioridad] g
+	on b.Maestro_Orden_PrioridadId = g.Id
+
+	left outer join [Global].[dbo].[Maestro_Incidencias_Seguimiento] h
+	on a.Id = h.Maestro_Incidencias_OrdenId
+	--where 1 = 1	
+		--and a.Email = 'Pbpg_20@hotmail.com'
+	
+END
+GO
