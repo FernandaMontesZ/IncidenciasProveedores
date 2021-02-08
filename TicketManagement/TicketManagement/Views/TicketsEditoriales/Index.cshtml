@@ -517,6 +517,16 @@
         height: 29px !important;
         font-weight: 400;
     }
+
+    /*Add*/
+    .dx-datagrid .dx-data-row > td.bullet {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+
+
+
 </style>
 
 
@@ -531,20 +541,350 @@
                     <strong>Asignación Rol Administrativo</strong>
                 </h2>
 
+
+
+
+            </div>
+            <div class="dx-viewport">
+                <div id="dxDatos" style="background-color:#FFFF00">
+                    <h1>xyz</h1>
+
+
+
+
+                </div>
             </div>
         </div>
+
+
         <div id="tabPanel"></div>
         <div id="gridContainer"></div>
         <div id="form-container">
-            <div id="form"></div>
+            <div id="form">
+
+
+            </div>
         </div>
+
+
+        @*<div class="demo-container">
+            <div id="longtabs">
+                <div class="caption">Tabs</div>
+                <div class="tabs-container"></div>
+            </div>*@ 
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
     <script>
+
+        //USARE LA VARIABLE ORDERS PERO IMPLEMENTAND0 MI METODO GET
+        $(function () {
+
+            var orderStore = new DevExpress.data.CustomStore({
+
+
+                load: function () {
+                    return $.getJSON("/TicketsEditoriales/GetDataTickets");
+                },
+                insert: function (values) {
+                    var data = values;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "//TicketsEditoriales/GetDataTickets",
+                        data: data,
+                        success: function () {
+
+
+
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'LISTO',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    });
+                },
+                //update: function (key, values) {
+
+
+                //    const datosAct = { ...key, ...values };
+
+
+
+                //    $.ajax({
+                //        type: "POST",
+                //        url: "/Anexar/UpdateUser",
+                //        data: datosAct,
+                //        success: function () {
+
+
+                //            Swal.fire({
+                //                position: 'center',
+                //                icon: 'success',
+                //                title: 'Actualizado Correctamente ',
+                //                showConfirmButton: false,
+                //                timer: 1500
+
+                //            });
+
+                //        }
+                //    });
+
+
+                //},
+
+
+
+                //remove: function (key) {
+                //    $.ajax({
+                //        type: "POST",
+                //        url: "/Anexar/DeleteUser",
+                //        data: { "UserId": key.Id },
+                //        success: function () {
+
+                //            Swal.fire({
+                //                position: 'center',
+                //                icon: 'error',
+                //                title: 'Eliminado',
+                //                showConfirmButton: true,
+                //                timer: 1500
+                //            });
+
+                //        }
+
+                //    })
+                //}
+
+            });
+
+
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+            //Declaras las columnas de los registros que vas a traer
+
+            $("#dxDatos").dxDataGrid({
+
+
+
+                //DEJE LA MISMA VARIABLE PERO DIFERENTE ESTRUCTURA
+
+                dataSource: orderStore,
+
+                repaintChangesOnly: true,
+                columns: [
+                    { dataField: "Incidencia", },
+                    { dataField: "Descripcion", },
+                    { dataField: "Proveedor", },
+                    { dataField: "Area Responsable ", },
+                    { dataField: "Evidencia" }
+
+
+
+                ],
+
+
+
+                //Propiedades de dev express
+
+                columnAutoWidth: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+
+                searchPanel: {
+                    visible: false,
+                    highlightCaseSensitive: true
+                },
+                showBorders: true,
+                editing: {
+                    refreshMode: "reshape",
+                    mode: "popup",
+                    allowUpdating: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                    confirmDelete: true,
+
+                    //Tamaño de mi pop
+
+                    popup: {
+                        title: "Deseas agregar un ticket ...",
+                        showTitle: true,
+                        width: 550,
+                        height: 650
+
+                    },
+                    form: {
+
+                        items: [{
+                            itemType: "group",
+                            colCount: 1,
+                            colSpan: 4,
+
+
+
+                            items: [
+
+                                { dataField: "Incidencia", },
+                                { dataField: "Descripcion", },
+                                { dataField: "Proveedor", },
+                                { dataField: "Area Responsable ", },
+                                { dataField: "Evidencia" }
+                            ]
+                        }],
+
+                        items2: [{
+                            itemType: "group",
+                            colCount: 1,
+                            colSpan: 4,
+
+
+
+                     
+
+                            item2: [
+
+                                { dataField: "Inccia", },
+                                { dataField: "Despcion", },
+                                { dataField: "Proveedor", },
+                                { dataField: "Area Responsable ", },
+                                { dataField: "Evidencia" }
+
+                            ]
+                        
+                        }],
+
+                    },
+
+
+
+
+                }
+            }).dxDataGrid("instance");
+
+
+          
+
+        })
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
 
         $(function () {
             let NivelData = new Array();
@@ -605,6 +945,10 @@
                                 allowedPageSizes: [15, 30, 50, 100],
                                 showInfo: true
                             },
+                            editing: {
+                                allowAdding: true,
+                                mode: "popup"
+                            },
                             remoteOperations: false,
                             filterRow: {
                                 visible: true,
@@ -636,19 +980,31 @@
                             sorting: {
                                 mode: "multiple"
                             },
+
+
+
+
+
+                            popup: {
+                                title: "Deseas agregar un ticket ...",
+                                showTitle: true,
+                                width: 550,
+                                height: 650
+
+                            },
+
+
                             columns: [
                                 { dataField: "FolioTicket" },
                                 { dataField: "FechaCreacion" },
-                                {
-                                    dataField: "NombreResponsable",
-                                },
-
+                                { dataField: "NombreResponsable", },
                                 { dataField: "Editorial" },
-                                {
-                                    dataField: "PrioridadTicket",
+                                {dataField: "PrioridadTicket",
 
                                     width: 200,
                                     cellTemplate: function (container, options) {
+
+
                                         var r = $("<div class='dropdown-content'></div>");
 
                                         var x = $("<div class='dropdown'>")
@@ -711,30 +1067,53 @@
             })
         });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         function masterDetailTemplate(_, masterDetailOptions) {
 
             //console.log(masterDetailOptions);
 
             return $("<div style='-webkit-box-shadow: 0px 0px 13px 0px rgba(68,68,68,0.82); box-shadow: 0px 0px 13px 0px rgba(68, 68, 68, 0.82);'>").dxTabPanel({
                 items: [
-                {
+                    {
                         title: "Responsables",
                         template: TicketDetailsGridTemplate(masterDetailOptions.data)
-                },
-                {
-                    title: "Incidencias",
-                    template: TicketDetailsGridTemplate(masterDetailOptions.data)
-                }
+                    },
+                    {
+                        title: "Incidencias",
+                        template: TicketDetailsGridTemplate(masterDetailOptions.data)
+                    }
                 ]
             });
         }
 
         function TicketDetailsGridTemplate(masterDetailData) {
             return function () {
-               return $("<div id='TicketsDetailsGrid'>").dxDataGrid({
+                return $("<div id='TicketsDetailsGrid'>").dxDataGrid({
                     dataSource: new DevExpress.data.DataSource({
                         load: function () {
-                           return $.getJSON("/TicketsEditoriales/GetDataTickets?OrdenId=" + masterDetailData.OrdenId);
+                            return $.getJSON("/TicketsEditoriales/GetDataTickets?OrdenId=" + masterDetailData.OrdenId);
                         }
                     }),
                     paging: {
@@ -745,6 +1124,10 @@
                         showPageSizeSelector: true,
                         allowedPageSizes: [300, 400],
                         showInfo: true
+                    },
+                    editing: {
+                        allowAdding: true,
+                        mode: "popup"
                     },
                     filterRow: {
                         visible: true,
@@ -776,11 +1159,11 @@
                     sorting: {
                         mode: "multiple"
                     },
-                   columns: [
-                       { dataField: "DescripcionIncidencia" },
-                       { dataField: "Observaciones" },
-                       { dataField: "Informacion Digital" },
-                       { dataField: "TiempoRespuestaHoras"}
+                    columns: [
+                        { dataField: "DescripcionIncidencia" },
+                        { dataField: "Observaciones" },
+                        { dataField: "Informacion Digital" },
+                        { dataField: "TiempoRespuestaHoras" }
                     ]
                 })
 
@@ -788,5 +1171,41 @@
 
         }
 
+
+
+
+
+        $(function () {
+            $("#longtabs > .tabs-container").dxTabs({
+                dataSource: longtabs
+            });
+
+            $("#scrolledtabs > .tabs-container").dxTabs({
+                dataSource: longtabs,
+                width: 300,
+                scrollByContent: true,
+                showNavButtons: true
+            });
+
+            var tabsInstance = $("#tabs > .tabs-container").dxTabs({
+                dataSource: tabs,
+                selectedIndex: 0,
+                onItemClick: function (e) {
+                    selectBox.option("value", e.itemData.id);
+                }
+            }).dxTabs("instance");
+
+            var selectBox = $("#selectbox").dxSelectBox({
+                value: 0,
+                dataSource: tabs,
+                displayExpr: "text",
+                valueExpr: "id",
+                onValueChanged: function (e) {
+                    tabsInstance.option("selectedIndex", e.value);
+                    $(".left-aligned").text(tabs[e.value].content);
+                }
+            }).dxSelectBox("instance");
+
+        });
 
     </script>

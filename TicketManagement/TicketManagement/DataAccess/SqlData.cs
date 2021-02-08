@@ -34,10 +34,7 @@ namespace TicketManagement.DataAccess
                 da.Fill(dt);
                 if (dt.Rows.Count > 0)
                 {
-                    //for (int i = 0; i < rows.Length; i++)
-                    //{
-                    //    Console.WriteLine(rows[i]["Order_Back"]);
-                    //}
+                    
 
                     TicketsEditoriales = dt;
                 }
@@ -45,10 +42,7 @@ namespace TicketManagement.DataAccess
                 {
                     TicketsEditoriales = null;
                 }
-                //else
-                //{
-
-                //}
+              
             }
             return TicketsEditoriales;
         }

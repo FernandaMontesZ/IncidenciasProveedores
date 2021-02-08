@@ -19,6 +19,9 @@ namespace TicketManagement.Controllers
             return View();
         }
 
+        //Leer 
+
+
 
         public JsonResult GetDataTickets()
         {
@@ -45,6 +48,9 @@ namespace TicketManagement.Controllers
             return Json(listTicketsEditoriales, JsonRequestBehavior.AllowGet);
         }
 
+
+        //Leer 
+
         public JsonResult GetLevels()
         {
             SqlData spSql = new SqlData();
@@ -58,6 +64,9 @@ namespace TicketManagement.Controllers
             return Json(listMaestroNiveles, JsonRequestBehavior.AllowGet);
 
         }
+
+
+        //Leer 
 
         public JsonResult GETAreas()
         {
@@ -73,5 +82,141 @@ namespace TicketManagement.Controllers
 
         }
 
+
+
+
+
+
+        /// 
+        /// /[dbo].[Maestro_Incidencias_Orden]
+        /// 
+
+        public JsonResult Agregar()
+        {
+
+            SqlData spSql = new SqlData();
+
+            // 
+
+            DataTable MaestroAreas = spSql.spGetData("[dbo].[Maestro_Incidencias_Orden]", new string[] { "@Accion:ADD_TICKET"});
+            List<TicketsEditorialesViewModel> listMaestroAreas = MaestroAreas.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+
+            }).ToList();
+
+            return Json(listMaestroAreas, JsonRequestBehavior.AllowGet);
+
+
+
+        }
+
+        // ///////////////////////////Borrar
+
+        public JsonResult Borrar()
+        {
+
+            SqlData spSql = new SqlData();
+
+            // 
+
+            DataTable MaestroAreas = spSql.spGetData("[dbo].[Maestro_Incidencias_Orden]", new string[] { "@Accion:DELETE_TICKET" });
+
+
+
+
+            List<TicketsEditorialesViewModel> listMaestroAreas = MaestroAreas.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+
+            }).ToList();
+
+            return Json(listMaestroAreas, JsonRequestBehavior.AllowGet);
+
+
+
+        }
+
+
+
+        // ///////////////////////////Editar
+
+        public JsonResult Editar()
+        {
+
+            SqlData spSql = new SqlData();
+
+            // 
+
+            DataTable MaestroAreas = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:EDIT_TICKET" });
+            List<TicketsEditorialesViewModel> listMaestroAreas = MaestroAreas.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+
+            }).ToList();
+
+            return Json(listMaestroAreas, JsonRequestBehavior.AllowGet);
+
+
+
+        }
+
+
+        public JsonResult Actualizar()
+        {
+
+            SqlData spSql = new SqlData();
+
+            // 
+
+            DataTable MaestroAreas = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:UPDATE_TICKET" });
+            List<TicketsEditorialesViewModel> listMaestroAreas = MaestroAreas.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+
+            }).ToList();
+
+            return Json(listMaestroAreas, JsonRequestBehavior.AllowGet);
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
