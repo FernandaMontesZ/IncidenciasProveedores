@@ -1102,7 +1102,7 @@
                     },
                     {
                         title: "Incidencias",
-                        template: TicketDetailsGridTemplate(masterDetailOptions.data)
+                        template: GridTemplate(masterDetailOptions.data)
                     }
                 ]
             });
@@ -1172,6 +1172,67 @@
         }
 
 
+        function GridTemplate(masterDetailData) {
+            return function () {
+                return $("<div id='TicketsDetailsGrid'>").dxDataGrid({
+                    dataSource: new DevExpress.data.DataSource({
+                        load: function () {
+                            return $.getJSON("/TicketsEditoriales/GetDataTickets?OrdenId=" + masterDetailData.OrdenId);
+                        }
+                    }),
+                    paging: {
+                        pageSize: 1000
+                    },
+                    height: 1200,
+                    pager: {
+                        showPageSizeSelector: true,
+                        allowedPageSizes: [300, 400],
+                        showInfo: true
+                    },
+                    editing: {
+                        allowAdding: true,
+                        mode: "popup"
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: "auto"
+                    },
+                    groupPanel: {
+                        visible: true,
+                    },
+                    searchPanel: {
+                        visible: true,
+                        width: 240,
+                        placeholder: "Buscar..."
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: "auto"
+                    },
+                    headerFilter: { visible: true },
+                    showBorders: true,
+                    allowColumnReordering: true,
+                    allowColumnResizing: true,
+                    onRowExpanding: function (e) {
+                        e.component.collapseAll(-1);
+                    },
+                    columnChooser: {
+                        enabled: true,
+                        mode: "select"
+                    },
+                    sorting: {
+                        mode: "multiple"
+                    },
+                    columns: [
+                        { dataField: "Incidencia" },
+                        { dataField: "Seguimiento" },
+                      
+                    ]
+                })
+
+            }
+
+        }
 
 
 
