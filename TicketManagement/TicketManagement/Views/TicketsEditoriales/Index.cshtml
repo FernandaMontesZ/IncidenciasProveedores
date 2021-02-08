@@ -650,8 +650,6 @@
                                 { dataField: "Editorial" },
                                 {
                                     dataField: "PrioridadTicket",
-
-                                    width: 200,
                                     cellTemplate: function (container, options) {
                                         var r = $("<div class='dropdown-content'></div>");
 
@@ -722,18 +720,18 @@
             return $("<div style='-webkit-box-shadow: 0px 0px 13px 0px rgba(68,68,68,0.82); box-shadow: 0px 0px 13px 0px rgba(68, 68, 68, 0.82);'>").dxTabPanel({
                 items: [
                 {
-                        title: "Responsables",
-                        template: TicketDetailsGridTemplate(masterDetailOptions.data)
+                    title: "Responsables",
+                    //template: TicketDetailsGridTemplate(masterDetailOptions.data)
                 },
                 {
                     title: "Incidencias",
-                    template: TicketDetailsGridTemplate(masterDetailOptions.data)
+                    template: IncidenciasMasterDetails(masterDetailOptions.data)
                 }
                 ]
             });
         }
 
-        function TicketDetailsGridTemplate(masterDetailData) {
+        function IncidenciasMasterDetails(masterDetailData) {
             return function () {
                return $("<div id='TicketsDetailsGrid'>").dxDataGrid({
                     dataSource: new DevExpress.data.DataSource({
@@ -785,6 +783,78 @@
                        { dataField: "Observaciones" },
                        { dataField: "Informacion Digital" },
                        { dataField: "TiempoRespuestaHoras"}
+                   ],
+                   masterDetail: {
+                       enabled: true,
+                       template: masterDetailInfoDigitalTemplate
+                   },
+                })
+
+            }
+
+        }
+        function masterDetailInfoDigitalTemplate(_, masterDetailOptions) {
+
+            //console.log(masterDetailOptions);
+
+            return $("<div style='-webkit-box-shadow: 0px 0px 13px 0px rgba(68,68,68,0.82); box-shadow: 0px 0px 13px 0px rgba(68, 68, 68, 0.82);'>").dxTabPanel({
+                items: [
+                    {
+                        title: "Detalles",
+                        template: InfoDigitalMasterDetails(masterDetailOptions.data)
+                    }
+                ]
+            });
+        }
+        function InfoDigitalMasterDetails(masterDetailData) {
+            return function () {
+                return $("<div id='TicketsDetailsGrid'>").dxDataGrid({
+                    dataSource: new DevExpress.data.DataSource({
+                        load: function () {
+                            return $.getJSON("/TicketsEditoriales/GetDataTickets?OrdenId=" + masterDetailData.OrdenId);
+                        }
+                    }),
+                    paging: {
+                        pageSize: 1000
+                    },
+                    height: 1200,
+                    pager: {
+                        showPageSizeSelector: true,
+                        allowedPageSizes: [300, 400],
+                        showInfo: true
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: "auto"
+                    },
+                    groupPanel: {
+                        visible: true,
+                    },
+                    searchPanel: {
+                        visible: true,
+                        width: 240,
+                        placeholder: "Buscar..."
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: "auto"
+                    },
+                    headerFilter: { visible: true },
+                    showBorders: true,
+                    allowColumnReordering: true,
+                    allowColumnResizing: true,
+                    onRowExpanding: function (e) {
+                        e.component.collapseAll(-1);
+                    },
+                    columnChooser: {
+                        enabled: true,
+                        mode: "select"
+                    },
+                    sorting: {
+                        mode: "multiple"
+                    },
+                    columns: [
+                        { dataField: "Informacion Digital" },
                     ]
                 })
 
