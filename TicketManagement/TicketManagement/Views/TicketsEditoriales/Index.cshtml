@@ -622,6 +622,10 @@
                                 visible: true,
                                 applyFilter: "auto"
                             },
+                            editing: {
+                                allowAdding: true,
+                                allowUpdating: true
+                            },
                             headerFilter: { visible: true },
                             showBorders: true,
                             allowColumnReordering: true,
@@ -671,32 +675,32 @@
                                         return x;
                                     }
                                 },
-                                //{
-                                //    dataField: "CerrarTicketNegativo",
-                                //    cellTemplate: function (container, options) {
-                                //        if (options.data.CerrarTicketNegativo == true) {
-                                //            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
-                                //                .appendTo(container);
-                                //        } else {
-                                //            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
-                                //                .appendTo(container);
-                                //        }
-                                //        //console.log(options);
-                                //    }
-                                //},
-                                //{
-                                //    dataField: "CerrarTicketPositivo",
-                                //    cellTemplate: function (container, options) {
-                                //        if (options.data.CerrarTicketPositivo == true) {
-                                //            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
-                                //                .appendTo(container);
-                                //        } else {
-                                //            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
-                                //                .appendTo(container);
-                                //        }
-                                //        //console.log(options);
-                                //    }
-                                //}
+                                {
+                                    dataField: "CerrarTicketNegativo",
+                                    cellTemplate: function (container, options) {
+                                        if (options.data.CerrarTicketNegativo == true) {
+                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
+                                                .appendTo(container);
+                                        } else {
+                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
+                                                .appendTo(container);
+                                        }
+                                        //console.log(options);
+                                    }
+                                },
+                                {
+                                    dataField: "CerrarTicketPositivo",
+                                    cellTemplate: function (container, options) {
+                                        if (options.data.CerrarTicketPositivo == true) {
+                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
+                                                .appendTo(container);
+                                        } else {
+                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
+                                                .appendTo(container);
+                                        }
+                                        //console.log(options);
+                                    }
+                                }
 
                             ],
                             masterDetail: {
