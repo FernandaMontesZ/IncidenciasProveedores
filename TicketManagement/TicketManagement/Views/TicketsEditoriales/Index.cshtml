@@ -549,6 +549,21 @@
         $(function () {
             let NivelData = new Array();
             let AreasData = new Array();
+            let EditorialesData = new Array();
+
+
+            $.ajax({
+                Type: 'GET',
+                url: '/TicketsEditoriales/GETEditoriales',
+                dataType: 'json',
+                async: false,
+                success: data => {
+                    //console.log(data);
+                    EditorialesData.push(data);
+                },
+            }).then(data => {
+                return NivelData;
+            });
 
             //Get Levels
             $.ajax({
@@ -570,12 +585,13 @@
                 async: false,
                 dataType: 'json',
                 success: data => {
-                    console.log(data);
+                    //console.log(data);
                     AreasData.push(data);
                 }
             }).then(data => {
                 return AreasData;
-            })
+
+            });
 
 
             $("#tabPanel").dxTabPanel({
@@ -623,6 +639,7 @@
                                 applyFilter: "auto"
                             },
                             editing: {
+                                refreshMode: "reshape",
                                 allowAdding: true,
                                 allowUpdating: true
                             },
@@ -652,19 +669,73 @@
                                     dataField: "PrioridadTicket",
                                     cellTemplate: function (container, options) {
                                         var r = $("<div class='dropdown-content'></div>");
+                                        let Bgcolor = "";
+                                        let nivel = "";
+                                        let border = "";
+                                        let textColor = "";
+                                        switch (options.data.PrioridadTicket) {
+                                            case "Alto":
+                                                Bgcolor = "#eb839f";
+                                                border = "1px solid #ff0044";
+                                                nivel = "Alto";
+                                                textColor = "#ff0044";
+                                                break;
+                                            case "Medio":
+                                                Bgcolor = "#ffe4ab";
+                                                border = "1px solid #ff7700";
+                                                nivel = "Medio";
+                                                textColor = "#ff7700";
+                                                break;
+                                            case "Bajo":
+                                                Bgcolor = "#a3ddff";
+                                                border = "1px solid #0088ff";
+                                                nivel = "Bajo";
+                                                textColor = "#0088ff";
+                                                break;
+
+                                        }
+
+
+
+
+                                        //console.log(NivelData[0]);
 
                                         var x = $("<div class='dropdown'>")
-                                            .append('<button class=" btn btn-default dropbtn2" id="btnEstatus" value="' + options.data.PrioridadTicket + '" style="background-color : white;"><label style="color: #AE1ED8 !important;" id="textEstatus">' + options.data.PrioridadTicket + '</label></button>')
+                                            .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${nivel}" style="background-color: ${Bgcolor}; border: ${border}"><label style="color: ${textColor} !important;" id="textEstatus">${nivel}</label></button>`)
                                             .append(r);
                                         //console.log(options);
 
                                         $.each(NivelData[0], function (key, value) {
 
-                                            //console.log(NivelData[0]);
+                                            switch (value.PrioridadTicket) {
+                                                case "Alto":
+                                                    Bgcolor = "#eb839f";
+                                                    border = "1px solid #ff0044";
+                                                    nivel = "Alto";
+                                                    textColor = "#ff0044";
+                                                    break;
+                                                case "Medio":
+                                                    Bgcolor = "#ffe4ab";
+                                                    border = "1px solid #ff7700";
+                                                    nivel = "Medio";
+                                                    textColor = "#ff7700";
+                                                    break;
+                                                case "Bajo":
+                                                    Bgcolor = "#a3ddff";
+                                                    border = "1px solid #0088ff";
+                                                    nivel = "Bajo";
+                                                    textColor = "#0088ff";
+                                                    break;
+
+                                            }
+                                            //console.log(value.IdPrioridad);
 
                                             if (options.data.OrdenId) {
+
+                                                //console.log(value.IdPrioridad);
+                                               
                                                 var c = $("<div>")
-                                                    .append("<button class='btn btn-default dropbtn2' style='background-color: #white;'><label style=\"color: #AE1ED8!important; \" id=\"textEstatus\">" + value.PrioridadTicket + "</label></button>")
+                                                    .append(`<button class='btn btn-default dropbtn2' style='background-color: ${Bgcolor}; border: ${border};'  onclick='UpdateNivel(${options.data.OrdenId},${value.IdPrioridad})'><label style=\"color: ${textColor}!important; \" id=\"textEstatus\">${nivel}</label></button>`)
                                                     .appendTo(r);
                                             }
                                         });
@@ -677,13 +748,13 @@
                                     dataField: "CerrarTicketNegativo",
                                     cellTemplate: function (container, options) {
                                         if (options.data.CerrarTicketNegativo == true) {
-                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
+                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' onclick='IsClosed(\"" + options.data.UserId + "\", this)'  checked><span class='slider round'></span></label></center>")
                                                 .appendTo(container);
                                         } else {
-                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
+                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'onclick='IsClosed(\"" + options.data.UserId + "\", this)'  ><span class='slider round'></span></label></center>")
                                                 .appendTo(container);
                                         }
-                                        //console.log(options);
+                                        console.log(options);
                                     }
                                 },
                                 {
@@ -712,6 +783,44 @@
                 }]
             })
         });
+
+
+        function UpdateNivel(ordenId, idPrioridad) {
+            $.ajax({
+                type: "POST",
+                url: "/TicketsEditoriales/UPDATEPrincipal",
+                data: { ordenId, idPrioridad }
+            }).done(function (data) {
+                $("#gridContainer").dxDataGrid("instance").refresh();
+                if (data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'Registro editado correctamente.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'No se edito correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+          
+        }
+
+        function IsClosed() {
+
+            console.log("Editando");
+        }
+
 
         function masterDetailTemplate(_, masterDetailOptions) {
 

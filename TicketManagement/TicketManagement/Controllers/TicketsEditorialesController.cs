@@ -24,7 +24,7 @@ namespace TicketManagement.Controllers
         {
 
             SqlData spSql = new SqlData();
-            DataTable TicketsEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:READ_Ticket"});
+            DataTable TicketsEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:READ_Ticket" });
             List<TicketsEditorialesViewModel> listTicketsEditoriales = TicketsEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
                 OrdenId = Convert.IsDBNull(x["OrdenId"]) ? 0 : (int)x["OrdenId"]
@@ -52,6 +52,7 @@ namespace TicketManagement.Controllers
             List<TicketsEditorialesViewModel> listMaestroNiveles = MaestroNiveles.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
                 PrioridadTicket = Convert.IsDBNull(x["Prioridad"]) ? "" : (string)x["Prioridad"]
+                ,IdPrioridad = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"] 
 
             }).ToList();
 
@@ -62,7 +63,7 @@ namespace TicketManagement.Controllers
         public JsonResult GETAreas()
         {
             SqlData spSql = new SqlData();
-            DataTable MaestroAreas = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETAreas" });
+            DataTable MaestroAreas = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETAreas"});
             List<TicketsEditorialesViewModel> listMaestroAreas = MaestroAreas.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
                 Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
@@ -70,6 +71,30 @@ namespace TicketManagement.Controllers
             }).ToList();
 
             return Json(listMaestroAreas, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult GETEditoriales()
+        {
+            SqlData spSql = new SqlData();
+            DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETEditoriales" });
+            List<TicketsEditorialesViewModel> listMaestroEditoriales = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                idEditoriales = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
+                ,Editorial = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+
+            }).ToList();
+
+            return Json(listMaestroEditoriales, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult UPDATEPrincipal (int ordenId, int idPrioridad)
+        {
+            SqlData spSql = new SqlData();
+            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_Priority", "@TicketId:" + ordenId, "@prioridadId:" + idPrioridad });
+
+            return RedirectToAction("index");
 
         }
 

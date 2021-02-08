@@ -8,7 +8,10 @@ namespace TicketManagement.Models.ViewModels
     public class TicketsEditorialesViewModel
     {
         public int OrdenId { get; set; }
+        public int idEditoriales { get; set; }
+        public int IdPrioridad { get; set; }
         public string FolioTicket { get; set; }
+        public int IdTickets { get; set; }
         public string DescripcionIncidencia { get; set; }
         public string PrioridadTicket { get; set; }
         public string FechaCreacion { get; set; }
