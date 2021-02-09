@@ -512,9 +512,6 @@
 
     button.btn.btn-default.dropbtn2 {
         margin-top: -17px;
-        font-size: 13px !important;
-        width: 129px !important;
-        height: 29px !important;
         font-weight: 400;
     }
 </style>
@@ -656,9 +653,13 @@
                                 mode: "multiple"
                             },
                             columns: [
-                                { dataField: "FolioTicket" },
+                                {
+                                    dataField: "FolioTicket",
+                                    width: 140,
+                                },
                                 {
                                     dataField: "Desempeño",
+                                    width: 140,
                                 },
                                 {
                                     dataField: "EntidadTicket",
@@ -668,7 +669,7 @@
                                         //console.log(options);
 
                                         var x = $("<div class='dropdown'>")
-                                            .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${options.data.EntidadTicket}" style="background-color: white; display: flex;"><label style="color: black !important; font-size: .9rem !important;" id="textEstatus">${options.data.EntidadTicket}</label></button>`)
+                                            .append(`<button class="btn btn-default dropbtn2" id="btnEstatus" value="${options.data.EntidadTicket}" style="background-color: white; width: 180px!important; height: 38px !important;"><label style="color: black !important; font-size: 9px !important; white-space: normal !important" id="textEstatus">${options.data.EntidadTicket}</label></button>`)
                                             .append(r);
 
                                         $.each(EditorialesData[0], function (key, value) {
@@ -679,7 +680,7 @@
                                                 //console.log(EditorialesData[0]);
 
                                                 var c = $("<div>")
-                                                    .append(`<button class='btn btn-default dropbtn2' value="${options.data.EntidadTicket}" onclick='UpdateEditorial(${options.data.OrdenId},${value.idEditoriales})' style='background-color: white'><label style="background-color: white;"><label style="color: black !important; font-size: .9rem !important;"  id=\"textEstatus\">${value.EntidadTicket}</label></button>`)
+                                                    .append(`<button class='btn btn-default dropbtn2' value="${options.data.EntidadTicket}" onclick='UpdateEditorial(${options.data.OrdenId},${value.idEditoriales})' style='background-color: white;width: 180px!important; height: 38px !important;'><label style="background-color: white; white-space: normal !important"><label style="color: black !important; font-size: 9px !important;"  id=\"textEstatus\">${value.EntidadTicket}</label></button>`)
                                                     .appendTo(r);
                                             }
                                         });
@@ -690,9 +691,11 @@
                                 },
                                 {
                                     dataField: "FechaCreacion",
+                                    width: 140,
                                 },
                                 {
                                     dataField: "CreadoPor",
+                                    width: 140,
                                 },
                                 {
                                     dataField: "PrioridadTicket",
@@ -728,7 +731,7 @@
                                         //console.log(NivelData[0]);
 
                                         var x = $("<div class='dropdown'>")
-                                            .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${nivel}" style="background-color: ${Bgcolor}; border: ${border}"><label style="color: ${textColor} !important;" id="textEstatus">${nivel}</label></button>`)
+                                            .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${nivel}" style="background-color: ${Bgcolor}; border: ${border}; height: 30px!important;"><label style="color: ${textColor} !important;" id="textEstatus">${nivel}</label></button>`)
                                             .append(r);
                                         //console.log(options);
 
@@ -762,7 +765,7 @@
                                                 //console.log(value.IdPrioridad);
                                                
                                                 var c = $("<div>")
-                                                    .append(`<button class='btn btn-default dropbtn2' style='background-color: ${Bgcolor}; border: ${border};'  onclick='UpdateNivel(${options.data.OrdenId},${value.IdPrioridad})'><label style=\"color: ${textColor}!important; \" id=\"textEstatus\">${nivel}</label></button>`)
+                                                    .append(`<button class='btn btn-default dropbtn2' style='background-color: ${Bgcolor}; border: ${border}; height: 30px!important;'  onclick='UpdateNivel(${options.data.OrdenId},${value.IdPrioridad})'><label style=\"color: ${textColor}!important; \" id=\"textEstatus\">${nivel}</label></button>`)
                                                     .appendTo(r);
                                             }
                                         });
@@ -773,6 +776,7 @@
                                 },
                                 {
                                     dataField: "CerrarTicketNegativo",
+                                    width: 140,
                                     cellTemplate: function (container, options) {
                                         if (options.data.CerrarTicketNegativo == true) {
                                             $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' onclick='IsClosed(\"" + options.data.OrdenId + "\", this)'  checked><span class='slider round'></span></label></center>")
@@ -786,6 +790,7 @@
                                 },
                                 {
                                     dataField: "CerrarTicketPositivo",
+                                    width: 140,
                                     cellTemplate: function (container, options) {
                                         if (options.data.CerrarTicketPositivo == true) {
                                             $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
@@ -797,9 +802,18 @@
                                         //console.log(options);
                                     }
                                 },
-                                { dataField: "FechaCierre" },
-                                { dataField: "Dictamen" },
-                                {dataField: "Reporte"}
+                                {
+                                    dataField: "FechaCierre",
+                                    width: 140,
+                                },
+                                {
+                                    dataField: "Dictamen",
+                                    width: 140,
+                                },
+                                {
+                                    dataField: "Reporte",
+                                    width: 140,
+                                }
 
                             ],
                             masterDetail: {
@@ -965,74 +979,5 @@
             }
 
         }
-        function masterDetailInfoDigitalTemplate(_, masterDetailOptions) {
-
-            //console.log(masterDetailOptions);
-
-            return $("<div style='-webkit-box-shadow: 0px 0px 13px 0px rgba(68,68,68,0.82); box-shadow: 0px 0px 13px 0px rgba(68, 68, 68, 0.82);'>").dxTabPanel({
-                items: [
-                    {
-                        title: "Detalles",
-                        template: InfoDigitalMasterDetails(masterDetailOptions.data)
-                    }
-                ]
-            });
-        }
-        function InfoDigitalMasterDetails(masterDetailData) {
-            return function () {
-                return $("<div id='TicketsDetailsGrid'>").dxDataGrid({
-                    dataSource: new DevExpress.data.DataSource({
-                        load: function () {
-                            return $.getJSON("/TicketsEditoriales/GetDataTickets?OrdenId=" + masterDetailData.OrdenId);
-                        }
-                    }),
-                    paging: {
-                        pageSize: 1000
-                    },
-                    height: 1200,
-                    pager: {
-                        showPageSizeSelector: true,
-                        allowedPageSizes: [300, 400],
-                        showInfo: true
-                    },
-                    filterRow: {
-                        visible: true,
-                        applyFilter: "auto"
-                    },
-                    groupPanel: {
-                        visible: true,
-                    },
-                    searchPanel: {
-                        visible: true,
-                        width: 240,
-                        placeholder: "Buscar..."
-                    },
-                    filterRow: {
-                        visible: true,
-                        applyFilter: "auto"
-                    },
-                    headerFilter: { visible: true },
-                    showBorders: true,
-                    allowColumnReordering: true,
-                    allowColumnResizing: true,
-                    onRowExpanding: function (e) {
-                        e.component.collapseAll(-1);
-                    },
-                    columnChooser: {
-                        enabled: true,
-                        mode: "select"
-                    },
-                    sorting: {
-                        mode: "multiple"
-                    },
-                    columns: [
-                        { dataField: "Informacion Digital" },
-                    ]
-                })
-
-            }
-
-        }
-
 
     </script>
