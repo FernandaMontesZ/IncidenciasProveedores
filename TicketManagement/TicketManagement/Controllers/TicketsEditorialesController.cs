@@ -32,9 +32,9 @@ namespace TicketManagement.Controllers
                 ,DescripcionIncidencia = Convert.IsDBNull(x["DescripcionIncidencia"]) ? "" : (string)x["DescripcionIncidencia"]
                 ,PrioridadTicket = Convert.IsDBNull(x["PrioridadIncidencia"]) ? "" : (string)x["PrioridadIncidencia"]
                 ,FechaCreacion = Convert.IsDBNull(x["FechaCreacion"]) ? "" : (string)x["FechaCreacion"]
-                ,NombreResponsable = Convert.IsDBNull(x["NombreResponsable"]) ? "" : (string)x["NombreResponsable"]
+                ,CreadoPor = Convert.IsDBNull(x["CreadoPor"]) ? "" : (string)x["CreadoPor"]
                 ,Area = Convert.IsDBNull(x["Area"]) ? "" : (string)x["Area"]
-                ,Editorial = Convert.IsDBNull(x["Editorial"]) ? "" : (string)x["Editorial"]
+                ,EntidadTicket = Convert.IsDBNull(x["EntidadTicket"]) ? "" : (string)x["EntidadTicket"]
                 ,CerrarTicketNegativo = Convert.ToBoolean(x["CerrarTicketNegativo"])
                 ,CerrarTicketPositivo = Convert.ToBoolean(x["CerrarTicketPositivo"])
                 ,TiempoRespuestaHoras = Convert.IsDBNull(x["TiempoRespuestaHoras"]) ? "" : (string)x["TiempoRespuestaHoras"]
@@ -81,7 +81,7 @@ namespace TicketManagement.Controllers
             List<TicketsEditorialesViewModel> listMaestroEditoriales = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
                 idEditoriales = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
-                ,Editorial = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                ,EntidadTicket = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
 
             }).ToList();
 

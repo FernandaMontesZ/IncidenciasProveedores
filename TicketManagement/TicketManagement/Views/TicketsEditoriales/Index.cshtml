@@ -639,9 +639,7 @@
                                 applyFilter: "auto"
                             },
                             editing: {
-                                refreshMode: "reshape",
-                                allowAdding: true,
-                                allowUpdating: true
+                                allowAdding: true
                             },
                             headerFilter: { visible: true },
                             showBorders: true,
@@ -659,14 +657,48 @@
                             },
                             columns: [
                                 { dataField: "FolioTicket" },
-                                { dataField: "FechaCreacion" },
                                 {
-                                    dataField: "NombreResponsable",
+                                    dataField: "Desempeño",
+                                    width: 140,
                                 },
+                                {
+                                    dataField: "EntidadTicket",
+                                    width: 140,
+                                    cellTemplate: function (container, options) {
+                                        var r = $("<div class='dropdown-content'></div>");
+                                        console.log(options);
 
-                                { dataField: "Editorial" },
+                                        var x = $("<div class='dropdown'>")
+                                            .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${options.data.EntidadTicket}" style="background-color: white;"><label style="color: black !important; font-size: .9rem !important;" id="textEstatus">${options.data.EntidadTicket}</label></button>`)
+                                            .append(r);
+
+                                        $.each(EditorialesData[0], function (key, value) {
+                                            //console.log(value.IdPrioridad);
+
+                                            if (options.data.OrdenId) {
+
+                                                console.log(value);
+
+                                                var c = $("<div>")
+                                                    .append(`<button class='btn btn-default dropbtn2' value="${options.data.EntidadTicket} style='background-color: white'><label style="color: black !important; font-size: .9rem !important;" id=\"textEstatus\">${value.EntidadTicket}</label></button>`)
+                                                    .appendTo(r);
+                                            }
+                                        });
+
+                                        x.appendTo(container);
+                                        return x;
+                                    }
+                                },
+                                {
+                                    dataField: "FechaCreacion",
+                                    width: 140,
+                                },
+                                {
+                                    dataField: "CreadoPor",
+                                },
                                 {
                                     dataField: "PrioridadTicket",
+                                    width: 140,
                                     cellTemplate: function (container, options) {
                                         var r = $("<div class='dropdown-content'></div>");
                                         let Bgcolor = "";
@@ -694,9 +726,6 @@
                                                 break;
 
                                         }
-
-
-
 
                                         //console.log(NivelData[0]);
 
@@ -748,13 +777,13 @@
                                     dataField: "CerrarTicketNegativo",
                                     cellTemplate: function (container, options) {
                                         if (options.data.CerrarTicketNegativo == true) {
-                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' onclick='IsClosed(\"" + options.data.UserId + "\", this)'  checked><span class='slider round'></span></label></center>")
+                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' onclick='IsClosed(\"" + options.data.OrdenId + "\", this)'  checked><span class='slider round'></span></label></center>")
                                                 .appendTo(container);
                                         } else {
-                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'onclick='IsClosed(\"" + options.data.UserId + "\", this)'  ><span class='slider round'></span></label></center>")
+                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'onclick='IsClosed(\"" + options.data.OrdenId + "\", this)'  ><span class='slider round'></span></label></center>")
                                                 .appendTo(container);
                                         }
-                                        console.log(options);
+                                        //console.log(options.data.CerrarTicketNegativo);
                                     }
                                 },
                                 {
@@ -769,7 +798,10 @@
                                         }
                                         //console.log(options);
                                     }
-                                }
+                                },
+                                { dataField: "FechaCierre" },
+                                { dataField: "Dictamen" },
+                                {dataField: "Reporte"}
 
                             ],
                             masterDetail: {
@@ -816,9 +848,9 @@
           
         }
 
-        function IsClosed() {
+        function IsClosed(idCerrar) {
 
-            console.log("Editando");
+            console.log("Editando" + idCerrar);
         }
 
 
