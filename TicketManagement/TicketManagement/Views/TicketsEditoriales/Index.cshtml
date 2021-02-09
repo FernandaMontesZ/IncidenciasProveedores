@@ -659,17 +659,16 @@
                                 { dataField: "FolioTicket" },
                                 {
                                     dataField: "Desempeño",
-                                    width: 140,
                                 },
                                 {
                                     dataField: "EntidadTicket",
-                                    width: 140,
+                                    width: 200,
                                     cellTemplate: function (container, options) {
                                         var r = $("<div class='dropdown-content'></div>");
-                                        console.log(options);
+                                        //console.log(options);
 
                                         var x = $("<div class='dropdown'>")
-                                            .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${options.data.EntidadTicket}" style="background-color: white;"><label style="color: black !important; font-size: .9rem !important;" id="textEstatus">${options.data.EntidadTicket}</label></button>`)
+                                            .append(`<button class=" btn btn-default dropbtn2" id="btnEstatus" value="${options.data.EntidadTicket}" style="background-color: white; display: flex;"><label style="color: black !important; font-size: .9rem !important;" id="textEstatus">${options.data.EntidadTicket}</label></button>`)
                                             .append(r);
 
                                         $.each(EditorialesData[0], function (key, value) {
@@ -677,10 +676,10 @@
 
                                             if (options.data.OrdenId) {
 
-                                                console.log(value);
+                                                //console.log(EditorialesData[0]);
 
                                                 var c = $("<div>")
-                                                    .append(`<button class='btn btn-default dropbtn2' value="${options.data.EntidadTicket} style='background-color: white'><label style="color: black !important; font-size: .9rem !important;" id=\"textEstatus\">${value.EntidadTicket}</label></button>`)
+                                                    .append(`<button class='btn btn-default dropbtn2' value="${options.data.EntidadTicket}" onclick='UpdateEditorial(${options.data.OrdenId},${value.idEditoriales})' style='background-color: white'><label style="background-color: white;"><label style="color: black !important; font-size: .9rem !important;"  id=\"textEstatus\">${value.EntidadTicket}</label></button>`)
                                                     .appendTo(r);
                                             }
                                         });
@@ -691,7 +690,6 @@
                                 },
                                 {
                                     dataField: "FechaCreacion",
-                                    width: 140,
                                 },
                                 {
                                     dataField: "CreadoPor",
@@ -846,6 +844,39 @@
                 }
             })
           
+        }
+
+        function UpdateEditorial(ordenId,idEditorial) {
+            console.log('Editando' + idEditorial);
+
+            $.ajax({
+                type: "POST",
+                url: "/TicketsEditoriales/UPDATEEditorial",
+                data: { ordenId, idEditorial }
+            }).done(function (data) {
+                $("#gridContainer").dxDataGrid("instance").refresh();
+                if (data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'Registro editado correctamente.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'No se edito correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
         }
 
         function IsClosed(idCerrar) {

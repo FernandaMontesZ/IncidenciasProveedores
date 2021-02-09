@@ -98,5 +98,14 @@ namespace TicketManagement.Controllers
 
         }
 
+        public ActionResult UPDATEEditorial(int ordenId, int idEditorial)
+        {
+            SqlData spSql = new SqlData();
+            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_Editorial", "@TicketId:" + ordenId, "@EditorialId:" + idEditorial });
+
+            return RedirectToAction("index");
+
+        }
+
     }
 }
