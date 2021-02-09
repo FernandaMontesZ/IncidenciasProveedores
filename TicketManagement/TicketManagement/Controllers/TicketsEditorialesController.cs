@@ -7,11 +7,13 @@ using TicketManagement.DataAccess;
 using System.Data;
 using System.Data.SqlClient;
 using TicketManagement.Models.ViewModels;
+using System.Configuration;
 
 namespace TicketManagement.Controllers
 {
     public class TicketsEditorialesController : Controller
     {
+        public static string conBD = ConfigurationManager.ConnectionStrings["Global"].ConnectionString;
         // GET: TicketsEditoriales
         public ActionResult Index()
         {
@@ -24,22 +26,22 @@ namespace TicketManagement.Controllers
         {
 
             SqlData spSql = new SqlData();
-            DataTable TicketsEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:READ_Ticket" });
+            DataTable TicketsEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:READ_Tickets" });
             List<TicketsEditorialesViewModel> listTicketsEditoriales = TicketsEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
                 OrdenId = Convert.IsDBNull(x["OrdenId"]) ? 0 : (int)x["OrdenId"]
                 ,FolioTicket = Convert.IsDBNull(x["FolioTicket"]) ? "" : (string)x["FolioTicket"]
-                ,DescripcionIncidencia = Convert.IsDBNull(x["DescripcionIncidencia"]) ? "" : (string)x["DescripcionIncidencia"]
-                ,PrioridadTicket = Convert.IsDBNull(x["PrioridadIncidencia"]) ? "" : (string)x["PrioridadIncidencia"]
+                //,DescripcionIncidencia = Convert.IsDBNull(x["DescripcionIncidencia"]) ? "" : (string)x["DescripcionIncidencia"]
+                ,PrioridadTicket = Convert.IsDBNull(x["PrioridadTicket"]) ? "" : (string)x["PrioridadTicket"]
                 ,FechaCreacion = Convert.IsDBNull(x["FechaCreacion"]) ? "" : (string)x["FechaCreacion"]
                 ,CreadoPor = Convert.IsDBNull(x["CreadoPor"]) ? "" : (string)x["CreadoPor"]
-                ,Area = Convert.IsDBNull(x["Area"]) ? "" : (string)x["Area"]
+                //,Area = Convert.IsDBNull(x["Area"]) ? "" : (string)x["Area"]
                 ,EntidadTicket = Convert.IsDBNull(x["EntidadTicket"]) ? "" : (string)x["EntidadTicket"]
                 ,CerrarTicketNegativo = Convert.ToBoolean(x["CerrarTicketNegativo"])
                 ,CerrarTicketPositivo = Convert.ToBoolean(x["CerrarTicketPositivo"])
                 ,IsTicketCancelled = Convert.ToBoolean(x["IsTicketCancelled"])
-                ,TiempoRespuestaHoras = Convert.IsDBNull(x["TiempoRespuestaHoras"]) ? "" : (string)x["TiempoRespuestaHoras"]
-                ,Observaciones = Convert.IsDBNull(x["Observaciones"]) ? "" : (string)x["Observaciones"]
+                //,TiempoRespuestaHoras = Convert.IsDBNull(x["TiempoRespuestaHoras"]) ? "" : (string)x["TiempoRespuestaHoras"]
+                //,Observaciones = Convert.IsDBNull(x["Observaciones"]) ? "" : (string)x["Observaciones"]
 
             }).ToList();
 
@@ -125,6 +127,50 @@ namespace TicketManagement.Controllers
             return RedirectToAction("index");
         }
 
+        public JsonResult GetDataTicketInc(int OrdenId)
+        {
+            DataTable ds = new DataTable();
+            using (SqlConnection con = new SqlConnection(conBD))
+            {
+                con.Open();
+                try
+                {
+
+                    SqlCommand cmd = new SqlCommand("Tickets_Editoriales", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Accion", "READ_TICKET_INC");
+                    cmd.Parameters.AddWithValue("@OrdenId", OrdenId);
+                    cmd.ExecuteNonQuery();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    cmd.CommandTimeout = 0;
+                    da.SelectCommand = cmd;
+                    ds = new DataTable();
+                    da.Fill(ds);
+                    con.Close();
+                }
+                catch (Exception)
+                {
+                    con.Close();
+                    throw;
+                }
+            }
+            List<TicketIncidenciasViewModel> dataRol = new List<TicketIncidenciasViewModel>();
+
+            dataRol = (from DataRow a in ds.Rows
+                       select new TicketIncidenciasViewModel()
+                       {
+                           NumTicket = Convert.ToString(a["NumTicket"]),
+                           IncidenciaId = Convert.ToInt32(a["IncidenciaId"]),
+                           Incidencia = Convert.ToString(a["Incidencia"]),
+                           Area = Convert.ToString(a["Area"]),
+                           ResponsableArea = Convert.ToString(a["ResponsableArea"]),
+                           Observaciones = Convert.ToString(a["Observaciones"]),
+                           FechaComentario = Convert.ToString(a["FechaComentario"]),
+                           Arhivo = Convert.ToString(a["Arhivo"]),
+                       }).ToList();
+
+            return Json(dataRol, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

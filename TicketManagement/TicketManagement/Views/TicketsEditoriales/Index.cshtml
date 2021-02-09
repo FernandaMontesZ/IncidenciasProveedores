@@ -525,7 +525,7 @@
         <div class="panel-heading">
             <div class="row">
                 <h2 class="panel-title pull-left" style="margin-left:10px;">
-                    <strong>Asignación Rol Administrativo</strong>
+                    <strong>Consola Tickets</strong>
                 </h2>
 
             </div>
@@ -991,10 +991,6 @@
             return $("<div style='-webkit-box-shadow: 0px 0px 13px 0px rgba(68,68,68,0.82); box-shadow: 0px 0px 13px 0px rgba(68, 68, 68, 0.82);'>").dxTabPanel({
                 items: [
                 {
-                    title: "Responsables",
-                    //template: TicketDetailsGridTemplate(masterDetailOptions.data)
-                },
-                {
                     title: "Incidencias",
                     template: IncidenciasMasterDetails(masterDetailOptions.data)
                 }
@@ -1003,62 +999,55 @@
         }
 
         function IncidenciasMasterDetails(masterDetailData) {
+            var dataOrdenInc = $.getJSON("/TicketsEditoriales/GetDataTicketInc?OrdenId=" + masterDetailData.OrdenId);
             return function () {
-               return $("<div id='TicketsDetailsGrid'>").dxDataGrid({
-                    dataSource: new DevExpress.data.DataSource({
-                        load: function () {
-                           return $.getJSON("/TicketsEditoriales/GetDataTickets?OrdenId=" + masterDetailData.OrdenId);
-                        }
-                    }),
-                    paging: {
-                        pageSize: 1000
-                    },
-                    height: 1200,
-                    pager: {
-                        showPageSizeSelector: true,
-                        allowedPageSizes: [300, 400],
-                        showInfo: true
-                    },
-                    filterRow: {
-                        visible: true,
-                        applyFilter: "auto"
-                    },
-                    groupPanel: {
-                        visible: true,
-                    },
-                    searchPanel: {
-                        visible: true,
-                        width: 240,
-                        placeholder: "Buscar..."
-                    },
-                    filterRow: {
-                        visible: true,
-                        applyFilter: "auto"
-                    },
-                    headerFilter: { visible: true },
-                    showBorders: true,
-                    allowColumnReordering: true,
-                    allowColumnResizing: true,
-                    onRowExpanding: function (e) {
-                        e.component.collapseAll(-1);
-                    },
-                    columnChooser: {
-                        enabled: true,
-                        mode: "select"
-                    },
-                    sorting: {
-                        mode: "multiple"
-                    },
-                   columns: [
-                       { dataField: "DescripcionIncidencia" },
-                       { dataField: "Observaciones" },
-                       { dataField: "Informacion Digital" },
-                       { dataField: "TiempoRespuestaHoras"}
-                   ],
-                   masterDetail: {
-                       enabled: true,
-                       template: masterDetailInfoDigitalTemplate
-                   },
+                return $("<div id='pivotGridContainer'>").dxPivotGrid({
+                    //dataSource: new DevExpress.data.PivotGridDataSource({
+                    //    load: function () {
+                    // var dataOrdenInc = $.getJSON("/TicketsEditoriales/GetDataTicketInc?OrdenId=" + masterDetailData.OrdenId);
+                    //        console.log(dataOrdenInc);
+                    //        return dataOrdenInc;
+                    //    }
+                    //}),
+                    //export: {
+                    //    enabled: true
+                    //},
+                    //fields: [{
+                    //    dataField: "Incidencia",
+                    //    area: "row",
+                    //}, {
+                    //    dataField: "Arhivo",
+                    //    width: 150,
+                    //    area: "column"
+                    //}, {
+                    //    dataField: "Observaciones", 
+                    //    area: "column"
+                    //}],
+                    dataSource: {
+                        fields: [{
+                            caption: "Incidencia",
+                            width: 120,
+                            dataField: "Incidencia",
+                            area: "row"
+                        }, {
+                            caption: "Area",
+                                dataField: "Area",
+                            width: 150,
+                            area: "row",
+                            //selector: function (data) {
+                            //    return data.Incidencia + " (" + data.Area + ")";
+                            //}
+                        }, {
+                            dataField: "Observaciones",
+                            dataType: "Observaciones",
+                            area: "column"
+                        }, {
+                            caption: "Arhivo",
+                            dataField: "amArhivoount",
+                            area: "column"
+                        }],
+                        store: dataOrdenInc
+                    }
                 })
 
             }
