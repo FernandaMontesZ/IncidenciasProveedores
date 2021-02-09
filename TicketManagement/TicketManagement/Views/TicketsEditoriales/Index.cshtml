@@ -546,21 +546,21 @@
         $(function () {
             let NivelData = new Array();
             let AreasData = new Array();
-            let EditorialesData = new Array();
+            //let EditorialesData = new Array();
 
 
-            $.ajax({
-                Type: 'GET',
-                url: '/TicketsEditoriales/GETEditoriales',
-                dataType: 'json',
-                async: false,
-                success: data => {
-                    //console.log(data);
-                    EditorialesData.push(data);
-                },
-            }).then(data => {
-                return NivelData;
-            });
+            //$.ajax({
+            //    Type: 'GET',
+            //    url: '/TicketsEditoriales/GETEditoriales',
+            //    dataType: 'json',
+            //    async: false,
+            //    success: data => {
+            //        //console.log(data);
+            //        EditorialesData.push(data);
+            //    },
+            //}).then(data => {
+            //    return NivelData;
+            //});
 
             //Get Levels
             $.ajax({
@@ -663,31 +663,7 @@
                                 },
                                 {
                                     dataField: "EntidadTicket",
-                                    width: 200,
-                                    cellTemplate: function (container, options) {
-                                        var r = $("<div class='dropdown-content'></div>");
-                                        //console.log(options);
-
-                                        var x = $("<div class='dropdown'>")
-                                            .append(`<button class="btn btn-default dropbtn2" id="btnEstatus" value="${options.data.EntidadTicket}" style="background-color: white; width: 180px!important; height: 38px !important;"><label style="color: black !important; font-size: 9px !important; white-space: normal !important" id="textEstatus">${options.data.EntidadTicket}</label></button>`)
-                                            .append(r);
-
-                                        $.each(EditorialesData[0], function (key, value) {
-                                            //console.log(value.IdPrioridad);
-
-                                            if (options.data.OrdenId) {
-
-                                                //console.log(EditorialesData[0]);
-
-                                                var c = $("<div>")
-                                                    .append(`<button class='btn btn-default dropbtn2' value="${options.data.EntidadTicket}" onclick='UpdateEditorial(${options.data.OrdenId},${value.idEditoriales})' style='background-color: white;width: 180px!important; height: 38px !important;'><label style="background-color: white; white-space: normal !important"><label style="color: black !important; font-size: 9px !important;"  id=\"textEstatus\">${value.EntidadTicket}</label></button>`)
-                                                    .appendTo(r);
-                                            }
-                                        });
-
-                                        x.appendTo(container);
-                                        return x;
-                                    }
+                                    width: 220,
                                 },
                                 {
                                     dataField: "FechaCreacion",
@@ -793,10 +769,10 @@
                                     width: 140,
                                     cellTemplate: function (container, options) {
                                         if (options.data.CerrarTicketPositivo == true) {
-                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox' checked><span class='slider round'></span></label></center>")
+                                            $("<center><label  class='switch'><input id='" + options.data.OrdenId + "' class='cb-p' type='checkbox' onclick='IsClosedSuccessfully(\"" + options.data.OrdenId + "\", this)' checked><span class='slider round'></span></label></center>")
                                                 .appendTo(container);
                                         } else {
-                                            $("<center><label  class='switch'><input id='" + options.data.CerrarTicketPositivo + "' class='cb-p' type='checkbox'><span class='slider round'></span></label></center>")
+                                            $("<center><label  class='switch'><input id='" + options.data.OrdenId + "' class='cb-p' type='checkbox' onclick='IsClosedSuccessfully(\"" + options.data.OrdenId + "\", this)' ><span class='slider round'></span></label></center>")
                                                 .appendTo(container);
                                         }
                                         //console.log(options);
@@ -805,6 +781,20 @@
                                 {
                                     dataField: "FechaCierre",
                                     width: 140,
+                                },
+                                {
+                                    dataField: "IsTicketCancelled",
+                                    width: 140,
+                                    cellTemplate: function (container, options) {
+                                        if (options.data.IsTicketCancelled == true) {
+                                            $("<center><label  class='switch'><input id='" + options.data.OrdenId + "' class='cb-p' type='checkbox' onclick='IsTicketCancelled(\"" + options.data.OrdenId + "\", this)' checked><span class='slider round'></span></label></center>")
+                                                .appendTo(container);
+                                        } else {
+                                            $("<center><label  class='switch'><input id='" + options.data.OrdenId + "' class='cb-p' type='checkbox' onclick='IsTicketCancelled(\"" + options.data.OrdenId + "\", this)' ><span class='slider round'></span></label></center>")
+                                                .appendTo(container);
+                                        }
+                                        //console.log(options);
+                                    }
                                 },
                                 {
                                     dataField: "Dictamen",
@@ -893,9 +883,104 @@
 
         }
 
-        function IsClosed(idCerrar) {
+        function IsClosed(ordenId, check) {
 
-            console.log("Editando" + idCerrar);
+            //console.log("Editando" + ordenId);
+            //console.log(check.checked);
+            let data = { ordenId: ordenId, isClosed: check.checked };
+            $.ajax({
+                type: "POST",
+                url: "/TicketsEditoriales/UpdateIsClosed",
+                data: data
+
+            }).done(function (data) {
+                $("#gridContainer").dxDataGrid("instance").refresh();
+                if (data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'Registro editado correctamente.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'No se edito correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            });
+
+        }
+        function IsClosedSuccessfully(ordenId, check) {
+
+            //console.log("Editando" + ordenId);
+            //console.log(check.checked);
+            let data = { ordenId: ordenId, isClosedSuccess: check.checked };
+            $.ajax({
+                type: "POST",
+                url: "/TicketsEditoriales/UpdateIsClosedSuccessfully",
+                data: data
+
+            }).done(function (data) {
+                $("#gridContainer").dxDataGrid("instance").refresh();
+                if (data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'Registro editado correctamente.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'No se edito correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+        }
+        function IsTicketCancelled(ordenId, check) {
+
+            //console.log("Editando" + ordenId);
+            //console.log(check.checked);
+            let data = { ordenId: ordenId, isTicketClosed: check.checked };
+            $.ajax({
+                type: "POST",
+                url: "/TicketsEditoriales/UpdateIsTicketCancelled",
+                data: data
+
+            }).done(function (data) {
+                $("#gridContainer").dxDataGrid("instance").refresh();
+                if (data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'Registro editado correctamente.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'No se edito correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+
         }
 
 

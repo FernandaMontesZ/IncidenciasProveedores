@@ -37,6 +37,7 @@ namespace TicketManagement.Controllers
                 ,EntidadTicket = Convert.IsDBNull(x["EntidadTicket"]) ? "" : (string)x["EntidadTicket"]
                 ,CerrarTicketNegativo = Convert.ToBoolean(x["CerrarTicketNegativo"])
                 ,CerrarTicketPositivo = Convert.ToBoolean(x["CerrarTicketPositivo"])
+                ,IsTicketCancelled = Convert.ToBoolean(x["IsTicketCancelled"])
                 ,TiempoRespuestaHoras = Convert.IsDBNull(x["TiempoRespuestaHoras"]) ? "" : (string)x["TiempoRespuestaHoras"]
                 ,Observaciones = Convert.IsDBNull(x["Observaciones"]) ? "" : (string)x["Observaciones"]
 
@@ -74,20 +75,20 @@ namespace TicketManagement.Controllers
 
         }
 
-        public JsonResult GETEditoriales()
-        {
-            SqlData spSql = new SqlData();
-            DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETEditoriales" });
-            List<TicketsEditorialesViewModel> listMaestroEditoriales = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
-            {
-                idEditoriales = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
-                ,EntidadTicket = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+        //public JsonResult GETEditoriales()
+        //{
+        //    SqlData spSql = new SqlData();
+        //    DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETEditoriales" });
+        //    List<TicketsEditorialesViewModel> listMaestroEditoriales = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+        //    {
+        //        idEditoriales = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
+        //        ,EntidadTicket = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
 
-            }).ToList();
+        //    }).ToList();
 
-            return Json(listMaestroEditoriales, JsonRequestBehavior.AllowGet);
+        //    return Json(listMaestroEditoriales, JsonRequestBehavior.AllowGet);
 
-        }
+        //}
 
         public ActionResult UPDATEPrincipal (int ordenId, int idPrioridad)
         {
@@ -98,14 +99,32 @@ namespace TicketManagement.Controllers
 
         }
 
-        public ActionResult UPDATEEditorial(int ordenId, int idEditorial)
+        public ActionResult UpdateIsClosed(int ordenId, bool isClosed )
         {
+
             SqlData spSql = new SqlData();
-            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_Editorial", "@TicketId:" + ordenId, "@EditorialId:" + idEditorial });
+            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_IsClosed", "@TicketId:" + ordenId, "@IsClosed:" + isClosed });
 
             return RedirectToAction("index");
-
         }
+        public ActionResult UpdateIsClosedSuccessfully(int ordenId, bool isClosedSuccess)
+        {
+
+            SqlData spSql = new SqlData();
+            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_IsClosed_Successfully", "@TicketId:" + ordenId, "@IsClosed_Successfully:" + isClosedSuccess });
+
+            return RedirectToAction("index");
+        }
+
+        public ActionResult UpdateIsTicketCancelled(int ordenId, bool isTicketClosed)
+        {
+
+            SqlData spSql = new SqlData();
+            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_IsTicket_Cancelled", "@TicketId:" + ordenId, "@IsTicket_Cancelled:" + isTicketClosed });
+
+            return RedirectToAction("index");
+        }
+
 
     }
 }

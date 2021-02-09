@@ -20,6 +20,7 @@ namespace TicketManagement.Models.ViewModels
         public string EntidadTicket { get; set; }
         public bool CerrarTicketNegativo { get; set; }
         public bool CerrarTicketPositivo { get; set; }
+        public bool IsTicketCancelled { get; set; }
         public string Observaciones { get; set; }
         public string TiempoRespuestaHoras { get; set; }
     }
