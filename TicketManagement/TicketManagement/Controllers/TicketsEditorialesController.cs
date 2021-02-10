@@ -130,6 +130,27 @@ namespace TicketManagement.Controllers
 
         }
 
+        public JsonResult GetResponsables()
+        {
+            SqlData spSql = new SqlData();
+            DataTable MaestroR = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GetResponsables" });
+
+
+            List<TicketsEditorialesViewModel> listMaestroR = MaestroR.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+
+
+                Name = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"],
+
+
+                Names = Convert.IsDBNull(x["Nombres"]) ? "" : (string)x["Nombres"]
+
+            }).ToList();
+
+            return Json(listMaestroR, JsonRequestBehavior.AllowGet);
+
+        }
+
 
 
 

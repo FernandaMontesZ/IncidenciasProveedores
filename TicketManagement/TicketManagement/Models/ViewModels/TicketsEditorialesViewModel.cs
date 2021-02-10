@@ -34,6 +34,10 @@ namespace TicketManagement.Models.ViewModels
 
         public int elID { get; set; }
 
+        public string Names { get; set; }
+
+        public string Name { get; set; }
+
 
     }
 }

@@ -859,7 +859,7 @@
         <div class="dx-field">
             <div class="dx-field-label">Areas</div>
             <div class="dx-field-value">
-                <div id="tagBoxCerrar"></div>
+                <div id="tagBoxAreas"></div>
             </div>
         </div>
 
@@ -867,9 +867,18 @@
         <div class="dx-field">
             <div class="dx-field-label">Responsable</div>
             <div class="dx-field-value">
-                <div id="Seleccionados"></div>
+                <div id="tagBoxResponsable"></div>
             </div>
         </div>
+
+
+        <div class="dx-field">
+            <div class="dx-field-label">Responsable</div>
+            <div class="dx-field-value">
+                <div id="tagR"></div>
+            </div>
+        </div>
+
 
         <!--------------------------------------------------------------->
 
@@ -908,7 +917,7 @@
 
 
 
-        $("#tagBoxCerrar").dxTagBox({
+        $("#tagBoxAreas").dxTagBox({
             dataSource: '/TicketsEditoriales/GETAreas'
             ,
             showSelectionControls: false,
@@ -918,18 +927,35 @@
             placeholder: "Seleccionar Areas...",
             displayExpr: function (item) {
                 // "item" can be null
-                return item && 'Incidencia ' + item.Area;
+                return item && ' ' + item.Area;
             },
             //valueExpr: "ID",
             itemTemplate: function (data) {
-                return "<div class='custom-item'><span> Area: " +
+                
+                return "<div class='custom-item'><span>" +
                     data.Area + "</span>  " +
                     " </div>";
             },
+          
+
+
+
+
             onValueChanged: function (data) {
                 console.log('Funciona Tag box Areas');
             }
         })
+
+
+
+
+
+
+
+
+
+
+
 
 
         $("#tagBoxIncidencias").dxTagBox({
@@ -942,24 +968,35 @@
             searchEnabled: true,
 
             searchExpr: ["Incidencias"],
-            placeholder: "Seleccionar Incidenci...",
+            placeholder: "Seleccionar Incidencias...",
             displayExpr: function (item) {
                 //"item" can be null
-                return item && ' Incidencia: ' + item.Area;
+                return item && '  ' + item.Area;
             },
             //valueExpr: "ID",
             itemTemplate: function (data) {
-                return "<div class='custom-item'><span>Incidencias: " +
-                    data.Area + "</span><div class='product-name'>Nombre: " +
+
+
+                return "<div class='custom-item'><span>" +
+                //data.Area + "</span><div class='product-name'> "+
                     data.Area + "</div></div>";
+                return "<div class='custom-item'><span>" ;
+                  
             },
+
+
+
+
+
+
+
             onValueChanged: function (data) {
                 console.log('Incidencias ');
                 console.log('funciona tagbox 2 Incidencias');
             }
         })
 
-        $("#Seleccionados").dxTagBox({
+        $("#tagBoxResponsable").dxTagBox({
 
 
             dataSource: '/TicketsEditoriales/GETRespo'
@@ -968,7 +1005,7 @@
             applyValueMode: "useButtons",
             searchEnabled: true,
 
-            searchExpr: ["Responsable"],
+            searchExpr: ["elID"],
             placeholder: "Responsables",
             displayExpr: function (item) {
                 //"item" can be null
@@ -977,11 +1014,8 @@
             },
             //valueExpr: "ID",
             itemTemplate: function (data) {
-                return "<div class='custom-item'><span>Area: " +
-
-
-                    data.elID + "</span><div class='product-name'>Responsable: " +
-                    data.Responsable + " ";
+                return "<div class='custom-item'><span> " + data.elID +
+                    "</span><div class='product-name'> " + data.Responsable + " ";
               
 
             },
@@ -990,6 +1024,44 @@
                 console.log('Funciona tagbox 3 Responsable ');
             }
         })
+
+
+        $("#tagR").dxTagBox({
+
+
+            dataSource: '/TicketsEditoriales/GetResponsables'
+            ,
+            showSelectionControls: false,
+            applyValueMode: "useButtons",
+            searchEnabled: true,
+
+            searchExpr: ["Name"],
+            placeholder: "MaestroR",
+            displayExpr: function (item) {
+                //"item" can be null
+                return item && ' Area: ' + item.Name + ' Responsable: ' + item.Names;
+             
+
+            },
+            //valueExpr: "ID",
+            itemTemplate: function (data) {
+                return "<div class='custom-item'><span> " + data.Name +
+                    "</span><div class='product-name'> " + data.Names + " " ;
+              
+              
+
+            },
+            onValueChanged: function (data) {
+                console.log('Responsables ');
+                console.log('Funciona tagbox 3 Responsable ');
+            }
+        })
+
+
+
+
+
+
 
 
 
