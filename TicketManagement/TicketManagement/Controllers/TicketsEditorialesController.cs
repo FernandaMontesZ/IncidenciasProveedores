@@ -159,14 +159,14 @@ namespace TicketManagement.Controllers
             dataRol = (from DataRow a in ds.Rows
                        select new TicketIncidenciasViewModel()
                        {
-                           NumTicket = Convert.ToString(a["NumTicket"]),
-                           IncidenciaId = Convert.ToInt32(a["IncidenciaId"]),
+                           //NumTicket = Convert.ToString(a["NumTicket"]),
+                           //IncidenciaId = Convert.ToInt32(a["IncidenciaId"]),
                            Incidencia = Convert.ToString(a["Incidencia"]),
                            Area = Convert.ToString(a["Area"]),
                            ResponsableArea = Convert.ToString(a["ResponsableArea"]),
                            Observaciones = Convert.ToString(a["Observaciones"]),
-                           FechaComentario = Convert.ToString(a["FechaComentario"]),
-                           Arhivo = Convert.ToString(a["Arhivo"]),
+                           //FechaComentario = Convert.ToString(a["FechaComentario"]),
+                           //Arhivo = Convert.ToString(a["Arhivo"]),
                        }).ToList();
 
             return Json(dataRol, JsonRequestBehavior.AllowGet);

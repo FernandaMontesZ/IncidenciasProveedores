@@ -27,14 +27,14 @@ namespace TicketManagement.Models.ViewModels
 
     public class TicketIncidenciasViewModel
     {
-        public string NumTicket { get; set; }
-        public int IncidenciaId { get; set; }
+        //public string NumTicket { get; set; }
+       // public int IncidenciaId { get; set; }
         public string Incidencia { get; set; }
         public string Area { get; set; }
         public string ResponsableArea { get; set; }
-        public string FechaComentario { get; set; }
+        //public string FechaComentario { get; set; }
         public string Observaciones { get; set; }
-        public string Arhivo { get; set; }
+        //public string Arhivo { get; set; }
 
     }
 
