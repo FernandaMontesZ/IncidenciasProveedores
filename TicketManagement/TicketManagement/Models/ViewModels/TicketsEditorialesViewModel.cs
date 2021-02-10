@@ -29,5 +29,9 @@ namespace TicketManagement.Models.ViewModels
 
         public string CreadoPor { get; set; }
 
+
+        public string Responsable { get; set; }
+
+
     }
 }

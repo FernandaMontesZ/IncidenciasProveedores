@@ -530,9 +530,256 @@
 
 
 
+<!--SWEET ALERT -->
+<!--SWEET ALERT -->
+<!--SWEET ALERT -->
+<!--SWEET ALERT -->
+<!--SWEET ALERT -->
+<!--SWEET ALERT -->
+<!--SWEET ALERT -->
+<!--SWEET ALERT -->
 
 
 
+
+@*@{ ViewBag.Title = "Incidencias"; }
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<!DOCTYPE html>
+@using (Html.BeginForm("Index", "Personals", FormMethod.Post))
+{
+@Html.AntiForgeryToken()
+                @Html.ValidationSummary()
+
+                                <html>
+                                <head>
+                                    <meta name="viewport" content="width=device-width" />
+                                    <title>Incidencia</title>
+                                </head>
+
+
+                                <body>
+
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+
+                                    <div class="container">
+                                        <button type="button" class="btn btn-danger align-left" onclick="CreateData();">+ Incidencia </button>
+
+                                    </div>
+
+
+                                    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+                                    <script src="~/Scripts/jquery-3.4.1.js"></script>
+                                    <script src="~/Scripts/bootstrap.js"></script>
+                                    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+                                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+                                    <script>
+
+                                        $(document).ready(function () { ReadData(); });
+
+                                        function addRequestVerificationToken(data) {
+                                            data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+                                            return data;
+                                        };
+
+
+
+                                        //LEER DATA  //Ajax mandas a llamar tu controlador y la funcion que se encarga de traer data
+
+
+
+                                        //////////AJAX            //EACH O LOOP ES UN CICLO
+                                        //R
+                                        //E
+                                        //A
+                                        //D
+
+                                        function ReadData() {
+                                            $.ajax({
+                                                type: "GET",
+                                                url: '/TicketsEditoriales/GETAreas',
+                                                success: function (result) {
+                                                    var html = '';
+                                                    data = result;
+                                                    $.each(result, function (key, item) {
+                                                        objID = item.ID_personal;
+                                                        html += '<tr>';
+                                                        html += '<td>' + item.Nombr + '</td>';
+                                                        html += '<td>' + item.ApePatern + '</td>';
+                                                        html += '<td>' + item.ApeMatern + '</td>';
+                                                        html += '<td>' + item.Eda + '</td>';
+
+
+                                                        if (item.IsActive == true) {
+                                                            html += '<td> TI </td>';
+                                                        }
+                                                        else {
+                                                            html += '<td> Finanzas </td>';
+                                                        }
+
+
+                                                        //html += '<td> <button value="Editar" id="btn_update" type="button" class="btn btn-primary" onclick="return getID(' + objID + ');">Editar</button> </td>';
+                                                        html += '<td> <button value="Eliminar" id="btnDelete" type="button" class="btn btn-danger" onclick="return Delete(' + objID + ');">Seguimiento</button></td>';
+                                                        html += '</tr>';
+                                                    });
+                                                    $('.tbody').html(html);
+                                                },
+                                                error: function () {
+                                                    console.log("error");
+                                                }
+                                            });
+                                        }
+
+
+
+                                        //CREAR DATA
+
+                                        //Este es el form creado con sweet alert
+
+
+                                        //CLASE ES ESTILO TAMBIEN class="swal2-input"
+
+
+                                        async function CreateData() {
+
+
+                                            const { value: Areas } = await Swal.fire({
+                                                title: 'Crear nueva Incidencia ',
+                                                html:
+                                                    '  <div class="dx-field swal2-input">' +
+                                                    ' <div class="dx-field-label">Areas</div>' +
+                                                    '  <div class="dx-field-value">' +
+                                                    '  <div id="tagBoxCerrar"></div>' +
+                                                    '  </div>' +
+                                                    '  </div>' +
+
+                                                    ' <div class="dx-field swal2-input">' +
+                                                    '  <div class="dx-field-label">Incidencias</div>' +
+                                                    ' <div class="dx-field-value">' +
+                                                    '    <div id="tagBoxIncidencias"></div>' +
+                                                    ' </div>' +
+                                                    '</div>' +
+
+
+
+
+
+                                                    '<label>Incidencia</label><input id="swal-input1" class= "swal2-input" > ' +
+                                                    '<label>Area</label> <input id="swal-input2" class="swal2-input">' +
+                                                    '<label>Resposables</label> <input id="swal-input3" class="swal2-input">' +
+                                                    '<label>Responsable</label></br> <select  id="swal-input5"> <option value="null">Demo1</option> <option value="true">Demo2</option> <option value="false">Demo 3</option></select>',
+
+                                                focusConfirm: false,
+                                                showCancelButton: true,
+                                                confirmButtonText: 'Continuar',
+                                                showLoaderOnConfirm: true,
+                                                preConfirm: () => {
+
+
+
+
+                                                    //Personal es la tabla
+
+
+
+                                                    var Personal = {
+                                                        Nombre: document.getElementById('swal-input1').value,
+                                                        Area: document.getElementById('swal-input2').value,
+
+                                                    }
+                                                    return Personal;
+                                                }
+                                            });
+
+
+                                            //enviar datos peticion por ajax
+
+                                            //////////AJAX
+                                            //////POST
+
+                                            //E
+                                            //D
+                                            //I
+                                            //T
+
+
+                                            if (Personal) {
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "/Personals/Create",
+                                                    dataType: "json",
+
+                                                    data: addRequestVerificationToken({ personal: Personal }),
+                                                    success: function (resultado) {
+
+
+                                                        if (resultado.result) {
+                                                            Swal.fire({
+                                                                title: 'Guardado',
+                                                                icon: 'success',
+                                                                showConfirmButton: false
+                                                            });
+                                                            ReadData();
+                                                        }
+
+                                                    },
+                                                    error: function (resultado) {
+                                                        Swal.fire({
+                                                            title: 'No se guardaron los datos correctamente',
+                                                            icon: 'error',
+                                                            showConfirmButton: false
+                                                        });
+                                                    }
+                                                });
+
+                                            }
+                                        }
+
+
+
+
+
+
+
+                                    </script>
+
+
+                                    <style>
+
+
+                                        tbody tr:nth-child(odd) {
+                                            background-color: #CACACA;
+                                        }
+
+                                        tbody tr:nth-child(even) {
+                                            background-color: #CACACA
+                                        }
+
+                                        tbody tr {
+                                            background-image: url(noise.png);
+                                            position: initial
+                                        }
+
+                                        table {
+                                            position: initial
+                                        }
+
+
+                                        .label {
+                                            color: red;
+                                            padding: 8px;
+                                        }
+                                    </style>
+
+                                </body>
+                            </html>}*@
 
 
 
@@ -579,27 +826,27 @@
 
         </div>
         @*<div class="dx-field">
-                <div class="dx-field-label">Areas</div>
-                <div class="dx-field-value">
-                    <div id="productsLine"></div>
-                </div>
-            </div>*@
+            <div class="dx-field-label">Areas</div>
+            <div class="dx-field-value">
+                <div id="productsLine"></div>
+            </div>
+        </div>*@
 
 
         @*<div class="demo-container">
-                <div id="pivotgrid-demo">
-                    <div id="pivotgrid-chart"></div>
-                    <div id="pivotgrid"></div>
-                </div>
-            </div>*@
+            <div id="pivotgrid-demo">
+                <div id="pivotgrid-chart"></div>
+                <div id="pivotgrid"></div>
+            </div>
+        </div>*@
 
         <!--MENUS DE TAG BOX -->
         @*<div class="dx-field">
-                <div class="dx-field-label">Areas</div>
-                <div class="dx-field-value">
-                    <div id="tagBoxCerrar"></div>
-                </div>
-            </div>*@
+            <div class="dx-field-label">Areas</div>
+            <div class="dx-field-value">
+                <div id="tagBoxCerrar"></div>
+            </div>
+        </div>*@
 
         <div class="dx-field">
             <div class="dx-field-label">Incidencias</div>
@@ -616,6 +863,14 @@
             </div>
         </div>
 
+
+        <div class="dx-field">
+            <div class="dx-field-label">Areas</div>
+            <div class="dx-field-value">
+                <div id="Seleccionados"></div>
+            </div>
+        </div>
+
         <!--------------------------------------------------------------->
 
 
@@ -627,14 +882,14 @@
 
 
 
-    <div id="tabPanel"></div>
+    @*<div id="tabPanel"></div>
     <div id="gridContainer"></div>
     <div id="form-container">
         <div id="form">
 
 
         </div>
-    </div>
+    </div>*@
 
 
 
@@ -646,51 +901,11 @@
 <script>
 
 
-
-
     ///Trear areas en tag box
-
     //searchBox.option("dataSource", "TicketsEditoriales/GETAreas");
-
-
-
-
-
-
-
     //USARE LA VARIABLE ORDERS PERO IMPLEMENTAND0 MI METODO GET
     $(function () {
 
-
-
-
-
-
-
-        //$("#tagBoxCerrar").dxTagBox({
-        //    dataSource: '/TicketsEditoriales/GETAreas'
-        //    ,
-        //    showSelectionControls: false,
-        //    applyValueMode: "useButtons",
-        //    searchEnabled: true,
-        //    searchExpr: ["Areas"],
-        //    placeholder: "Seleccionar Areas...",
-        //    displayExpr: function (item) {
-        //        // "item" can be null
-        //        return item && 'Name: ' + item.Name + ', Name: ' + item.Name;
-        //    },
-        //    //valueExpr: "ID",
-        //    itemTemplate: function (data) {
-        //        return "<div class='custom-item'><span>O: " +
-        //            data.Name + "</span><div class='product-name'>Name: " +
-        //            data.Name + "</div></div>";
-        //    },
-        //    onValueChanged: function (data) {
-        //        console.log('hacer algo hol');
-        //        console.log('tagbox');
-
-        //    }
-        //})
 
 
         $("#tagBoxCerrar").dxTagBox({
@@ -707,16 +922,14 @@
             },
             //valueExpr: "ID",
             itemTemplate: function (data) {
-                return "<div class='custom-item'><span> area: " +
+                return "<div class='custom-item'><span> Area: " +
                     data.Area + "</span>  " +
                     " </div>";
             },
             onValueChanged: function (data) {
-                console.log('hacer algo hol');
+                console.log('Funciona Tag box Areas');
             }
         })
-
-
 
 
         $("#tagBoxIncidencias").dxTagBox({
@@ -732,7 +945,7 @@
             placeholder: "Seleccionar Incidenci...",
             displayExpr: function (item) {
                 //"item" can be null
-                return item && ' Area: ' + item.Area;
+                return item && ' Incidencia: ' + item.Area;
             },
             //valueExpr: "ID",
             itemTemplate: function (data) {
@@ -742,10 +955,36 @@
             },
             onValueChanged: function (data) {
                 console.log('Incidencias ');
-                console.log('tagbox 2 ');
+                console.log('funciona tagbox 2 Incidencias');
             }
         })
 
+        $("#Seleccionados").dxTagBox({
+
+
+            dataSource: '/TicketsEditoriales/GETRespo'
+            ,
+            showSelectionControls: false,
+            applyValueMode: "useButtons",
+            searchEnabled: true,
+
+            searchExpr: ["Responsable"],
+            placeholder: "Responsables",
+            displayExpr: function (item) {
+                //"item" can be null
+                return item && ' Responsable: ' + item.Area;
+            },
+            //valueExpr: "ID",
+            itemTemplate: function (data) {
+                return "<div class='custom-item'><span>Responsables: " +
+                    data.Area + "</span><div class='product-name'>Nombre: " +
+                    data.Responsable + "</div></div>";
+            },
+            onValueChanged: function (data) {
+                console.log('Responsables ');
+                console.log('Funciona tagbox 3 Responsable ');
+            }
+        })
 
 
 
