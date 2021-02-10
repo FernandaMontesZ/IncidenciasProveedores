@@ -117,7 +117,11 @@ namespace TicketManagement.Controllers
 
             List<TicketsEditorialesViewModel> listMaestroResponsable = MaestroResponsable.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
-                Area= Convert.IsDBNull(x["Nombres"]) ? "" : (string)x["Nombres"],
+
+
+
+               elID = Convert.IsDBNull(x["Maestro_AreasId"]) ? 0 : (int)x["Maestro_AreasId"],
+               
                  Responsable = Convert.IsDBNull(x["Nombres"]) ? "" : (string)x["Nombres"]
 
             }).ToList();

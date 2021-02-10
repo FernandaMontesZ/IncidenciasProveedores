@@ -32,6 +32,8 @@ namespace TicketManagement.Models.ViewModels
 
         public string Responsable { get; set; }
 
+        public int elID { get; set; }
+
 
     }
 }

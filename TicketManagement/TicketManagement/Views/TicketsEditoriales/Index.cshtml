@@ -865,7 +865,7 @@
 
 
         <div class="dx-field">
-            <div class="dx-field-label">Areas</div>
+            <div class="dx-field-label">Responsable</div>
             <div class="dx-field-value">
                 <div id="Seleccionados"></div>
             </div>
@@ -972,13 +972,18 @@
             placeholder: "Responsables",
             displayExpr: function (item) {
                 //"item" can be null
-                return item && ' Responsable: ' + item.Area;
+                return item && ' Responsable: ' + item.Responsable + ' Area: ' + item.elID;
+               
             },
             //valueExpr: "ID",
             itemTemplate: function (data) {
-                return "<div class='custom-item'><span>Responsables: " +
-                    data.Area + "</span><div class='product-name'>Nombre: " +
-                    data.Responsable + "</div></div>";
+                return "<div class='custom-item'><span>Area: " +
+
+
+                    data.elID + "</span><div class='product-name'>Responsable: " +
+                    data.Responsable + " ";
+              
+
             },
             onValueChanged: function (data) {
                 console.log('Responsables ');
