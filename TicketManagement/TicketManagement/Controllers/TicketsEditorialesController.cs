@@ -19,7 +19,7 @@ namespace TicketManagement.Controllers
             return View();
         }
 
-        //Leer 
+        //Leer Lista
 
 
 
@@ -31,18 +31,28 @@ namespace TicketManagement.Controllers
             List<TicketsEditorialesViewModel> listTicketsEditoriales = TicketsEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
                 OrdenId = Convert.IsDBNull(x["OrdenId"]) ? 0 : (int)x["OrdenId"]
-                ,FolioTicket = Convert.IsDBNull(x["FolioTicket"]) ? "" : (string)x["FolioTicket"]
-                ,DescripcionIncidencia = Convert.IsDBNull(x["DescripcionIncidencia"]) ? "" : (string)x["DescripcionIncidencia"]
-                ,PrioridadTicket = Convert.IsDBNull(x["PrioridadIncidencia"]) ? "" : (string)x["PrioridadIncidencia"]
-                ,FechaCreacion = Convert.IsDBNull(x["FechaCreacion"]) ? "" : (string)x["FechaCreacion"]
-                ,NombreResponsable = Convert.IsDBNull(x["NombreResponsable"]) ? "" : (string)x["NombreResponsable"]
-                ,Area = Convert.IsDBNull(x["Area"]) ? "" : (string)x["Area"]
-                ,Editorial = Convert.IsDBNull(x["Editorial"]) ? "" : (string)x["Editorial"]
-                ,CerrarTicketNegativo = Convert.ToBoolean(x["CerrarTicketNegativo"])
-                ,CerrarTicketPositivo = Convert.ToBoolean(x["CerrarTicketPositivo"])
-                ,TiempoRespuestaHoras = Convert.IsDBNull(x["TiempoRespuestaHoras"]) ? "" : (string)x["TiempoRespuestaHoras"]
-                ,Observaciones = Convert.IsDBNull(x["Observaciones"]) ? "" : (string)x["Observaciones"]
-
+                ,
+                FolioTicket = Convert.IsDBNull(x["FolioTicket"]) ? "" : (string)x["FolioTicket"]
+                ,
+                PrioridadTicket = Convert.IsDBNull(x["PrioridadTicket"]) ? "" : (string)x["PrioridadTicket"]
+                ,
+                FechaCreacion = Convert.IsDBNull(x["FechaCreacion"]) ? "" : (string)x["FechaCreacion"]
+                ,
+                CreadoPor = Convert.IsDBNull(x["CreadoPor"]) ? "" : (string)x["CreadoPor"]
+                ,
+                Area = Convert.IsDBNull(x["Area"]) ? "" : (string)x["Area"]
+                ,
+                EntidadTicket = Convert.IsDBNull(x["EntidadTicket"]) ? "" : (string)x["EntidadTicket"]
+                ,
+                CerrarTicketNegativo = Convert.ToBoolean(x["CerrarTicketNegativo"])
+                ,
+                CerrarTicketPositivo = Convert.ToBoolean(x["CerrarTicketPositivo"])
+                ,
+                IsTicketCancelled = Convert.ToBoolean(x["IsTicketCancelled"])
+                ,
+                TipoUsuario = Convert.IsDBNull(x["TipoUsuario"]) ? "" : (string)x["TipoUsuario"]
+                //,TiempoRespuestaHoras = Convert.IsDBNull(x["TiempoRespuestaHoras"]) ? "" : (string)x["TiempoRespuestaHoras"]
+                //,Observaciones = Convert.IsDBNull(x["Observaciones"]) ? "" : (string)x["Observaciones"]
             }).ToList();
 
             return Json(listTicketsEditoriales, JsonRequestBehavior.AllowGet);
@@ -81,6 +91,30 @@ namespace TicketManagement.Controllers
             return Json(listMaestroAreas, JsonRequestBehavior.AllowGet);
 
         }
+
+
+        public JsonResult GETIncidencias()
+        {
+            SqlData spSql = new SqlData();
+            DataTable MaestroIncidencias = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETIncidencias" });
+
+
+            List<TicketsEditorialesViewModel> listMaestroIncidencias = MaestroIncidencias.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+
+            }).ToList();
+
+            return Json(listMaestroIncidencias, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+
+
+
 
 
 
@@ -127,7 +161,7 @@ namespace TicketManagement.Controllers
 
             List<TicketsEditorialesViewModel> listMaestroAreas = MaestroAreas.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
-                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                    Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
 
             }).ToList();
 
