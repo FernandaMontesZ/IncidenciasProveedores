@@ -654,52 +654,160 @@
                         },
                         columns: [
                             {
-                                dataField: "FolioTicket",
-                                width: 140,
+                                dataField: "id",
+                                width: 100,
                             },
                             {
                                 dataField: "Desempeño",
-                                width: 140,
+                                caption: "Desempeño Horas",
+                                width: 200,
+                                dataType: "number",
+                                format: "udefined",
+                                allowGrouping: false,
+                                cellTemplate: function (container, options) {
+                                    //console.log(options)
+                                    //console.log(options.data.TiempoEstimadoRespuesta);
+                                    //console.log(options.data.TiempoRealRespuesta);
+
+                                    $("<div/>").dxBullet({
+                                        onIncidentOccurred: null,
+                                        size: {
+                                            width: 150,
+                                            height: 35
+                                        },
+                                        margin: {
+                                            top: 5,
+                                            bottom: 0,
+                                            left: 5
+                                        },
+                                        showTarget: false,
+                                        showZeroLevel: true,
+                                        value: options.data.TiempoEstimadoRespuesta,
+                                        startScaleValue: 0,
+                                        endScaleValue: 100,
+                                        tooltip: {
+                                            enabled: true,
+                                            font: {
+                                                size: 18
+                                            },
+                                            contentTemplate: `Horas Aproximadas: ${options.data.TiempoEstimadoRespuesta}`,
+                                            paddingTopBottom: 2,
+                                            color: "#ffffff",
+                                            font: {
+                                                color: "#000",
+                                                opacity: 1,
+                                                size: 12,
+                                                width: 400
+                                            },
+                                            shadow: {
+                                                blur: 2,
+                                                color: "#000000",
+                                                offsetX: 0,
+                                                offsetY: 4,
+                                                opacity: 0.4
+
+                                            },
+                                            zIndex: 5
+                                        }
+                                    }).appendTo(container);
+
+                                    $("<div/>").dxBullet({
+                                        onIncidentOccurred: null,
+                                        size: {
+                                            width: 150,
+                                            height: 35
+                                        },
+                                        color: "#05c1ff",
+                                        margin: {
+                                            top: 5,
+                                            bottom: 0,
+                                            left: 5
+                                        },
+                                        showTarget: false,
+                                        showZeroLevel: true,
+                                        value: options.data.TiempoRealRespuesta,
+                                        startScaleValue: 0,
+                                        endScaleValue: 100,
+                                        tooltip: {
+                                            enabled: true,
+                                            font: {
+                                                size: 18
+                                            },
+                                            contentTemplate: `Horas Reales: ${options.data.TiempoRealRespuesta}`,
+                                            paddingTopBottom: 2,
+                                            color: "#ffffff",
+                                            font: {
+                                                color: "#000",
+                                                opacity: 1,
+                                                size: 12,
+                                                width: 400
+                                            },
+                                            shadow: {
+                                                blur: 2,
+                                                color: "#000000",
+                                                offsetX: 0,
+                                                offsetY: 4,
+                                                opacity: 0.4
+
+                                            },
+                                            zIndex: 5
+                                        }
+                                    }).appendTo(container);
+                                }
                             },
                             {
-                                dataField: "EntidadTicket",
+                                dataField: "Maestro_EditorialesId",
                                 width: 220,
                             },
                             {
-                                dataField: "FechaCreacion",
-                                width: 140,
+                                dataField: "TicketDescripcion",
+                                width: 200
                             },
                             {
-                                dataField: "CreadoPor",
-                                width: 140,
+                                dataField: "Updated_At",
+                                width: 200,
                             },
                             {
-                                dataField: "PrioridadTicket",
-                                width: 140,
+                                dataField: "UserId",
+                                width: 200,
+                            },
+                            {
+                                dataField: "Nombre_Area",
+                                width: 200,
+                            },
+                            {
+                                dataField: "Rol_Usuario",
+                                width: 200,
+                            },
+                            {
+                                dataField: "Maestro_Orden_PrioridadId",
+                                width: 200,
                                 cellTemplate: function (container, options) {
+
+
                                     var r = $("<div class='dropdown-content'></div>");
                                     let Bgcolor = "";
                                     let nivel = "";
                                     let border = "";
                                     let textColor = "";
-                                    switch (options.data.PrioridadTicket) {
+                                    switch (options.data.Maestro_Orden_PrioridadId) {
                                         case "Alto":
                                             Bgcolor = "#eb839f";
                                             border = "1px solid #ff0044";
                                             nivel = "Alto";
-                                            textColor = "#ff0044";
+                                            textColor = "#000";
                                             break;
                                         case "Medio":
                                             Bgcolor = "#ffe4ab";
                                             border = "1px solid #ff7700";
                                             nivel = "Medio";
-                                            textColor = "#ff7700";
+                                            textColor = "#000";
                                             break;
                                         case "Bajo":
-                                            Bgcolor = "#a3ddff";
-                                            border = "1px solid #0088ff";
+                                            Bgcolor = "#91edc0";
+                                            border = "1px solid #00b05a";
                                             nivel = "Bajo";
-                                            textColor = "#0088ff";
+                                            textColor = "#000";
                                             break;
 
                                     }
@@ -713,35 +821,35 @@
 
                                     $.each(NivelData[0], function (key, value) {
 
-                                        switch (value.PrioridadTicket) {
+                                        switch (value.Maestro_Orden_PrioridadId) {
                                             case "Alto":
                                                 Bgcolor = "#eb839f";
                                                 border = "1px solid #ff0044";
                                                 nivel = "Alto";
-                                                textColor = "#ff0044";
+                                                textColor = "#000";
                                                 break;
                                             case "Medio":
                                                 Bgcolor = "#ffe4ab";
                                                 border = "1px solid #ff7700";
                                                 nivel = "Medio";
-                                                textColor = "#ff7700";
+                                                textColor = "#000";
                                                 break;
                                             case "Bajo":
-                                                Bgcolor = "#a3ddff";
-                                                border = "1px solid #0088ff";
+                                                Bgcolor = "#91edc0";
+                                                border = "1px solid #00b05a";
                                                 nivel = "Bajo";
-                                                textColor = "#0088ff";
+                                                textColor = "#000";
                                                 break;
 
                                         }
                                         //console.log(value.IdPrioridad);
 
-                                        if (options.data.OrdenId) {
+                                        if (options.data.id) {
 
                                             //console.log(value.IdPrioridad);
 
                                             var c = $("<div>")
-                                                .append(`<button class='btn btn-default dropbtn2' style='background-color: ${Bgcolor}; border: ${border}; height: 30px!important;'  onclick='UpdateNivel(${options.data.OrdenId},${value.IdPrioridad})'><label style=\"color: ${textColor}!important; \" id=\"textEstatus\">${nivel}</label></button>`)
+                                                .append(`<button class='btn btn-default dropbtn2' style='background-color: ${Bgcolor}; border: ${border}; height: 30px!important;'  onclick='UpdateNivel(${options.data.id},${value.IdPrioridad})'><label style=\"color: ${textColor}!important; \" id=\"textEstatus\">${nivel}</label></button>`)
                                                 .appendTo(r);
                                         }
                                     });
@@ -751,28 +859,30 @@
                                 }
                             },
                             {
-                                dataField: "CerrarTicketNegativo",
-                                width: 140,
+                                caption: "Ticket Cerrado",
+                                dataField: "IsClosed",
+                                width: 200,
                                 cellTemplate: function (container, options) {
-                                    if (options.data.CerrarTicketNegativo == true) {
-                                        $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox' onclick='IsClosed(\"" + options.data.OrdenId + "\", this)'  checked><span class='slider round'></span></label></center>")
+                                    if (options.data.IsClosed == true) {
+                                        $("<center><label  class='switch'><input id='" + options.data.IsClosed + "' class='cb-p' type='checkbox' onclick='IsClosed(\"" + options.data.id + "\", this)'  checked><span class='slider round'></span></label></center>")
                                             .appendTo(container);
                                     } else {
-                                        $("<center><label  class='switch'><input id='" + options.data.CerrarTicketNegativo + "' class='cb-p' type='checkbox'onclick='IsClosed(\"" + options.data.OrdenId + "\", this)'  ><span class='slider round'></span></label></center>")
+                                        $("<center><label  class='switch'><input id='" + options.data.IsClosed + "' class='cb-p' type='checkbox'onclick='IsClosed(\"" + options.data.id + "\", this)'  ><span class='slider round'></span></label></center>")
                                             .appendTo(container);
                                     }
                                     //console.log(options.data.CerrarTicketNegativo);
                                 }
                             },
                             {
-                                dataField: "CerrarTicketPositivo",
-                                width: 140,
+                                caption: "Ticket Cerrado Satisfactoriamente",
+                                dataField: "IsClosed_Successfully",
+                                width: 200,
                                 cellTemplate: function (container, options) {
-                                    if (options.data.CerrarTicketPositivo == true) {
-                                        $("<center><label  class='switch'><input id='" + options.data.OrdenId + "' class='cb-p' type='checkbox' onclick='IsClosedSuccessfully(\"" + options.data.OrdenId + "\", this)' checked><span class='slider round'></span></label></center>")
+                                    if (options.data.IsClosed_Successfully == true) {
+                                        $("<center><label  class='switch'><input id='" + options.data.IsClosed_Successfully + "' class='cb-p' type='checkbox' onclick='IsClosedSuccessfully(\"" + options.data.id + "\", this)' checked><span class='slider round'></span></label></center>")
                                             .appendTo(container);
                                     } else {
-                                        $("<center><label  class='switch'><input id='" + options.data.OrdenId + "' class='cb-p' type='checkbox' onclick='IsClosedSuccessfully(\"" + options.data.OrdenId + "\", this)' ><span class='slider round'></span></label></center>")
+                                        $("<center><label  class='switch'><input id='" + options.data.IsClosed_Successfully + "' class='cb-p' type='checkbox' onclick='IsClosedSuccessfully(\"" + options.data.id + "\", this)' ><span class='slider round'></span></label></center>")
                                             .appendTo(container);
                                     }
                                     //console.log(options);
@@ -780,17 +890,17 @@
                             },
                             {
                                 dataField: "FechaCierre",
-                                width: 140,
+                                width: 200,
                             },
                             {
-                                dataField: "IsTicketCancelled",
-                                width: 140,
+                                dataField: "isticket_cancelled",
+                                width: 200,
                                 cellTemplate: function (container, options) {
                                     if (options.data.IsTicketCancelled == true) {
-                                        $("<center><label  class='switch'><input id='" + options.data.OrdenId + "' class='cb-p' type='checkbox' onclick='IsTicketCancelled(\"" + options.data.OrdenId + "\", this)' checked><span class='slider round'></span></label></center>")
+                                        $("<center><label  class='switch'><input id='" + options.data.IsTicketCancelled + "' class='cb-p' type='checkbox' onclick='IsTicketCancelled(\"" + options.data.id + "\", this)' checked><span class='slider round'></span></label></center>")
                                             .appendTo(container);
                                     } else {
-                                        $("<center><label  class='switch'><input id='" + options.data.OrdenId + "' class='cb-p' type='checkbox' onclick='IsTicketCancelled(\"" + options.data.OrdenId + "\", this)' ><span class='slider round'></span></label></center>")
+                                        $("<center><label  class='switch'><input id='" + options.data.IsTicketCancelled + "' class='cb-p' type='checkbox' onclick='IsTicketCancelled(\"" + options.data.id + "\", this)' ><span class='slider round'></span></label></center>")
                                             .appendTo(container);
                                     }
                                     //console.log(options);
@@ -798,11 +908,11 @@
                             },
                             {
                                 dataField: "Dictamen",
-                                width: 140,
+                                width: 200,
                             },
                             {
                                 dataField: "Reporte",
-                                width: 140,
+                                width: 200,
                             }
 
                         ],
@@ -992,12 +1102,12 @@
             items: [
                 {
                     title: "Incidencias",
-                    template: IncidenciasMasterDetails(masterDetailOptions.data)
+                    template: IncidenciasGridTemplate(masterDetailOptions.data)
                 }
             ]
         });
     }
-
+    //version pivot
     function IncidenciasMasterDetails(masterDetailData) {
         //var dataOrdenInc = $.getJSON("/TicketsEditoriales/GetDataTicketInc?OrdenId=" + masterDetailData.OrdenId);
         //console.log(dataOrdenInc);
@@ -1042,7 +1152,7 @@
                         //customizeText: function (cellInfo) {
                         //    return cellInfo.value + "$";
                         //}
-                       
+
                     }],
                 //dataSource: {
                 //    fields: [{
@@ -1074,5 +1184,493 @@
         }
 
     }
+    //version grid
+    function IncidenciasGridTemplate(masterDetailData) {
+        return function () {
+            return $("<div id='IncidenciasGrid'>").dxDataGrid({
+                dataSource: new DevExpress.data.DataSource({
+                    key: "IdIncidencia",
+                    load: function () {
+                        return $.getJSON("/TicketsEditoriales/GetDataTicketInc?OrdenId=" + masterDetailData.id);
+                    }
+                }),
+                paging: {
+                    pageSize: 1000
+                },
+                height: 1200,
+                allowColumnReordering: true,
+                groupPanel: {
+                    visible: true
+                },
+                grouping: {
+                    autoExpandAll: true,
+                },
+                pager: {
+                    showPageSizeSelector: true,
+                    allowedPageSizes: [300, 400],
+                    showInfo: true
+                },
+                filterRow: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                groupPanel: {
+                    visible: true,
+                },
+                searchPanel: {
+                    visible: true,
+                    width: 240,
+                    placeholder: "Buscar..."
+                },
+                filterRow: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                headerFilter: { visible: true },
+                showBorders: true,
+                columnsAutoWidth: true,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                onRowExpanding: function (e) {
+                    e.component.collapseAll(-1);
+                },
+                columnChooser: {
+                    enabled: true,
+                    mode: "select"
+                },
+                sorting: {
+                    mode: "multiple"
+                },
+                columns: [
+                    {
+                        dataField: "Incidencia",
+                        caption: "Incidencia",
+                        groupIndex: 0,
+                        width: 300,
+                    },
+                    {
+                        dataField: "Area",
+                        caption: "Area",
+                        groupIndex: 1,
+                        width: 300,
+                    },
+                    {
+                        dataField: "ResponsableArea",
+                        caption: "Responsable de Area",
+                        //groupIndex: 2,
+                        width: 300,
+                    },
+                    {
+                        dataField: "Observaciones",
+                        caption: "Observaciones",
+                        width: 350,
+                    },
+                    {
+                        dataField: "NumImagenes",
+                        caption: "Imagenes",
+                        //width: 50,
+                        cellTemplate: function (container, options) {
+                            let Edicion = 0;
+                            let Id = options.data.IdIncidencia;
+                            let Item = 0;
+                            //console.log(options.data.NumImagenes);
+                            if (options.data.NumImagenes != 0) {
+                                var x = $("<a onclick='OpenImage(\"" + Edicion + "^" + Id + "^" + Item + "\",\"" + options.data.NumImagenes + "\")'>&emsp;")
+                                    .append("<i class='fa fa-picture-o fa-2x lbl-img' style='color: rgb(40, 180, 99, 2 )' data-toggle='tooltip' title='Visualizar Imagenes'></i>")
+                                    .appendTo(container);
 
+                                x.appendTo(container);
+                            } else {
+                                var x = $("<a onclick='OpenImage(\"" + Edicion + "^" + Id + "^" + Item + "\",\"" + options.data.NumImagenes + "\")'>&emsp;")
+                                    .append("<i class='fa fa-picture-o fa-2x lbl-img' style='color: black' data-toggle='tooltip' title='Cargar Imagenes'></i>")
+                                    .appendTo(container);
+
+                                x.appendTo(container);
+                            }
+                        }
+                    }
+
+                ],
+                //onContentReady: function (e) {
+                //    var toolbar = e.element.find('.dx-datagrid-header-panel .dx-toolbar').dxToolbar('instance');
+                //    toolbar.on('optionChanged', function (arg) {
+                //        addCustomItem2(toolbar);
+                //    });
+                //    addCustomItem2(toolbar);
+                //},
+                //onToolbarPreparing: function (e) {
+
+                //    //AGREGAR MASIVO
+                //    e.toolbarOptions.items.unshift({
+                //        location: "after",
+                //        widget: "dxButton",
+                //        template: function () {
+                //            //if (UserRoles[0].authorizeProductoyCadena || UserRoles[0].admin) {
+                //            return $("<a class='editarProducto-span' style='cursor: pointer' onclick='updateSelectRoles(\"" + masterDetailData.UserId + "\")' data-toggle='tooltip'>")
+                //                .append("<i class='fa fa-check-circle-o fa-lg myIcon' style='color:#32B216'></i>")
+                //            //}
+                //        }
+                //    });
+                //    //ELIMINAR MASIVO
+                //    e.toolbarOptions.items.unshift({
+                //        location: "after",
+                //        widget: "dxButton",
+                //        template: function () {
+                //            //AutorizarCadenas
+                //            //if (UserRoles[0].authorizeProductoyCadena || UserRoles[0].admin) {
+                //            return $("<a class='editarProducto-span' style='cursor: pointer' onclick='DeleteSelectRoles(\"" + masterDetailData.UserId + "\")' data-toggle='tooltip'>")
+                //                .append("<i class='fa fa-times fa-lg' style='color: #c23516'></i>")
+                //            //}
+                //        }
+                //    });
+                //},
+            });
+
+        };
+
+    }
+
+        function OpenImage(data) {
+            let datos = data;
+            let Data1 = data.split("^");
+            //console.log("datos open image "+ Data1[1]);
+            let Id = { IdIncidencia: Data1[1] };
+            $.post("/TicketsEditoriales/GetImages/", Id).done(function (data) {
+                console.log(data);
+                Swal.fire({
+                    title: '<strong>Archivos</strong>',
+                    html:
+                        "<div class='alert alert' role='alert'>" +
+
+                        "<i id='descargarImages' style='color: rgb(46, 134, 193, 2); cursor: pointer;' class='fa fa-download fa-3x' onclick='downloadImg(\"" + Id.Id + "\")' aria-hidden='true'></i>&emsp;" +
+                        "&emsp;<i id='addImages'  style='color: rgb(35, 155, 86, 2); cursor: pointer;' class='fa fa-upload fa-3x' onclick='AddImage(\"" + Data1[1] + "\", \"" + Data1[2] + "\", \"" + datos + "\")'  aria-hidden='true'></i>" +
+
+                        "<hr/></div>" +
+                        "<div class='row'>" +
+                        "<div id='img'></div><br/>" +
+                        "</div>",
+                    showCloseButton: true,
+                    width: 700,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'Ok'
+                })
+                if (data.length == 0) {
+                    $('#descargarImages').hide()
+                    let result = CargaDinamica(Id.Id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                } else if (data.length == 1) {
+                    let result = CargaDinamica(Id.Id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                } else if (data.length >= 1) {
+                    $('#descargarImages').show()
+                }
+                for (var i = 0; data.length > i; ++i) {
+                    let dataName = data[i].Imagen;
+                    console.log(dataName);
+                    let format = dataName.split(".");
+                    if (format[2] == "png" || format[2] == "jpg" || format[2] == "jpeg" || format[2] == "gif") {
+                        $("#img").append(
+                            "<div style='padding-bottom:10px' class='col-md-2 button-container'> <a data - toggle='modal' data - target='#Modal_Image' onclick = 'OpenImageSweetAlert(\"" + data[i].Imagen + "\", \"" + datos + "\")' > <img class='a-si' src='" + data[i].Imagen + "' style='width: 80px' /></a > " +
+                            "<a class='a-opc-img aa' onclick='DeleteImageByProductId(\"" + Data1[1]+ "\",\"" + data[i].Imagen + "\", \"" + datos + "\")'><i class='fa fa-times fa-2x edit-i' style='color: #c23516' data-toggle='tooltip' title='Eliminar imagen'></i></a>" +
+                            "<a class='a-opc-img aaa'  href='" + data[i].Imagen + "' download><i class='fa fa-cloud-download fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='Descargar imagen'></i></a></div>"
+                        );
+                    } else if (format[2] == "pdf" || format[2] == "pdef") {
+                        $("#img").append(
+                            "<div style='padding-bottom:10px' class='col-md-2 button-container'> <a data - toggle='modal' data - target='#Modal_Image' onclick = 'OpenPdfSweetAlert(\"" + data[i].Imagen + "\", \"" + datos + "\")' > <img class='a-si' src='https://www.flaticon.es/svg/static/icons/svg/337/337946.svg' style='width: 80px' /></a > " +
+                            "<a class='a-opc-img aa' onclick='DeleteImageByProductId(\"" + Data1[1] + "\",\"" + data[i].Imagen + "\", \"" + datos + "\")'><i class='fa fa-times fa-2x edit-i' style='color: #c23516' data-toggle='tooltip' title='Eliminar imagen'></i></a>" +
+                            "<a class='a-opc-img aaa'   href='" + data[i].Imagen + "' download><i class='fa fa-cloud-download fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='descargar imagen'></i></a></div>"
+
+                        );
+                    }
+                }
+            }).fail(function () {
+
+            });
+        }
+
+        function AddImage(id, item, datos) {
+            let Subir = false;
+            Swal.fire({
+                title: '<strong>Subir Archivos</strong>',
+                html: '<span class="note"> <strong>Tamaño maximo permitido:</strong> <span>4 MB</span>.</span>' + '<span class="note"><strong>  Formato permitido: </strong><span>.jpg, .jpeg, .gif, .png, .pdf, .csv y .zip</span>.</span><hr/>' +
+                    "<div id='SubirArchivos'></div>"+
+                    "<center><div id='gallery' style='width:250px'></div></center>",
+                showCloseButton: true,
+                width: 700,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Cerrar',
+                willOpen: () => {
+                    var datas = { id: id, dato: item };
+                    var imgSrc = [];
+                    $("#SubirArchivos").dxFileUploader({
+                        multiple: true,
+                        uploadMode: "useButtons",
+                        uploadUrl: '@Url.Content("~/TicketsEditoriales/SaveImagesBySeguimiento")',
+                        maxFileSize: 4000000,
+                        selectButtonText: "Selecciónar Imagen",
+                        readyToUploadMessage: "Listo para subir archivo",
+                        uploadedMessage: "Archivo cargado correctamente",
+                        uploadButtonText: "Cargar Todo",
+                        uploadFailedMessage: "Error al subir archivo intente más tarde",
+                        invalidMaxFileSizeMessage: "El archivo exede el tamaño permitido",
+                        invalidFileExtensionMessage: "Formato no valido",
+                        labelText: "O SOLTAR IMAGEN AQUÍ",
+                        onValueChanged: function (e) {
+                            onUPloaded($("#SubirArchivos").dxFileUploader("option", "value").length);
+                            imgSrc = [];
+                            $.each(e.value, function (_, value) {
+                                var fileUrl = URL.createObjectURL(value);
+                                if (value.type == "image/jpeg" || value.type == "image/jpg" || value.type == "image/gif" || value.type == "image/png") {
+                                imgSrc.push({ imageSrc: fileUrl, name: value.name });
+                                }
+                            });
+                            $("#gallery").dxGallery({
+                                dataSource: imgSrc,
+                                height: 350,
+                                loop: true,
+                                slideshowDelay: 2000,
+                                showNavButtons: true,
+                                showIndicator: true
+                            }).dxGallery("instance");
+                            var url = e.component.option("uploadUrl");
+                            url = updateQueryStringParameter(url, "datos", datas.id + "/" + datas.dato );
+                            e.component.option("uploadUrl", url);
+                        },
+                        onUploaded: function(e) {
+                            Subir = true;
+                        }
+                    });
+
+                    function updateQueryStringParameter(uri, key, value) {
+                        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                        if (uri.match(re)) {
+                            return uri.replace(re, '$1' + key + "=" + value + '$2');
+                        }
+                        else {
+                            return uri + separator + key + "=" + value;
+                        }
+                    }
+
+                   click();
+                },
+                preConfirm: (login) => {
+                    if (Subir === true) {
+                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                        if (Update) {
+                            console.log("RECARGA");
+                        } else {
+
+                        }
+                        Subir = false;
+                    }
+                    OpenImage(datos);
+                },
+                allowOutsideClick: function () {
+                    if (Subir === true) {
+                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                        if (Update) {
+                            console.log("RECARGA");
+                        } else {
+
+                        }
+                        Subir = false;
+                    }
+                    OpenImage(datos)
+                },
+                willClose: () => {
+                    if (Subir === true) {
+                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                        if (Update) {
+                            console.log("RECARGA");
+                        } else {
+
+                        }
+                        Subir = false;
+                    }
+                    OpenImage(datos);
+                }
+            })
+        }
+
+        function OpenImageSweetAlert(path, datos) {
+            let Name = path.split('/');
+            Swal.fire({
+                html:
+                    '<p><strong>' + Name[3] + '</strong></p>',
+                imageUrl: path,
+                width: 800,
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                preConfirm: (login) => {
+                    OpenImage(datos);
+                },
+                allowOutsideClick: () => !OpenImage(datos),
+                willClose: () => {
+                    OpenImage(datos);
+                }
+            })
+        }
+
+        function OpenPdfSweetAlert(path, datos) {
+            let Name = path.split('/');
+            Swal.fire({
+                title: '',
+                html:
+                    '<iframe style="width:80%; height:650px" src="' + path + '" frameborder="0"></iframe>' +
+                    '<p><strong>' + Name[3] + '</strong></p>',
+                showCancelButton: false,
+                showCloseButton: true,
+                width: 900 + 'px',
+                height: 800 + 'px',
+                confirmButtonText: 'Cerrar',
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                    OpenImage(datos);
+                },
+                allowOutsideClick: () => !OpenImage(datos),
+                willClose: () => {
+                    OpenImage(datos);
+                }
+            })
+
+        }
+
+        function downloadImg(img) {
+            let data = { Id: img };
+            $.post("/TicketsEditoriales/PrepareDownloadFile/", data).done(function (data) {
+                if (data === '1') {
+                    window.location = ("/TicketsEditoriales/DownloadFile/");
+                } else {
+
+                }
+            }).fail(function () {
+
+            });
+        }
+        //Delete Imagen por ID del Producto
+        function DeleteImageByProductId(id, path, datos) {
+
+            var data = { Path: path };
+            fetch('/TicketsEditoriales/DeleteImage', {
+                method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }
+            })
+                .then(x => {
+                    return x.json();
+                })
+                .then(data => {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'Archivo eliminado satisfactoriamente',
+                        showConfirmButton: false,
+                        timer: 1200,
+                        preConfirm: (login) => {
+                            OpenImage(datos);
+                        },
+                        allowOutsideClick: function () {
+
+                            let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                                if (Update) {
+                                    console.log("RECARGA");
+                                } else {
+
+                                }
+                                Subir = false;
+
+                            OpenImage(datos);
+                        },
+                        willClose: () => {
+                            let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                            if (Update) {
+                                console.log("RECARGA");
+                            } else {
+
+                            }
+                            OpenImage(datos);
+                        }
+                    }).then(function () {
+
+                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                            if (Update) {
+                                console.log("RECARGA");
+                            } else {
+
+                            }
+                            Subir = false;
+
+                        OpenImage(datos);
+                    });
+                })
+                .catch(() => {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'warning',
+                        title: 'Error!',
+                        text: 'Error al eliminar imagen',
+                        showConfirmButton: false,
+                        timer: 1200
+                    });
+                })
+        }
+
+        function DownloadImageByProductId(path, datos, id) {
+            window.open(path, '', 'height=400,width=400');
+        }
+
+        function click() {
+            var fileUploader = $('#SubirArchivos').dxFileUploader('instance');
+            fileUploader._isCustomClickEvent = true;
+            fileUploader._$fileInput.click();
+            console.log("ok");
+        }
+
+        function onUploadProgress(e) {
+            console.log("Listo");
+            //$("#gridContainer").dxDataGrid("instance").refresh();
+        }
+
+        function onUPloaded(dato) {
+            //console.log("Listo");
+            //var files = $("#SubirArchivos").dxFileUploader("option", "value");
+            //console.log("files");
+            //console.log(dato);
+        }
+
+        function CargaDinamica(Id, option, grid, url) {
+            let Result = true;
+            let ds = $("#" + grid).dxDataGrid("getDataSource");
+            let Rep = $("#" + grid).dxDataGrid("instance");
+            let RowIndex = Rep.getRowIndexByKey(Number(Id));
+
+            let ID = { id: Id };
+            if (option !== "delete") {
+                $.getJSON(url, ID)
+                    .done(function (result) {
+                        console.log('result[0]');
+                        console.log(result[0]);
+                        console.log('result[0]');
+                        if (option === "Edit") {
+                            ds.store().push([{ type: "update", key: Number(Id), data: result[0] }]);
+                            Rep.repaintRows([RowIndex]);
+                        } else if (option === "Add") {
+                            ds.store().push([{ type: "insert", data: result[0], index: 0 }]);
+                            Rep.repaintRows([RowIndex]);
+                        } else if (option === "delete") {
+                            ds.store().push([{ type: "remove", key: Number(Id) }]);
+                            Rep.repaint();
+                        }
+
+                    }).fail(function (err) {
+                        Result = false;
+                    });
+            } else {
+                ds.store().push([{ type: "remove", key: Number(Id) }]);
+                Rep.repaint();
+            }
+            return Result;
+        }
 </script>
