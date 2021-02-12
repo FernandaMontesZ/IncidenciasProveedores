@@ -1336,7 +1336,7 @@
             //console.log("datos open image "+ Data1[1]);
             let Id = { IdIncidencia: Data1[1] };
             $.post("/TicketsEditoriales/GetImages/", Id).done(function (data) {
-                console.log(data);
+                //console.log(data);
                 Swal.fire({
                     title: '<strong>Archivos</strong>',
                     html:
@@ -1355,6 +1355,7 @@
                     focusConfirm: false,
                     confirmButtonText: 'Ok'
                 })
+                //console.log(data.length);
                 if (data.length == 0) {
                     $('#descargarImages').hide()
                     let result = CargaDinamica(Id.Id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
@@ -1365,15 +1366,17 @@
                 }
                 for (var i = 0; data.length > i; ++i) {
                     let dataName = data[i].Imagen;
-                    console.log(dataName);
                     let format = dataName.split(".");
-                    if (format[2] == "png" || format[2] == "jpg" || format[2] == "jpeg" || format[2] == "gif") {
+                    //console.log(dataName.split("."));
+                    //console.log(data[i].Imagen);    
+                    if (format[1] == "png" || format[1] == "jpg" || format[1] == "jpeg" || format[1] == "gif") {
+                        //console.log(data[i].Imagen);
                         $("#img").append(
                             "<div style='padding-bottom:10px' class='col-md-2 button-container'> <a data - toggle='modal' data - target='#Modal_Image' onclick = 'OpenImageSweetAlert(\"" + data[i].Imagen + "\", \"" + datos + "\")' > <img class='a-si' src='" + data[i].Imagen + "' style='width: 80px' /></a > " +
                             "<a class='a-opc-img aa' onclick='DeleteImageByProductId(\"" + Data1[1]+ "\",\"" + data[i].Imagen + "\", \"" + datos + "\")'><i class='fa fa-times fa-2x edit-i' style='color: #c23516' data-toggle='tooltip' title='Eliminar imagen'></i></a>" +
                             "<a class='a-opc-img aaa'  href='" + data[i].Imagen + "' download><i class='fa fa-cloud-download fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='Descargar imagen'></i></a></div>"
                         );
-                    } else if (format[2] == "pdf" || format[2] == "pdef") {
+                    } else if (format[1] == "pdf" || format[1] == "pdef") {
                         $("#img").append(
                             "<div style='padding-bottom:10px' class='col-md-2 button-container'> <a data - toggle='modal' data - target='#Modal_Image' onclick = 'OpenPdfSweetAlert(\"" + data[i].Imagen + "\", \"" + datos + "\")' > <img class='a-si' src='https://www.flaticon.es/svg/static/icons/svg/337/337946.svg' style='width: 80px' /></a > " +
                             "<a class='a-opc-img aa' onclick='DeleteImageByProductId(\"" + Data1[1] + "\",\"" + data[i].Imagen + "\", \"" + datos + "\")'><i class='fa fa-times fa-2x edit-i' style='color: #c23516' data-toggle='tooltip' title='Eliminar imagen'></i></a>" +

@@ -238,8 +238,8 @@ C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketMa
 C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\bin\Newtonsoft.Json.xml
 C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\bin\Antlr3.Runtime.pdb
 C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\obj\Debug\TicketManagement.csprojAssemblyReference.cache
 C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\obj\Debug\TicketManagement.csproj.CoreCompileInputs.cache
 C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\obj\Debug\TicketManagement.csproj.CopyComplete
 C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\obj\Debug\TicketManagement.dll
 C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\obj\Debug\TicketManagement.pdb
+C:\Users\re307\Documents\GitHub\IncidenciasProveedores\TicketManagement\TicketManagement\obj\Debug\TicketManagement.csprojAssemblyReference.cache
