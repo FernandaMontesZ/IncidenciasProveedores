@@ -1192,7 +1192,24 @@
                     key: "IdIncidencia",
                     load: function () {
                         return $.getJSON("/TicketsEditoriales/GetDataTicketInc?OrdenId=" + masterDetailData.id);
-                    }
+                    },
+                    update: function (key, values) {
+                        data = { IdIncidencia: key, Comentario: values.Observaciones }
+                        console.log(values.Observaciones);
+                        console.log(key);
+                        return $.ajax({
+                            url: "/TicketsEditoriales/EditCommentByIdSeguimiento",
+                            method: "POST",
+                            data: data
+                        })
+                    },
+                    remove: function (key) {
+                        return $.ajax({
+                            url: "/TicketsEditoriales/DeleteSeguimiento",
+                            method: "POST",
+                            data: { IdSeguimiento: key }
+                        })
+                    },
                 }),
                 paging: {
                     pageSize: 1000
@@ -1226,6 +1243,11 @@
                     visible: true,
                     applyFilter: "auto"
                 },
+                editing: {
+                    mode: "row",
+                    allowUpdating: true,
+                    allowDeleting: true,
+                }, 
                 headerFilter: { visible: true },
                 showBorders: true,
                 columnsAutoWidth: true,
@@ -1247,40 +1269,48 @@
                         caption: "Incidencia",
                         groupIndex: 0,
                         width: 300,
+                        allowEditing: false
                     },
                     {
                         dataField: "Area",
                         caption: "Area",
                         groupIndex: 1,
                         width: 300,
+                        allowEditing: false
                     },
                     {
                         dataField: "ResponsableArea",
                         caption: "Responsable de Area",
                         //groupIndex: 2,
                         width: 300,
+                        allowEditing: false
                     },
                     {
                         dataField: "Observaciones",
                         caption: "Observaciones",
                         width: 350,
+                        validationRules: [{ type: "required" }]
                     },
                     {
                         dataField: "NumImagenes",
                         caption: "Imagenes",
-                        //width: 50,
+                        width: 150,
+                        allowEditing: false,
                         cellTemplate: function (container, options) {
+                            
                             let Edicion = 0;
                             let Id = options.data.IdIncidencia;
-                            let Item = 0;
+                            let Item = "INC";
                             //console.log(options.data.NumImagenes);
                             if (options.data.NumImagenes != 0) {
+                                console.log('Tiene imagenes');
                                 var x = $("<a onclick='OpenImage(\"" + Edicion + "^" + Id + "^" + Item + "\",\"" + options.data.NumImagenes + "\")'>&emsp;")
                                     .append("<i class='fa fa-picture-o fa-2x lbl-img' style='color: rgb(40, 180, 99, 2 )' data-toggle='tooltip' title='Visualizar Imagenes'></i>")
                                     .appendTo(container);
 
                                 x.appendTo(container);
                             } else {
+                                console.log('Tiene imagenes');
                                 var x = $("<a onclick='OpenImage(\"" + Edicion + "^" + Id + "^" + Item + "\",\"" + options.data.NumImagenes + "\")'>&emsp;")
                                     .append("<i class='fa fa-picture-o fa-2x lbl-img' style='color: black' data-toggle='tooltip' title='Cargar Imagenes'></i>")
                                     .appendTo(container);
@@ -1291,13 +1321,18 @@
                     }
 
                 ],
-                //onContentReady: function (e) {
-                //    var toolbar = e.element.find('.dx-datagrid-header-panel .dx-toolbar').dxToolbar('instance');
-                //    toolbar.on('optionChanged', function (arg) {
-                //        addCustomItem2(toolbar);
-                //    });
-                //    addCustomItem2(toolbar);
-                //},
+                onEditorPreparing: function (e) {
+                    //if (e.dataField === "Observaciones" ) {
+                    //    console.log(e.dataField);
+                    //    //console.log(e.row.data.IdIncidencia);
+                    //    //e.cancel = true;
+                    //}
+                },
+                onRowUpdated: function (e) {
+                    console.log("RowUpdated");
+                    if (e.dataField === "Observaciones") {
+                    }
+                },
                 //onToolbarPreparing: function (e) {
 
                 //    //AGREGAR MASIVO
@@ -1333,16 +1368,17 @@
         function OpenImage(data) {
             let datos = data;
             let Data1 = data.split("^");
-            //console.log("datos open image "+ Data1[1]);
-            let Id = { IdIncidencia: Data1[1] };
-            $.post("/TicketsEditoriales/GetImages/", Id).done(function (data) {
+            //console.log("datos open image "+ Data1[0]);
+            //let IdOrden = Data1[0];
+            let IdIncidencia = { IdIncidencia: Data1[1] };
+            $.post("/TicketsEditoriales/GetImages/", IdIncidencia).done(function (data) {
                 //console.log(data);
                 Swal.fire({
                     title: '<strong>Archivos</strong>',
                     html:
                         "<div class='alert alert' role='alert'>" +
 
-                        "<i id='descargarImages' style='color: rgb(46, 134, 193, 2); cursor: pointer;' class='fa fa-download fa-3x' onclick='downloadImg(\"" + Id.Id + "\")' aria-hidden='true'></i>&emsp;" +
+                        "<i id='descargarImages' style='color: rgb(46, 134, 193, 2); cursor: pointer;' class='fa fa-download fa-3x' onclick='downloadImg(\"" + Data1[1] + "\")' aria-hidden='true'></i>&emsp;" +
                         "&emsp;<i id='addImages'  style='color: rgb(35, 155, 86, 2); cursor: pointer;' class='fa fa-upload fa-3x' onclick='AddImage(\"" + Data1[1] + "\", \"" + Data1[2] + "\", \"" + datos + "\")'  aria-hidden='true'></i>" +
 
                         "<hr/></div>" +
@@ -1358,9 +1394,9 @@
                 //console.log(data.length);
                 if (data.length == 0) {
                     $('#descargarImages').hide()
-                    let result = CargaDinamica(Id.Id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                    let result = CargaDinamica(IdIncidencia.IdIncidencia, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
                 } else if (data.length == 1) {
-                    let result = CargaDinamica(Id.Id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                    let result = CargaDinamica(IdIncidencia.IdIncidencia, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
                 } else if (data.length >= 1) {
                     $('#descargarImages').show()
                 }
@@ -1404,7 +1440,7 @@
                 confirmButtonText:
                     'Cerrar',
                 willOpen: () => {
-                    var datas = { id: id, dato: item };
+                    var datas = { id: id, datos: item };
                     var imgSrc = [];
                     $("#SubirArchivos").dxFileUploader({
                         multiple: true,
@@ -1458,11 +1494,14 @@
 
                    click();
                 },
-                preConfirm: (login) => {
+                preConfirm: (data) => {
+                    console.log(data);
+                    var key = dataGrid.keyOf(data); 
                     if (Subir === true) {
+                        console.log(id);
                         let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
                         if (Update) {
-                            console.log("RECARGA");
+                            console.log("RECARGA" + Update);
                         } else {
 
                         }
@@ -1474,7 +1513,7 @@
                     if (Subir === true) {
                         let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
                         if (Update) {
-                            console.log("RECARGA");
+                            console.log("RECARGA" + Update);
                         } else {
 
                         }
@@ -1486,7 +1525,7 @@
                     if (Subir === true) {
                         let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
                         if (Update) {
-                            console.log("RECARGA");
+                            console.log("RECARGA" + Update);
                         } else {
 
                         }
@@ -1647,7 +1686,9 @@
             let Result = true;
             let ds = $("#" + grid).dxDataGrid("getDataSource");
             let Rep = $("#" + grid).dxDataGrid("instance");
+            console.log(Rep);
             let RowIndex = Rep.getRowIndexByKey(Number(Id));
+            console.log('Encarga dinamica : '+RowIndex);
 
             let ID = { id: Id };
             if (option !== "delete") {
@@ -1655,9 +1696,10 @@
                     .done(function (result) {
                         console.log('result[0]');
                         console.log(result[0]);
-                        console.log('result[0]');
+                        console.log(RowIndex);
                         if (option === "Edit") {
                             ds.store().push([{ type: "update", key: Number(Id), data: result[0] }]);
+                            console.log("En update: " + ds.data)
                             Rep.repaintRows([RowIndex]);
                         } else if (option === "Add") {
                             ds.store().push([{ type: "insert", data: result[0], index: 0 }]);

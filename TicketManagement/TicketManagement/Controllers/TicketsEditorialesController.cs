@@ -215,7 +215,7 @@ namespace TicketManagement.Controllers
 
             return Json(dataInc, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetSeguimientoDetalle(int Id = 0)
+        public JsonResult GetSeguimientoDetalle(int Id = 0, int ID_IncidenciaSeguimientoDI = 0)
         {
             DataTable ds = new DataTable();
             using (SqlConnection con = new SqlConnection(conBD))
@@ -228,6 +228,7 @@ namespace TicketManagement.Controllers
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Accion", "Detalles_Inc");
                     cmd.Parameters.AddWithValue("@ID_IncidenciaSeguimientoDI", Id);
+                    //cmd.Parameters.AddWithValue("@OrdenId", Id);
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter da = new SqlDataAdapter();
                     cmd.CommandTimeout = 0;
@@ -346,6 +347,7 @@ namespace TicketManagement.Controllers
                     con.Open();
 
                     SqlDataReader reader = comando.ExecuteReader();
+
                 }
 
                 //var idImage = GetIdByImagePath(pathToSQLServer);
@@ -545,6 +547,39 @@ namespace TicketManagement.Controllers
 
                 SqlDataReader reader = comando.ExecuteReader();
             }
+        }
+
+        public string EditCommentByIdSeguimiento (int IdIncidencia = 0, string Comentario = "")
+        {
+            DataTable ds = new DataTable();
+            using (SqlConnection con = new SqlConnection(conBD))
+            {
+                con.Open();
+                try
+                {
+
+                    SqlCommand cmd = new SqlCommand("Tickets_Editoriales", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Accion", "EditCommentByIdSeguimiento");
+                    cmd.Parameters.AddWithValue("@IdSeguimiento", IdIncidencia);
+                    cmd.Parameters.AddWithValue("@Observaciones", Comentario);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    return "true";
+                }
+                catch (Exception)
+                {
+                    con.Close();
+                    throw;
+                }
+            }
+
+        }
+
+        public void DeleteSeguimiento(int IdSeguimiento = 0)
+        {
+            SqlData spSql = new SqlData();
+            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:DeleteSeguimiento", "@IdSeguimiento:" + IdSeguimiento });
         }
     }
 }
