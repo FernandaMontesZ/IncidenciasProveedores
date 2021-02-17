@@ -46,18 +46,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Charts.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.Desktop.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataAccess.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.ExpressApp.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Office.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Pdf.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Persistent.Base.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.PivotGrid.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.RichEdit.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.RichEdit.v20.2.Export, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Sparkline.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraCharts.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGauges.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v20.2.Web, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -81,6 +88,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -227,11 +235,93 @@
     <Compile Include="Models\ViewModels\TicketIncidenciasViewModel.cs" />
     <Compile Include="Models\ViewModels\TicketsEditorialesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\IncidenciasReport.cs">
+    <Compile Include="Reports\OrdenIncidencias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrdenIncidencias.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\AspNetRoles.cs" />
+    <Compile Include="Reports\ORMDataModelCode\AspNetRoles.Designer.cs">
+      <DependentUpon>AspNetRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\AspNetUserRoles.cs" />
+    <Compile Include="Reports\ORMDataModelCode\AspNetUserRoles.Designer.cs">
+      <DependentUpon>AspNetUserRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\AspNetUsers_Alternative.cs" />
+    <Compile Include="Reports\ORMDataModelCode\AspNetUsers_Alternative.Designer.cs">
+      <DependentUpon>AspNetUsers_Alternative.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\ConnectionHelper.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Areas.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Areas.Designer.cs">
+      <DependentUpon>Maestro_Areas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Editoriales.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Editoriales.Designer.cs">
+      <DependentUpon>Maestro_Editoriales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias.Designer.cs">
+      <DependentUpon>Maestro_Incidencias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Orden.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Orden.Designer.cs">
+      <DependentUpon>Maestro_Incidencias_Orden.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_OrdenDictamen.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_OrdenDictamen.Designer.cs">
+      <DependentUpon>Maestro_Incidencias_OrdenDictamen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_OrdenDictamenClosed.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_OrdenDictamenClosed.Designer.cs">
+      <DependentUpon>Maestro_Incidencias_OrdenDictamenClosed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Orden_Areas.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Orden_Areas.Designer.cs">
+      <DependentUpon>Maestro_Incidencias_Orden_Areas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Orden_Areas_Users.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Orden_Areas_Users.Designer.cs">
+      <DependentUpon>Maestro_Incidencias_Orden_Areas_Users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Seguimiento.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Seguimiento.Designer.cs">
+      <DependentUpon>Maestro_Incidencias_Seguimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Seguimiento_DI.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Incidencias_Seguimiento_DI.Designer.cs">
+      <DependentUpon>Maestro_Incidencias_Seguimiento_DI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Orden.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Orden.Designer.cs">
+      <DependentUpon>Maestro_Orden.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Orden_Descripcion.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Orden_Descripcion.Designer.cs">
+      <DependentUpon>Maestro_Orden_Descripcion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Orden_Prioridad.cs" />
+    <Compile Include="Reports\ORMDataModelCode\Maestro_Orden_Prioridad.Designer.cs">
+      <DependentUpon>Maestro_Orden_Prioridad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Report1.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\IncidenciasReport.Designer.cs">
-      <DependentUpon>IncidenciasReport.cs</DependentUpon>
+    <Compile Include="Reports\Report1.Designer.cs">
+      <DependentUpon>Report1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\XtraReport1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\XtraReport1.Designer.cs">
+      <DependentUpon>XtraReport1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\XtraReport2.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\XtraReport2.Designer.cs">
+      <DependentUpon>XtraReport2.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +329,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrapfont-awesome.css" />
+    <Content Include="Content\devexpress.css" />
+    <Content Include="Content\dx.common.css" />
+    <Content Include="Content\dx.material.purple.light.compact.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\undefined_1.jpg" />
+    <Content Include="Content\Images\undefined_2.jpg" />
+    <Content Include="Content\Images\undefined_3.jpg" />
+    <Content Include="Content\Images\undefined_4.jpg" />
+    <Content Include="Content\Images\undefined_5.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -279,17 +379,43 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Reports\OrdenIncidencias.xsc">
+      <DependentUpon>OrdenIncidencias.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\OrdenIncidencias.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OrdenIncidencias.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\OrdenIncidencias.xss">
+      <DependentUpon>OrdenIncidencias.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\ORMDataModel.xpo" />
+    <None Include="Reports\ORMDataModel.xpo.diagram">
+      <DependentUpon>ORMDataModel.xpo</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\devexpress.js" />
+    <Content Include="Scripts\dx.all.js" />
+    <Content Include="Scripts\exceljs.min.js" />
+    <Content Include="Scripts\FileSaver.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.5.1.min.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jszip.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\polyfill.min.js" />
+    <Content Include="Scripts\quill.min.js" />
+    <Content Include="Scripts\sweetalert.js" />
+    <Content Include="Scripts\sweetalert2%4010.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -327,8 +453,14 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="Reports\IncidenciasReport.resx">
-      <DependentUpon>IncidenciasReport.cs</DependentUpon>
+    <EmbeddedResource Include="Reports\Report1.resx">
+      <DependentUpon>Report1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\XtraReport1.resx">
+      <DependentUpon>XtraReport1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\XtraReport2.resx">
+      <DependentUpon>XtraReport2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

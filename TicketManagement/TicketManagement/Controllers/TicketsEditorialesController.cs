@@ -26,7 +26,6 @@ namespace TicketManagement.Controllers
             return View();
         }
 
-
         public JsonResult GetDataTickets()
         {
 
@@ -166,7 +165,7 @@ namespace TicketManagement.Controllers
                        select new TicketIncidenciasViewModel()
                        {
                            //NumTicket = Convert.ToString(a["NumTicket"]),
-                           IdIncidencia = Convert.ToInt32(a["IdIncidencia"]),
+                           IdIncidencia = Convert.ToInt32(a["IdSeguimiento"]),
                            Incidencia = Convert.ToString(a["Incidencia"]),
                            Area = Convert.ToString(a["Area"]),
                            ResponsableArea = Convert.ToString(a["ResponsableArea"]),
@@ -215,7 +214,7 @@ namespace TicketManagement.Controllers
 
             return Json(dataInc, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetSeguimientoDetalle(int Id = 0, int ID_IncidenciaSeguimientoDI = 0)
+        public JsonResult GetSeguimientoDetalle(int id = 0)
         {
             DataTable ds = new DataTable();
             using (SqlConnection con = new SqlConnection(conBD))
@@ -227,7 +226,7 @@ namespace TicketManagement.Controllers
                     SqlCommand cmd = new SqlCommand("Tickets_Editoriales", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Accion", "Detalles_Inc");
-                    cmd.Parameters.AddWithValue("@ID_IncidenciaSeguimientoDI", Id);
+                    cmd.Parameters.AddWithValue("@ID_IncidenciaSeguimientoDI", id);
                     //cmd.Parameters.AddWithValue("@OrdenId", Id);
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter da = new SqlDataAdapter();
@@ -301,7 +300,7 @@ namespace TicketManagement.Controllers
                     var fecha = dia.Replace("/", "_");
                     var fecha2 = fecha.Replace(":", "_");
                     var fecha3 = fecha2.Replace(" ", "_");
-                    string newfilename = datosRecibidos[1] + "_" + subscript_C; //New FileName
+                    string newfilename = "INC" + "_" + subscript_C; //New FileName
 
                     string p1 = originalDirectory2 + "/Content/Images/" + newfilename + ".png";
                     string p2 = originalDirectory2 + "/Content/Images/" + newfilename + ".jpg";

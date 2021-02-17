@@ -597,6 +597,7 @@
                 template: function () {
                     $("#gridContainer").dxDataGrid({
                         dataSource: new DevExpress.data.DataSource({
+                            key: "id",
                             load: function () {
                                 return $.getJSON("/TicketsEditoriales/GetDataTickets");
                             }
@@ -1093,7 +1094,6 @@
 
     }
 
-
     function masterDetailTemplate(_, masterDetailOptions) {
 
         //console.log(masterDetailOptions);
@@ -1187,11 +1187,13 @@
     //version grid
     function IncidenciasGridTemplate(masterDetailData) {
         return function () {
-            return $("<div id='IncidenciasGrid'>").dxDataGrid({
+            return $("<div id=\"IncidenciasGrid\">").dxDataGrid({
                 dataSource: new DevExpress.data.DataSource({
                     key: "IdIncidencia",
                     load: function () {
-                        return $.getJSON("/TicketsEditoriales/GetDataTicketInc?OrdenId=" + masterDetailData.id);
+                        var datos = $.getJSON("/TicketsEditoriales/GetDataTicketInc?OrdenId=" + masterDetailData.id);
+                        //console.log(datos);
+                        return datos;
                     },
                     update: function (key, values) {
                         data = { IdIncidencia: key, Comentario: values.Observaciones }
@@ -1244,9 +1246,11 @@
                     applyFilter: "auto"
                 },
                 editing: {
-                    mode: "row",
+                    mode: "cell",
                     allowUpdating: true,
                     allowDeleting: true,
+                    //confirmDelete: false,
+                    ConfirmUpdate: false,
                 }, 
                 headerFilter: { visible: true },
                 showBorders: true,
@@ -1300,6 +1304,7 @@
                             
                             let Edicion = 0;
                             let Id = options.data.IdIncidencia;
+                            console.log(Id);
                             let Item = "INC";
                             //console.log(options.data.NumImagenes);
                             if (options.data.NumImagenes != 0) {
@@ -1310,7 +1315,7 @@
 
                                 x.appendTo(container);
                             } else {
-                                console.log('Tiene imagenes');
+                                //console.log('Tiene imagenes');
                                 var x = $("<a onclick='OpenImage(\"" + Edicion + "^" + Id + "^" + Item + "\",\"" + options.data.NumImagenes + "\")'>&emsp;")
                                     .append("<i class='fa fa-picture-o fa-2x lbl-img' style='color: black' data-toggle='tooltip' title='Cargar Imagenes'></i>")
                                     .appendTo(container);
@@ -1321,6 +1326,10 @@
                     }
 
                 ],
+                onCellClick:
+                    function (e) {
+                        console.log(e);
+                    }, 
                 onEditorPreparing: function (e) {
                     //if (e.dataField === "Observaciones" ) {
                     //    console.log(e.dataField);
@@ -1368,7 +1377,7 @@
         function OpenImage(data) {
             let datos = data;
             let Data1 = data.split("^");
-            //console.log("datos open image "+ Data1[0]);
+            //console.log("datos open image "+ Data1);
             //let IdOrden = Data1[0];
             let IdIncidencia = { IdIncidencia: Data1[1] };
             $.post("/TicketsEditoriales/GetImages/", IdIncidencia).done(function (data) {
@@ -1394,9 +1403,10 @@
                 //console.log(data.length);
                 if (data.length == 0) {
                     $('#descargarImages').hide()
-                    let result = CargaDinamica(IdIncidencia.IdIncidencia, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                    let result = CargaDinamica(Data1[1], "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle?id=" + Data1[1]);
+                    console.log(result);
                 } else if (data.length == 1) {
-                    let result = CargaDinamica(IdIncidencia.IdIncidencia, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                    let result = CargaDinamica(Data1[1], "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle?id=" + Data1[1]);
                 } else if (data.length >= 1) {
                     $('#descargarImages').show()
                 }
@@ -1426,7 +1436,8 @@
             });
         }
 
-        function AddImage(id, item, datos) {
+    function AddImage(id, item, datos) {
+        console.log("Id "+id + " valor inc : "+item+" numImagenes: "+ datos);
             let Subir = false;
             Swal.fire({
                 title: '<strong>Subir Archivos</strong>',
@@ -1499,7 +1510,7 @@
                     var key = dataGrid.keyOf(data); 
                     if (Subir === true) {
                         console.log(id);
-                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle?id=" + id);
                         if (Update) {
                             console.log("RECARGA" + Update);
                         } else {
@@ -1511,7 +1522,7 @@
                 },
                 allowOutsideClick: function () {
                     if (Subir === true) {
-                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle?id=" + id);
                         if (Update) {
                             console.log("RECARGA" + Update);
                         } else {
@@ -1523,7 +1534,7 @@
                 },
                 willClose: () => {
                     if (Subir === true) {
-                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle?id=" + id);
                         if (Update) {
                             console.log("RECARGA" + Update);
                         } else {
@@ -1614,8 +1625,9 @@
                             OpenImage(datos);
                         },
                         allowOutsideClick: function () {
-
-                            let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                            
+                            let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle?id=" + id);
+                            
                                 if (Update) {
                                     console.log("RECARGA");
                                 } else {
@@ -1626,7 +1638,7 @@
                             OpenImage(datos);
                         },
                         willClose: () => {
-                            let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                            let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle?id=" + id);
                             if (Update) {
                                 console.log("RECARGA");
                             } else {
@@ -1636,7 +1648,7 @@
                         }
                     }).then(function () {
 
-                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle/");
+                        let Update = CargaDinamica(id, "Edit", "IncidenciasGrid", "/TicketsEditoriales/GetSeguimientoDetalle?id=" + id);
                             if (Update) {
                                 console.log("RECARGA");
                             } else {
@@ -1667,7 +1679,7 @@
             var fileUploader = $('#SubirArchivos').dxFileUploader('instance');
             fileUploader._isCustomClickEvent = true;
             fileUploader._$fileInput.click();
-            console.log("ok");
+            console.log("ok archivo cargado");
         }
 
         function onUploadProgress(e) {
@@ -1687,8 +1699,11 @@
             let ds = $("#" + grid).dxDataGrid("getDataSource");
             let Rep = $("#" + grid).dxDataGrid("instance");
             console.log(Rep);
+            console.log(grid);
+            console.log(Id);
             let RowIndex = Rep.getRowIndexByKey(Number(Id));
-            console.log('Encarga dinamica : '+RowIndex);
+            console.log('En carga dinamica : ' + RowIndex);
+            console.log(url);
 
             let ID = { id: Id };
             if (option !== "delete") {
@@ -1696,10 +1711,10 @@
                     .done(function (result) {
                         console.log('result[0]');
                         console.log(result[0]);
-                        console.log(RowIndex);
+                        //console.log(RowIndex);
                         if (option === "Edit") {
                             ds.store().push([{ type: "update", key: Number(Id), data: result[0] }]);
-                            console.log("En update: " + ds.data)
+                            console.log("En update: " + Number(Id))
                             Rep.repaintRows([RowIndex]);
                         } else if (option === "Add") {
                             ds.store().push([{ type: "insert", data: result[0], index: 0 }]);
