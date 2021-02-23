@@ -56,8 +56,11 @@ namespace TicketManagement.Controllers
                 NumImagenesDescp = Convert.IsDBNull(x["NumImagenesDescp"]) ? 0 : (int)x["NumImagenesDescp"],
                 Dictamen = Convert.IsDBNull(x["Dictamen"]) ? "" : (string)x["Dictamen"],
                 NumImagenesDictamen = Convert.IsDBNull(x["NumImagenesDictamen"]) ? 0 : (int)x["NumImagenesDictamen"],
-                IsClosed_UserId = Convert.IsDBNull(x["IsClosed_UserId"]) ? "" : (string)x["IsClosed_UserId"]
-            }).ToList();
+                IsClosed_UserId = Convert.IsDBNull(x["IsClosed_UserId"]) ? "" : (string)x["IsClosed_UserId"],
+                IsClosed_Successfully_UserId = Convert.IsDBNull(x["IsClosed_Successfully_UserId"]) ? "" : (string)x["IsClosed_Successfully_UserId"],
+                IsClosed_Successfully_Timestamp = Convert.IsDBNull(x["IsClosed_Successfully_Timestamp"]) ? "" : (string)x["IsClosed_Successfully_Timestamp"],
+
+        }).ToList();
 
             return Json(listTicketsEditoriales, JsonRequestBehavior.AllowGet);
         }
@@ -258,15 +261,15 @@ namespace TicketManagement.Controllers
                     throw;
                 }
             }
-            List<TicketIncidenciasImgViewModel> dataInc = new List<TicketIncidenciasImgViewModel>();
+            List<TicketIncidenciasImgViewModel> data = new List<TicketIncidenciasImgViewModel>();
 
-            dataInc = (from DataRow a in ds.Rows
+            data = (from DataRow a in ds.Rows
                        select new TicketIncidenciasImgViewModel()
                        {
                            Imagen = Convert.ToString(a["ImagePath"])
                        }).ToList();
 
-            return Json(dataInc, JsonRequestBehavior.AllowGet);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetSeguimientoDetalle(int id = 0)
         {
@@ -831,7 +834,7 @@ namespace TicketManagement.Controllers
                         if (Exists2 || Exists3 || Exists4 || Exists5)
                         {
                             var cont2 = countImgByProduct + cont3;
-                            newfilename = datosRecibidos[1] + "_" + cont2;
+                            newfilename = Name + "_" + datosRecibidos[0] + "_" + cont2;
                             Exists2 = System.IO.File.Exists(originalDirectory + newfilename + ".png");
                             Exists3 = System.IO.File.Exists(originalDirectory + newfilename + ".jpg");
                             Exists4 = System.IO.File.Exists(originalDirectory + newfilename + ".jpeg");
@@ -1005,6 +1008,76 @@ namespace TicketManagement.Controllers
             }
         }
 
+        public int GetIdByImagePathDesc(string path)
+        {
+            int result = 0;
+            using (SqlConnection con = new SqlConnection(conBD))
+            {
+                SqlCommand comando = new SqlCommand(sql, con);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@Accion", "GetIdByImagePathDesc");
+                comando.Parameters.AddWithValue("@ImagePath", path);
+
+                con.Open();
+
+                SqlDataReader reader = comando.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        result = reader.IsDBNull(0) == true ? 0 : reader.GetInt32(0);
+                    }
+                }
+            }
+            return result;
+        }
+        public int GetIdByImagePathDictamen(string path)
+        {
+            int result = 0;
+            using (SqlConnection con = new SqlConnection(conBD))
+            {
+                SqlCommand comando = new SqlCommand(sql, con);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@Accion", "GetIdByImagePathDictamen");
+                comando.Parameters.AddWithValue("@ImagePath", path);
+
+                con.Open();
+
+                SqlDataReader reader = comando.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        result = reader.IsDBNull(0) == true ? 0 : reader.GetInt32(0);
+                    }
+                }
+            }
+            return result;
+        }
+        public void DeleteImageByIdDescripcion_Dictamen(int Id, string opcion)
+        {
+            using (SqlConnection con = new SqlConnection(conBD))
+            {
+                SqlCommand comando = new SqlCommand(sql, con);
+                comando.CommandType = CommandType.StoredProcedure;
+                if (opcion == "PorOrdenDesc")
+                {
+                    comando.Parameters.AddWithValue("@Accion", "DeleteImageDescripcionById");
+                    comando.Parameters.AddWithValue("@Maestro_Orden_DescripcionId", Id);
+                    con.Open();
+                    SqlDataReader reader = comando.ExecuteReader();
+                }
+                if (opcion == "PorOrdenDictamen")
+                {
+                    comando.Parameters.AddWithValue("@Accion", "DeleteImageDictamenById");
+                    comando.Parameters.AddWithValue("@Maestro_Orden_DictamenId", Id);
+                    con.Open();
+                    SqlDataReader reader = comando.ExecuteReader();
+                }
+            }
+        }
         public JsonResult DeleteImageDescripcion_Dictamen(string Path, string opcion)
         {
             var result = true;
@@ -1013,7 +1086,7 @@ namespace TicketManagement.Controllers
 
             if (opcion == "PorOrdenDesc")
             {
-                Id = GetIdByImagePath(Path);
+                Id = GetIdByImagePathDesc(Path);
                 var pathpr = originalDirectory + Path;
 
                 bool nameExists = System.IO.File.Exists(pathpr);
@@ -1021,12 +1094,12 @@ namespace TicketManagement.Controllers
                 if (nameExists)
                 {
                     System.IO.File.Delete(originalDirectory + Path);
-                    DeleteImageSeguimientoByImageId(Id);
+                    DeleteImageByIdDescripcion_Dictamen(Id, opcion);
                 }
             }
             if (opcion == "PorOrdenDictamen")
             {
-                Id = GetIdByImagePath(Path);
+                Id = GetIdByImagePathDictamen(Path);
                 var pathpr = originalDirectory + Path;
 
                 bool nameExists = System.IO.File.Exists(pathpr);
@@ -1034,7 +1107,7 @@ namespace TicketManagement.Controllers
                 if (nameExists)
                 {
                     System.IO.File.Delete(originalDirectory + Path);
-                    DeleteImageSeguimientoByImageId(Id);
+                    DeleteImageByIdDescripcion_Dictamen(Id, opcion);
                 }
             }
             return Json(result, JsonRequestBehavior.AllowGet);

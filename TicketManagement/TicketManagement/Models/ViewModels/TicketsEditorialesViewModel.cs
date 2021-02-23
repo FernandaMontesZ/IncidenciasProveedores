@@ -32,6 +32,8 @@ namespace TicketManagement.Models.ViewModels
         public string Dictamen { get; set; }
         public int NumImagenesDictamen { get; set; }
         public string IsClosed_UserId { get; set; }
+        public string IsClosed_Successfully_UserId { get; set; }
+        public string IsClosed_Successfully_Timestamp { get; set; }
     }
 
     

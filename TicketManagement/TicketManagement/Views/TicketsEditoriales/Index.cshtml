@@ -769,22 +769,10 @@
                                     var User = options.data.UserId;
                                     var TimeOrden = options.data.Updated_At;
                                     var Descripcion = options.data.Descripcion;
-                                    //if (options.data.NumImagenesDescp != 0) {
-                                        //console.log('Tiene imagenes');
-                                        //var x = $("<a onclick='OpenImageByOrden(" + Id + "," + opcion+")'>&emsp;")
                                         var x = $("<a onclick='OpenImageByOrden(\"" + User + "^" + Id + "^" + opcion + "^" + TimeOrden + "^" + Descripcion + "\",\"" + options.data.NumImagenesDescp + "\")'>&emsp;")
                                             .append("<i class='fas fa-file-alt fa-2x lbl-img' style='color: (46, 134, 193, 2)' data-toggle='tooltip' title='Visualizar Imagenes'></i>")
                                             .appendTo(container);
-
                                         x.appendTo(container);
-                                    //} else {
-                                    //    //console.log('Tiene imagenes');
-                                    //    var x = $("<a onclick='OpenImageByOrden(\"" + User + "^" + Id + "^" + opcion + "^" + TimeOrden + "^" + Descripcion + "\",\"" + options.data.NumImagenesDescp + "\")'>&emsp;")
-                                    //        .append("<i class='fas fa-file-alt fa-2x lbl-img' style='color: black' data-toggle='tooltip' title='Cargar Imagenes'></i>")
-                                    //        .appendTo(container);
-
-                                    //    x.appendTo(container);
-                                    //}
                                 }
                             },
                             {
@@ -981,16 +969,15 @@
                                     let Dictamen = options.data.Dictamen;
                                     //console.log(DictamenUser, DictamenTime);
                                     //console.log(options.data.NumImagenes);
-                                    if (options.data.IsClosed == true) {
-                                        //console.log('Tiene imagenes');
+                                    if (options.data.IsClosed == true || options.data.IsClosed_Successfully == true ) {
+                                        // unsucces
                                         var x = $("<a onclick='OpenImageByOrden(\"" + DictamenUser + "^" + Id + "^" + opcion + "^" + DictamenTime + "^" + Dictamen + "\",\"" + options.data.NumImagenesDictamen + "\")'>&emsp;")
-                                            //fas fa-image
                                             .append("<i class='fas fa-file-alt fa-2x lbl-img' style='color: rgb(40, 180, 99, 2 )' data-toggle='tooltip' title='Visualizar Imagenes'></i>")
-                                            //.append("<i class='fa fa-picture-o fa-2x lbl-img' style='color: rgb(40, 180, 99, 2 )' data-toggle='tooltip' title='Visualizar Imagenes'></i>")
                                             .appendTo(container);
 
                                         x.appendTo(container);
-                                    } else {
+                                    }
+                                    else {
                                         //console.log('Tiene imagenes');
                                         var x = $("<a onclick='OpenImageByOrden(\"" + DictamenUser + "^" + Id + "^" + opcion + "^" + DictamenTime + "^" + Dictamen + "\",\"" + options.data.NumImagenesDictamen + "\")'>&emsp;")
                                             .append("<i class='fas fa-file-alt fa-2x lbl-img' style='color: black' data-toggle='tooltip' title='Cargar Imagenes'></i>")
@@ -1533,13 +1520,13 @@
                         $("#img").append(
                             "<div style='padding-bottom:10px' class='col-md-2 button-container'> <a data - toggle='modal' data - target='#Modal_Image' onclick = 'OpenImageSweetAlert(\"" + data[i].Imagen + "\", \"" + datos + "\")' > <img class='a-si' src='" + data[i].Imagen + "' style='width: 80px' /></a > " +
                             "<a class='a-opc-img aa' onclick='DeleteImageByProductId(\"" + Data1[1]+ "\",\"" + data[i].Imagen + "\", \"" + datos + "\")'><i class='fa fa-times fa-2x edit-i' style='color: #c23516' data-toggle='tooltip' title='Eliminar imagen'></i></a>" +
-                            "<a class='a-opc-img aaa'  href='" + data[i].Imagen + "' download><i class='fa fa-cloud-download fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='Descargar imagen'></i></a></div>"
+                            "<a class='a-opc-img aaa'  href='" + data[i].Imagen + "' download><i class='fas fa-cloud-download-alt fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='Descargar imagen'></i></a></div>"
                         );
                     } else if (format[1] == "pdf" || format[1] == "pdef") {
                         $("#img").append(
                             "<div style='padding-bottom:10px' class='col-md-2 button-container'> <a data - toggle='modal' data - target='#Modal_Image' onclick = 'OpenPdfSweetAlert(\"" + data[i].Imagen + "\", \"" + datos + "\")' > <img class='a-si' src='https://www.flaticon.es/svg/static/icons/svg/337/337946.svg' style='width: 80px' /></a > " +
                             "<a class='a-opc-img aa' onclick='DeleteImageByProductId(\"" + Data1[1] + "\",\"" + data[i].Imagen + "\", \"" + datos + "\")'><i class='fa fa-times fa-2x edit-i' style='color: #c23516' data-toggle='tooltip' title='Eliminar imagen'></i></a>" +
-                            "<a class='a-opc-img aaa'   href='" + data[i].Imagen + "' download><i class='fa fa-cloud-download fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='descargar imagen'></i></a></div>"
+                            "<a class='a-opc-img aaa'   href='" + data[i].Imagen + "' download><i class='fas fa-cloud-download-alt fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='descargar imagen'></i></a></div>"
 
                         );
                     }
@@ -1812,7 +1799,7 @@
         let Data1 = data.split("^");
          //console.log("datos open image "+ Data1);
         //let IdOrden = Data1[0];
-        //console.log(Data1);
+        console.log(Data1);
         let params = { Id: Data1[1], opcion: Data1[2] };
         var html;
         var title;
@@ -1825,10 +1812,11 @@
 
                 "<hr/></div>" +
                 "<div class='row'>" +
-                '<center><label>Folio Ticket:<input value = "' + Data1[1] + '" class= "form-control" id="folio" disabled></label></center>' +
-                //'<center><label>Descripcion: <input class= "form-control" id="Descripcion" placeholder = "Ingresa la descripción" ></label></center>' +
+                '<center><label>Folio Ticket:<input value = "' + Data1[1] + '" class= "form-control" id="foliodesc" style="width: 270px" disabled></label></center>' +
+                '<center><label>Creado por: <input value = "' + Data1[0] + '" class= "form-control" id="Userdesc" style="width: 270px" disabled></label></center>' +
+                '<center><label>Fecha Creación: <input value = "' + Data1[3] + '" class= "form-control" id="TimeClosed" style="width: 270px" disabled></label></center>' +
                 "<center><label>Descripcion: </label></center>" +
-                "<center><div id='TxtAreaDescripcion' style='width: 230px'></div></center>" +
+                "<center><div id='TxtAreaDescripcion' style='width: 270px'></div></center>" +
                 "<hr/></div>" +
                 "<div class='row'>" +
                 "<div id='img'></div><br/>" +
@@ -1843,18 +1831,17 @@
 
                 "<hr/></div>" +
                 "<div class='row'>" +
-                '<center><label>Cerrado por: <input value = "' + Data1[0] + '" class= "form-control" id="UserClosed" disabled></label></center>' +
-                '<center><label>Fecha Cierre: <input value = "' + Data1[3] + '" class= "form-control" id="TimeClosed" disabled></label></center>' +
-                //'<center><label>Dictamen:<input value = "' + Data1[4] + '"class= "form-control" id="Dictamen" placeholder = "Ingresa la Dictamen" ></label></center>' +
+                '<center><label>Cerrado por: <input value = "' + Data1[0] + '" class= "form-control" id="UserClosed" style="width: 270px" disabled></label></center>' +
+                '<center><label>Fecha Cierre: <input value = "' + Data1[3] + '" class= "form-control" id="TimeClosed" style="width: 270px" disabled></label></center>' +
                 "<center><label>Dictamen: </label></center>"+
-                "<center><div id='TxtAreaDictamen' style='width: 230px'></div></center>" +
+                "<center><div id='TxtAreaDictamen' style='width: 270px'></div></center>" +
                 "<hr/></div>" +
                 "<div class='row'>" +
                 "<div id='img'></div><br/>" +
                 "</div>";
         }
         $.post("/TicketsEditoriales/GetImages/", params).done(function (data) {
-            console.log("GET IMAGENES "+data);
+            console.log("GET IMAGENES " + data.length);
             Swal.fire({
                 title: title,
                 html: html,
@@ -1909,16 +1896,17 @@
                 //console.log(data[i].Imagen);
                 if (format[1] == "png" || format[1] == "jpg" || format[1] == "jpeg" || format[1] == "gif") {
                     //console.log(data[i].Imagen);
+                    //<i class="fas fa-cloud-download-alt"></i>
                     $("#img").append(
                         "<div style='padding-bottom:10px' class='col-md-2 button-container'> <a data - toggle='modal' data - target='#Modal_Image' onclick = 'OpenImageSweetAlertDescripcion_Dictamen(\"" + data[i].Imagen + "\", \"" + datos + "\")' > <img class='a-si' src='" + data[i].Imagen + "' style='width: 80px' /></a > " +
                         "<a class='a-opc-img aa' onclick='DeleteImageByDescripcion_Dictamen(\"" + Data1[1] + "\",\"" + Data1[2] + "\",\"" + data[i].Imagen + "\", \"" + datos + "\")'><i class='fa fa-times fa-2x edit-i' style='color: #c23516' data-toggle='tooltip' title='Eliminar imagen'></i></a>" +
-                        "<a class='a-opc-img aaa'  href='" + data[i].Imagen + "' download><i class='fa fa-cloud-download fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='Descargar imagen'></i></a></div>"
+                        "<a class='a-opc-img aaa'  href='" + data[i].Imagen + "' download><i class='fas fa-cloud-download-alt fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='Descargar imagen'></i></a></div>"
                     );
                 } else if (format[1] == "pdf" || format[1] == "pdef") {
                     $("#img").append(
                         "<div style='padding-bottom:10px' class='col-md-2 button-container'> <a data - toggle='modal' data - target='#Modal_Image' onclick = 'OpenImageSweetAlertDescripcion_Dictamen(\"" + data[i].Imagen + "\", \"" + datos + "\")' > <img class='a-si' src='https://www.flaticon.es/svg/static/icons/svg/337/337946.svg' style='width: 80px' /></a > " +
                         "<a class='a-opc-img aa' onclick='DeleteImageByDescripcion_Dictamen(\"" + Data1[1] + "\",\"" + Data1[2] + "\",\"" + data[i].Imagen + "\", \"" + datos + "\")'><i class='fa fa-times fa-2x edit-i' style='color: #c23516' data-toggle='tooltip' title='Eliminar imagen'></i></a>" +
-                        "<a class='a-opc-img aaa'   href='" + data[i].Imagen + "' download><i class='fa fa-cloud-download fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='descargar imagen'></i></a></div>"
+                        "<a class='a-opc-img aaa'   href='" + data[i].Imagen + "' download><i class='fas fa-cloud-download-alt fa-2x edit-i' style='color: #1375D6' data-toggle='tooltip' title='descargar imagen'></i></a></div>"
 
                     );
                 }
@@ -2185,5 +2173,7 @@
         console.log("LLamada Reporte");
         console.log(Orden);
         window.open("/TicketsEditoriales/OpenReport?IdOrden=" + Orden);
-        }
+    }
+
+
 </script>

@@ -30,11 +30,11 @@ namespace TicketManagement.Reports
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraReport2));
             DevExpress.DataAccess.Sql.StoredProcQuery storedProcQuery1 = new DevExpress.DataAccess.Sql.StoredProcQuery();
             DevExpress.DataAccess.Sql.QueryParameter queryParameter1 = new DevExpress.DataAccess.Sql.QueryParameter();
             DevExpress.DataAccess.Sql.StoredProcQuery storedProcQuery2 = new DevExpress.DataAccess.Sql.StoredProcQuery();
             DevExpress.DataAccess.Sql.QueryParameter queryParameter2 = new DevExpress.DataAccess.Sql.QueryParameter();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraReport2));
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.pageInfo1 = new DevExpress.XtraReports.UI.XRPageInfo();
@@ -57,10 +57,10 @@ namespace TicketManagement.Reports
             this.tableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
-            this.xrPictureBox1 = new DevExpress.XtraReports.UI.XRPictureBox();
             this.table2 = new DevExpress.XtraReports.UI.XRTable();
             this.tableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
             this.tableCell12 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell13 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell14 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell15 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -69,6 +69,7 @@ namespace TicketManagement.Reports
             this.tableCell17 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell19 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
             this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
             this.Title = new DevExpress.XtraReports.UI.XRControlStyle();
             this.DetailCaption1 = new DevExpress.XtraReports.UI.XRControlStyle();
@@ -91,8 +92,8 @@ namespace TicketManagement.Reports
             this.xrTableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
             this.sqlDataSource2 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
-            this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrControlStyle1 = new DevExpress.XtraReports.UI.XRControlStyle();
+            this.xrCheckBox1 = new DevExpress.XtraReports.UI.XRCheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.table1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.table2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -292,11 +293,15 @@ namespace TicketManagement.Reports
             // Detail
             // 
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrCheckBox1,
             this.xrLine1,
-            this.xrPictureBox1,
             this.table2});
-            this.Detail.HeightF = 39.74994F;
+            this.Detail.HeightF = 40.79161F;
             this.Detail.Name = "Detail";
+            this.Detail.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+            new DevExpress.XtraReports.UI.GroupField("Editorial", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
+            this.Detail.StylePriority.UseTextAlignment = false;
+            this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
             // xrLine1
             // 
@@ -306,27 +311,16 @@ namespace TicketManagement.Reports
             this.xrLine1.SizeF = new System.Drawing.SizeF(802.9583F, 11.08328F);
             this.xrLine1.StylePriority.UseForeColor = false;
             // 
-            // xrPictureBox1
-            // 
-            this.xrPictureBox1.BorderColor = System.Drawing.Color.DarkCyan;
-            this.xrPictureBox1.ImageAlignment = DevExpress.XtraPrinting.ImageAlignment.MiddleCenter;
-            this.xrPictureBox1.ImageSource = new DevExpress.XtraPrinting.Drawing.ImageSource("svg", resources.GetString("xrPictureBox1.ImageSource"));
-            this.xrPictureBox1.LocationFloat = new DevExpress.Utils.PointFloat(1.041667F, 10F);
-            this.xrPictureBox1.Name = "xrPictureBox1";
-            this.xrPictureBox1.SizeF = new System.Drawing.SizeF(10F, 10F);
-            this.xrPictureBox1.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
-            this.xrPictureBox1.StylePriority.UseBorderColor = false;
-            // 
             // table2
             // 
-            this.table2.LocationFloat = new DevExpress.Utils.PointFloat(11.04169F, 0F);
+            this.table2.LocationFloat = new DevExpress.Utils.PointFloat(22.50001F, 0F);
             this.table2.Name = "table2";
             this.table2.OddStyleName = "DetailData3_Odd";
             this.table2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.tableRow2});
-            this.table2.SizeF = new System.Drawing.SizeF(792.9583F, 25F);
+            this.table2.SizeF = new System.Drawing.SizeF(781.5F, 25F);
             this.table2.StylePriority.UseTextAlignment = false;
-            this.table2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
+            this.table2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
             // tableRow2
             // 
@@ -355,8 +349,22 @@ namespace TicketManagement.Reports
             this.tableCell12.StylePriority.UseBorders = false;
             this.tableCell12.StylePriority.UseTextAlignment = false;
             this.tableCell12.Text = "> ";
-            this.tableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
-            this.tableCell12.Weight = 0.062535616605542D;
+            this.tableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            this.tableCell12.Weight = 0.044193507529842649D;
+            // 
+            // xrTableCell8
+            // 
+            this.xrTableCell8.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell8.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Descripcion]")});
+            this.xrTableCell8.Multiline = true;
+            this.xrTableCell8.Name = "xrTableCell8";
+            this.xrTableCell8.StyleName = "DetailData1";
+            this.xrTableCell8.StylePriority.UseBorders = false;
+            this.xrTableCell8.StylePriority.UseTextAlignment = false;
+            this.xrTableCell8.Text = "xrTableCell8";
+            this.xrTableCell8.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleJustify;
+            this.xrTableCell8.Weight = 0.13322490093812589D;
             // 
             // tableCell13
             // 
@@ -386,7 +394,7 @@ namespace TicketManagement.Reports
             this.tableCell15.StyleName = "DetailData1";
             this.tableCell15.StylePriority.UseTextAlignment = false;
             this.tableCell15.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell15.TextFormatString = "{0:dd/MM/yy H:mm}";
+            this.tableCell15.TextFormatString = "{0:dd/MM/yyyy}";
             this.tableCell15.Weight = 0.1030048414023769D;
             // 
             // tableCell16
@@ -419,7 +427,7 @@ namespace TicketManagement.Reports
             this.tableCell17.StyleName = "DetailData1";
             this.tableCell17.StylePriority.UseTextAlignment = false;
             this.tableCell17.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell17.TextFormatString = "{0:dd/MM/yy H:mm}";
+            this.tableCell17.TextFormatString = "{0:dd/MM/yyyy}";
             this.tableCell17.Weight = 0.14918086218611676D;
             // 
             // tableCell18
@@ -440,8 +448,20 @@ namespace TicketManagement.Reports
             this.tableCell19.StyleName = "DetailData1";
             this.tableCell19.StylePriority.UseTextAlignment = false;
             this.tableCell19.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell19.TextFormatString = "{0:dd/MM/yy H:mm}";
+            this.tableCell19.TextFormatString = "{0:dd/MM/yyyy}";
             this.tableCell19.Weight = 0.13444328097748376D;
+            // 
+            // xrTableCell9
+            // 
+            this.xrTableCell9.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dictamen]")});
+            this.xrTableCell9.Multiline = true;
+            this.xrTableCell9.Name = "xrTableCell9";
+            this.xrTableCell9.StyleName = "DetailData1";
+            this.xrTableCell9.StylePriority.UseTextAlignment = false;
+            this.xrTableCell9.Text = "xrTableCell9";
+            this.xrTableCell9.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleJustify;
+            this.xrTableCell9.Weight = 0.13613183487600739D;
             // 
             // sqlDataSource1
             // 
@@ -525,7 +545,7 @@ namespace TicketManagement.Reports
             this.GroupHeader2});
             this.DetailReport.DataMember = "spTestFer2";
             this.DetailReport.DataSource = this.sqlDataSource2;
-            this.DetailReport.DrillDownControl = this.xrPictureBox1;
+            this.DetailReport.DrillDownControl = this.xrCheckBox1;
             this.DetailReport.FilterString = "[IdOrden] = ?OrdenId";
             this.DetailReport.Level = 0;
             this.DetailReport.Name = "DetailReport";
@@ -539,17 +559,22 @@ namespace TicketManagement.Reports
             this.xrLabel1});
             this.Detail1.HeightF = 40.04161F;
             this.Detail1.Name = "Detail1";
+            this.Detail1.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
+            new DevExpress.XtraReports.UI.GroupField("Incidencia", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending),
+            new DevExpress.XtraReports.UI.GroupField("Area", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending),
+            new DevExpress.XtraReports.UI.GroupField("ResponsableArea", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             // 
             // xrLabel4
             // 
+            this.xrLabel4.EvenStyleName = "xrControlStyle1";
             this.xrLabel4.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[spTestFer2].[Observaciones]")});
             this.xrLabel4.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.xrLabel4.LocationFloat = new DevExpress.Utils.PointFloat(386.1173F, 0F);
+            this.xrLabel4.LocationFloat = new DevExpress.Utils.PointFloat(490.5215F, 0F);
             this.xrLabel4.Multiline = true;
             this.xrLabel4.Name = "xrLabel4";
             this.xrLabel4.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel4.SizeF = new System.Drawing.SizeF(262.2923F, 32.33325F);
+            this.xrLabel4.SizeF = new System.Drawing.SizeF(228.4368F, 32.33325F);
             this.xrLabel4.StylePriority.UseFont = false;
             this.xrLabel4.StylePriority.UseTextAlignment = false;
             this.xrLabel4.Text = "xrLabel4";
@@ -557,14 +582,15 @@ namespace TicketManagement.Reports
             // 
             // xrLabel3
             // 
+            this.xrLabel3.EvenStyleName = "xrControlStyle1";
             this.xrLabel3.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[spTestFer2].[ResponsableArea]")});
             this.xrLabel3.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.xrLabel3.LocationFloat = new DevExpress.Utils.PointFloat(277.6251F, 0F);
+            this.xrLabel3.LocationFloat = new DevExpress.Utils.PointFloat(325.0001F, 0F);
             this.xrLabel3.Multiline = true;
             this.xrLabel3.Name = "xrLabel3";
             this.xrLabel3.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel3.SizeF = new System.Drawing.SizeF(108.4922F, 32.33325F);
+            this.xrLabel3.SizeF = new System.Drawing.SizeF(165.5215F, 32.33325F);
             this.xrLabel3.StylePriority.UseFont = false;
             this.xrLabel3.StylePriority.UseTextAlignment = false;
             this.xrLabel3.Text = "xrLabel3";
@@ -572,14 +598,15 @@ namespace TicketManagement.Reports
             // 
             // xrLabel2
             // 
+            this.xrLabel2.EvenStyleName = "xrControlStyle1";
             this.xrLabel2.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[spTestFer2].[Area]")});
             this.xrLabel2.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(179.6596F, 0F);
+            this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(207.3334F, 0F);
             this.xrLabel2.Multiline = true;
             this.xrLabel2.Name = "xrLabel2";
             this.xrLabel2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel2.SizeF = new System.Drawing.SizeF(97.9655F, 32.33325F);
+            this.xrLabel2.SizeF = new System.Drawing.SizeF(117.6666F, 32.33325F);
             this.xrLabel2.StylePriority.UseFont = false;
             this.xrLabel2.StylePriority.UseTextAlignment = false;
             this.xrLabel2.Text = "xrLabel2";
@@ -587,14 +614,15 @@ namespace TicketManagement.Reports
             // 
             // xrLabel1
             // 
+            this.xrLabel1.EvenStyleName = "xrControlStyle1";
             this.xrLabel1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[spTestFer2].[Incidencia]")});
             this.xrLabel1.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(97.81921F, 0F);
+            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(97.8192F, 0F);
             this.xrLabel1.Multiline = true;
             this.xrLabel1.Name = "xrLabel1";
             this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel1.SizeF = new System.Drawing.SizeF(81.84043F, 32.33325F);
+            this.xrLabel1.SizeF = new System.Drawing.SizeF(109.5142F, 32.33325F);
             this.xrLabel1.StylePriority.UseFont = false;
             this.xrLabel1.StylePriority.UseTextAlignment = false;
             this.xrLabel1.Text = "xrLabel1";
@@ -605,16 +633,16 @@ namespace TicketManagement.Reports
             this.GroupHeader2.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrLine2,
             this.xrTable1});
-            this.GroupHeader2.HeightF = 32.70835F;
+            this.GroupHeader2.HeightF = 32.79168F;
             this.GroupHeader2.Name = "GroupHeader2";
             // 
             // xrLine2
             // 
             this.xrLine2.BorderColor = System.Drawing.Color.Black;
             this.xrLine2.ForeColor = System.Drawing.Color.Gray;
-            this.xrLine2.LocationFloat = new DevExpress.Utils.PointFloat(98.40961F, 30.70835F);
+            this.xrLine2.LocationFloat = new DevExpress.Utils.PointFloat(98.40959F, 30.70835F);
             this.xrLine2.Name = "xrLine2";
-            this.xrLine2.SizeF = new System.Drawing.SizeF(550F, 2F);
+            this.xrLine2.SizeF = new System.Drawing.SizeF(620.5488F, 2.083334F);
             this.xrLine2.StylePriority.UseBorderColor = false;
             this.xrLine2.StylePriority.UseForeColor = false;
             // 
@@ -624,7 +652,7 @@ namespace TicketManagement.Reports
             this.xrTable1.Name = "xrTable1";
             this.xrTable1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow1});
-            this.xrTable1.SizeF = new System.Drawing.SizeF(550.5905F, 29.08331F);
+            this.xrTable1.SizeF = new System.Drawing.SizeF(620.5488F, 29.08331F);
             this.xrTable1.StylePriority.UseTextAlignment = false;
             this.xrTable1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
             // 
@@ -644,6 +672,8 @@ namespace TicketManagement.Reports
             this.xrTableCell1.BorderColor = System.Drawing.Color.Transparent;
             this.xrTableCell1.Borders = DevExpress.XtraPrinting.BorderSide.None;
             this.xrTableCell1.ForeColor = System.Drawing.Color.Gray;
+            this.xrTableCell1.InteractiveSorting.FieldName = "Incidencia";
+            this.xrTableCell1.InteractiveSorting.TargetBand = this.Detail1;
             this.xrTableCell1.Name = "xrTableCell1";
             this.xrTableCell1.StyleName = "DetailCaption1";
             this.xrTableCell1.StylePriority.UseBackColor = false;
@@ -653,29 +683,33 @@ namespace TicketManagement.Reports
             this.xrTableCell1.StylePriority.UseTextAlignment = false;
             this.xrTableCell1.Text = "Incidencia";
             this.xrTableCell1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrTableCell1.Weight = 0.12590835285817098D;
+            this.xrTableCell1.Weight = 0.16757499750208219D;
             // 
             // xrTableCell2
             // 
             this.xrTableCell2.BackColor = System.Drawing.Color.White;
             this.xrTableCell2.ForeColor = System.Drawing.Color.Gray;
+            this.xrTableCell2.InteractiveSorting.FieldName = "Area";
+            this.xrTableCell2.InteractiveSorting.TargetBand = this.Detail1;
             this.xrTableCell2.Name = "xrTableCell2";
             this.xrTableCell2.StyleName = "DetailCaption1";
             this.xrTableCell2.StylePriority.UseBackColor = false;
             this.xrTableCell2.StylePriority.UseForeColor = false;
             this.xrTableCell2.Text = "Area";
-            this.xrTableCell2.Weight = 0.15071615357766571D;
+            this.xrTableCell2.Weight = 0.18102557655517446D;
             // 
             // xrTableCell3
             // 
             this.xrTableCell3.BackColor = System.Drawing.Color.White;
             this.xrTableCell3.ForeColor = System.Drawing.Color.Gray;
+            this.xrTableCell3.InteractiveSorting.FieldName = "ResponsableArea";
+            this.xrTableCell3.InteractiveSorting.TargetBand = this.Detail1;
             this.xrTableCell3.Name = "xrTableCell3";
             this.xrTableCell3.StyleName = "DetailCaption1";
             this.xrTableCell3.StylePriority.UseBackColor = false;
             this.xrTableCell3.StylePriority.UseForeColor = false;
             this.xrTableCell3.Text = "Responsable";
-            this.xrTableCell3.Weight = 0.16691110455982769D;
+            this.xrTableCell3.Weight = 0.25464852613718764D;
             // 
             // xrTableCell4
             // 
@@ -686,7 +720,7 @@ namespace TicketManagement.Reports
             this.xrTableCell4.StylePriority.UseBackColor = false;
             this.xrTableCell4.StylePriority.UseForeColor = false;
             this.xrTableCell4.Text = "Observaciones";
-            this.xrTableCell4.Weight = 0.403526669969144D;
+            this.xrTableCell4.Weight = 0.35144125434335349D;
             // 
             // sqlDataSource2
             // 
@@ -702,31 +736,29 @@ namespace TicketManagement.Reports
             storedProcQuery2});
             this.sqlDataSource2.ResultSchemaSerializable = resources.GetString("sqlDataSource2.ResultSchemaSerializable");
             // 
-            // xrTableCell8
+            // xrControlStyle1
             // 
-            this.xrTableCell8.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.xrTableCell8.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Descripcion]")});
-            this.xrTableCell8.Multiline = true;
-            this.xrTableCell8.Name = "xrTableCell8";
-            this.xrTableCell8.StyleName = "DetailData1";
-            this.xrTableCell8.StylePriority.UseBorders = false;
-            this.xrTableCell8.StylePriority.UseTextAlignment = false;
-            this.xrTableCell8.Text = "xrTableCell8";
-            this.xrTableCell8.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
-            this.xrTableCell8.Weight = 0.13322490093812589D;
+            this.xrControlStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.xrControlStyle1.BorderColor = System.Drawing.Color.White;
+            this.xrControlStyle1.Name = "xrControlStyle1";
+            this.xrControlStyle1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             // 
-            // xrTableCell9
+            // xrCheckBox1
             // 
-            this.xrTableCell9.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dictamen]")});
-            this.xrTableCell9.Multiline = true;
-            this.xrTableCell9.Name = "xrTableCell9";
-            this.xrTableCell9.StyleName = "DetailData1";
-            this.xrTableCell9.StylePriority.UseTextAlignment = false;
-            this.xrTableCell9.Text = "xrTableCell9";
-            this.xrTableCell9.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleJustify;
-            this.xrTableCell9.Weight = 0.13613183487600739D;
+            this.xrCheckBox1.CheckBoxState = DevExpress.XtraPrinting.CheckBoxState.Checked;
+            this.xrCheckBox1.Checked = true;
+            this.xrCheckBox1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "CheckBoxState", "[ReportItems.DetailReport].[DrillDownExpanded]")});
+            this.xrCheckBox1.GlyphOptions.Alignment = DevExpress.Utils.HorzAlignment.Center;
+            this.xrCheckBox1.GlyphOptions.CustomGlyphs.Checked = new DevExpress.XtraPrinting.Drawing.ImageSource("svg", resources.GetString("xrCheckBox1.GlyphOptions.CustomGlyphs.Checked"));
+            this.xrCheckBox1.GlyphOptions.CustomGlyphs.Unchecked = new DevExpress.XtraPrinting.Drawing.ImageSource("svg", resources.GetString("xrCheckBox1.GlyphOptions.CustomGlyphs.Unchecked"));
+            this.xrCheckBox1.GlyphOptions.Size = new System.Drawing.SizeF(16F, 16F);
+            this.xrCheckBox1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 2.000014F);
+            this.xrCheckBox1.Name = "xrCheckBox1";
+            this.xrCheckBox1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrCheckBox1.SizeF = new System.Drawing.SizeF(22.50001F, 23F);
+            this.xrCheckBox1.StylePriority.UseTextAlignment = false;
+            this.xrCheckBox1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
             // XtraReport2
             // 
@@ -751,7 +783,8 @@ namespace TicketManagement.Reports
             this.DetailCaption1,
             this.DetailData1,
             this.DetailData3_Odd,
-            this.PageInfo});
+            this.PageInfo,
+            this.xrControlStyle1});
             this.Version = "20.2";
             ((System.ComponentModel.ISupportInitialize)(this.table1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.table2)).EndInit();
@@ -812,7 +845,6 @@ namespace TicketManagement.Reports
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell3;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell4;
         private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource2;
-        private DevExpress.XtraReports.UI.XRPictureBox xrPictureBox1;
         private DevExpress.XtraReports.UI.XRLine xrLine1;
         private DevExpress.XtraReports.UI.XRLine xrLine2;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell7;
@@ -820,5 +852,7 @@ namespace TicketManagement.Reports
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell6;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell8;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell9;
+        private DevExpress.XtraReports.UI.XRControlStyle xrControlStyle1;
+        private DevExpress.XtraReports.UI.XRCheckBox xrCheckBox1;
     }
 }
