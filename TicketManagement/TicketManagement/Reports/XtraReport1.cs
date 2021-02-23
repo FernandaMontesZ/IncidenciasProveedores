@@ -13,9 +13,5 @@ namespace TicketManagement.Reports
             InitializeComponent();
         }
 
-        private void TopMargin_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
-        {
-
-        }
     }
 }

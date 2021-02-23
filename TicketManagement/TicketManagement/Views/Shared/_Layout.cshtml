@@ -13,33 +13,40 @@
 
     <!-- Import From DevExtreme -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.0/polyfill.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/3.3.1/exceljs.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.6/quill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/3.3.1/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.6/quill.min.js"></script>
     @*<script src="~/Scripts/polyfill.min.js"></script>
-    <script src="~/Scripts/exceljs.min.js"></script>
-    <script src="~/Scripts/FileSaver.min.js"></script>
-    <script src="~/Scripts/jszip.min.js"></script>
-    <script src="~/Scripts/quill.min.js"></script>*@
+        <script src="~/Scripts/exceljs.min.js"></script>
+        <script src="~/Scripts/FileSaver.min.js"></script>
+        <script src="~/Scripts/jszip.min.js"></script>
+        <script src="~/Scripts/quill.min.js"></script>*@
 
     <!-- Javascript -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     @*<script src="~/Scripts/jquery-3.5.1.min.js"></script>*@
 
     <!-- DevExtreme themes -->
-    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/20.1.4/css/dx.common.css">
-        <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/20.1.4/css/dx.material.purple.light.compact.css">
+    @*<link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/20.1.4/css/dx.common.css">
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/20.1.4/css/dx.material.purple.light.compact.css">*@
     @*<link href="~/Content/dx.common.css" rel="stylesheet" />
-    <link href="~/Content/dx.material.purple.light.compact.css" rel="stylesheet" />*@
+        <link href="~/Content/dx.material.purple.light.compact.css" rel="stylesheet" />*@
 
     <!-- DevExtreme library -->
-    <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/20.1.4/js/dx.all.js"></script>
+    @*<script type="text/javascript" src="https://cdn3.devexpress.com/jslib/20.1.4/js/dx.all.js"></script>*@
     @*<script src="~/Scripts/dx.all.js"></script>*@
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" crossorigin="anonymous" />
+
     @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+    @Html.DevExpress().GetStyleSheets(new StyleSheet{ ExtensionType = ExtensionType.WebDocumentViewer },
+                                      new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+                                      new StyleSheet { ExtensionSuite = ExtensionSuite.Icons })
+    @Html.DevExpress().GetScripts(new Script() { ExtensionType = ExtensionType.WebDocumentViewer })
 
     <style>
         .celColor {

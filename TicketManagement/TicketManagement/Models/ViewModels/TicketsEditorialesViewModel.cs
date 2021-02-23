@@ -27,6 +27,11 @@ namespace TicketManagement.Models.ViewModels
         public string Rol_Usuario { get; set; }
         public bool IsReadyForWork { get; set; }
         public string IsClosed_Timestamp { get; set; }
+        public string Descripcion { get; set; }
+        public int NumImagenesDescp { get; set; }
+        public string Dictamen { get; set; }
+        public int NumImagenesDictamen { get; set; }
+        public string IsClosed_UserId { get; set; }
     }
 
     
