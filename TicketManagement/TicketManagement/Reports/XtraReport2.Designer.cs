@@ -30,11 +30,11 @@ namespace TicketManagement.Reports
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraReport2));
             DevExpress.DataAccess.Sql.StoredProcQuery storedProcQuery1 = new DevExpress.DataAccess.Sql.StoredProcQuery();
             DevExpress.DataAccess.Sql.QueryParameter queryParameter1 = new DevExpress.DataAccess.Sql.QueryParameter();
             DevExpress.DataAccess.Sql.StoredProcQuery storedProcQuery2 = new DevExpress.DataAccess.Sql.StoredProcQuery();
             DevExpress.DataAccess.Sql.QueryParameter queryParameter2 = new DevExpress.DataAccess.Sql.QueryParameter();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraReport2));
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.pageInfo1 = new DevExpress.XtraReports.UI.XRPageInfo();
@@ -56,6 +56,7 @@ namespace TicketManagement.Reports
             this.tableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+            this.xrCheckBox1 = new DevExpress.XtraReports.UI.XRCheckBox();
             this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
             this.table2 = new DevExpress.XtraReports.UI.XRTable();
             this.tableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -93,7 +94,6 @@ namespace TicketManagement.Reports
             this.xrTableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
             this.sqlDataSource2 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
             this.xrControlStyle1 = new DevExpress.XtraReports.UI.XRControlStyle();
-            this.xrCheckBox1 = new DevExpress.XtraReports.UI.XRCheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.table1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.table2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -302,6 +302,23 @@ namespace TicketManagement.Reports
             new DevExpress.XtraReports.UI.GroupField("Editorial", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
             this.Detail.StylePriority.UseTextAlignment = false;
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            // 
+            // xrCheckBox1
+            // 
+            this.xrCheckBox1.CheckBoxState = DevExpress.XtraPrinting.CheckBoxState.Checked;
+            this.xrCheckBox1.Checked = true;
+            this.xrCheckBox1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "CheckBoxState", "[ReportItems.DetailReport].[DrillDownExpanded]")});
+            this.xrCheckBox1.GlyphOptions.Alignment = DevExpress.Utils.HorzAlignment.Center;
+            this.xrCheckBox1.GlyphOptions.CustomGlyphs.Checked = new DevExpress.XtraPrinting.Drawing.ImageSource("svg", resources.GetString("xrCheckBox1.GlyphOptions.CustomGlyphs.Checked"));
+            this.xrCheckBox1.GlyphOptions.CustomGlyphs.Unchecked = new DevExpress.XtraPrinting.Drawing.ImageSource("svg", resources.GetString("xrCheckBox1.GlyphOptions.CustomGlyphs.Unchecked"));
+            this.xrCheckBox1.GlyphOptions.Size = new System.Drawing.SizeF(16F, 16F);
+            this.xrCheckBox1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 2.000014F);
+            this.xrCheckBox1.Name = "xrCheckBox1";
+            this.xrCheckBox1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrCheckBox1.SizeF = new System.Drawing.SizeF(22.50001F, 23F);
+            this.xrCheckBox1.StylePriority.UseTextAlignment = false;
+            this.xrCheckBox1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
             // xrLine1
             // 
@@ -742,23 +759,6 @@ namespace TicketManagement.Reports
             this.xrControlStyle1.BorderColor = System.Drawing.Color.White;
             this.xrControlStyle1.Name = "xrControlStyle1";
             this.xrControlStyle1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
-            // 
-            // xrCheckBox1
-            // 
-            this.xrCheckBox1.CheckBoxState = DevExpress.XtraPrinting.CheckBoxState.Checked;
-            this.xrCheckBox1.Checked = true;
-            this.xrCheckBox1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "CheckBoxState", "[ReportItems.DetailReport].[DrillDownExpanded]")});
-            this.xrCheckBox1.GlyphOptions.Alignment = DevExpress.Utils.HorzAlignment.Center;
-            this.xrCheckBox1.GlyphOptions.CustomGlyphs.Checked = new DevExpress.XtraPrinting.Drawing.ImageSource("svg", resources.GetString("xrCheckBox1.GlyphOptions.CustomGlyphs.Checked"));
-            this.xrCheckBox1.GlyphOptions.CustomGlyphs.Unchecked = new DevExpress.XtraPrinting.Drawing.ImageSource("svg", resources.GetString("xrCheckBox1.GlyphOptions.CustomGlyphs.Unchecked"));
-            this.xrCheckBox1.GlyphOptions.Size = new System.Drawing.SizeF(16F, 16F);
-            this.xrCheckBox1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 2.000014F);
-            this.xrCheckBox1.Name = "xrCheckBox1";
-            this.xrCheckBox1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrCheckBox1.SizeF = new System.Drawing.SizeF(22.50001F, 23F);
-            this.xrCheckBox1.StylePriority.UseTextAlignment = false;
-            this.xrCheckBox1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
             // XtraReport2
             // 

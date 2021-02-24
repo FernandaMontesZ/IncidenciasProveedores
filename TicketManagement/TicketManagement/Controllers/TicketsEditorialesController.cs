@@ -31,11 +31,16 @@ namespace TicketManagement.Controllers
             return View();
         }
 
-        public JsonResult GetDataTickets()
+        public JsonResult GetDataTickets(int id = 0)
         {
+            var SP = "Read_Tickets";
 
+            if (id > 0)
+            {
+                SP = "Read_TicketsId";
+            }
             SqlData spSql = new SqlData();
-            DataTable TicketsEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:READ_Tickets" });
+            DataTable TicketsEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:" + SP, "@TicketId:" + id });
             List<TicketsEditorialesViewModel> listTicketsEditoriales = TicketsEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
                 id = Convert.IsDBNull(x["id"]) ? 0 : (int)x["id"]                ,
@@ -64,35 +69,35 @@ namespace TicketManagement.Controllers
 
             return Json(listTicketsEditoriales, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetDataTicketId (int id =0)
-        {
-            SqlData spSql = new SqlData();
-            DataTable TicketsEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Read_TicketsId", "@TicketId:" + id });
-            List<TicketsEditorialesViewModel> listTicketsEditoriales = TicketsEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
-            {
-                id = Convert.IsDBNull(x["id"]) ? 0 : (int)x["id"],
-                Maestro_Orden_PrioridadId = Convert.IsDBNull(x["Maestro_Orden_PrioridadId"]) ? "" : (string)x["Maestro_Orden_PrioridadId"],
-                Updated_At = Convert.IsDBNull(x["Updated_At"]) ? "" : (string)x["Updated_At"],
-                UserId = Convert.IsDBNull(x["UserId"]) ? "" : (string)x["UserId"],
-               Nombre_Area = Convert.IsDBNull(x["Nombre_Area"]) ? "" : (string)x["Nombre_Area"],
-                Maestro_EditorialesId = Convert.IsDBNull(x["Maestro_EditorialesId"]) ? "" : (string)x["Maestro_EditorialesId"],
-                IsClosed = Convert.ToBoolean(x["IsClosed"]),
-                IsClosed_Successfully = Convert.ToBoolean(x["IsClosed_Successfully"]),
-                isticket_cancelled = Convert.ToBoolean(x["isticket_cancelled"]),
-                Rol_Usuario = Convert.IsDBNull(x["Rol_Usuario"]) ? "" : (string)x["Rol_Usuario"],
-                TiempoEstimadoRespuesta = Convert.IsDBNull(x["TiempoEstimadoRespuesta"]) ? 0 : (double)x["TiempoEstimadoRespuesta"],
-                TiempoRealRespuesta = Convert.IsDBNull(x["TiempoRealRespuesta"]) ? 0 : (double)x["TiempoRealRespuesta"],
-                IsReadyForWork = Convert.ToBoolean(x["IsReadyForWork"]),
-                IsClosed_Timestamp = Convert.IsDBNull(x["IsClosed_Timestamp"]) ? "" : (string)x["IsClosed_Timestamp"],
-                Descripcion = Convert.IsDBNull(x["Descripcion"]) ? "" : (string)x["Descripcion"],
-                NumImagenesDescp = Convert.IsDBNull(x["NumImagenesDescp"]) ? 0 : (int)x["NumImagenesDescp"],
-                Dictamen = Convert.IsDBNull(x["Dictamen"]) ? "" : (string)x["Dictamen"],
-                NumImagenesDictamen = Convert.IsDBNull(x["NumImagenesDictamen"]) ? 0 : (int)x["NumImagenesDictamen"],
-                IsClosed_UserId = Convert.IsDBNull(x["IsClosed_UserId"]) ? "" : (string)x["IsClosed_UserId"]
-            }).ToList();
+        //public JsonResult GetDataTicketId (int id =0)
+        //{
+        //    SqlData spSql = new SqlData();
+        //    DataTable TicketsEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Read_TicketsId", "@TicketId:" + id });
+        //    List<TicketsEditorialesViewModel> listTicketsEditoriales = TicketsEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+        //    {
+        //        id = Convert.IsDBNull(x["id"]) ? 0 : (int)x["id"],
+        //        Maestro_Orden_PrioridadId = Convert.IsDBNull(x["Maestro_Orden_PrioridadId"]) ? "" : (string)x["Maestro_Orden_PrioridadId"],
+        //        Updated_At = Convert.IsDBNull(x["Updated_At"]) ? "" : (string)x["Updated_At"],
+        //        UserId = Convert.IsDBNull(x["UserId"]) ? "" : (string)x["UserId"],
+        //       Nombre_Area = Convert.IsDBNull(x["Nombre_Area"]) ? "" : (string)x["Nombre_Area"],
+        //        Maestro_EditorialesId = Convert.IsDBNull(x["Maestro_EditorialesId"]) ? "" : (string)x["Maestro_EditorialesId"],
+        //        IsClosed = Convert.ToBoolean(x["IsClosed"]),
+        //        IsClosed_Successfully = Convert.ToBoolean(x["IsClosed_Successfully"]),
+        //        isticket_cancelled = Convert.ToBoolean(x["isticket_cancelled"]),
+        //        Rol_Usuario = Convert.IsDBNull(x["Rol_Usuario"]) ? "" : (string)x["Rol_Usuario"],
+        //        TiempoEstimadoRespuesta = Convert.IsDBNull(x["TiempoEstimadoRespuesta"]) ? 0 : (double)x["TiempoEstimadoRespuesta"],
+        //        TiempoRealRespuesta = Convert.IsDBNull(x["TiempoRealRespuesta"]) ? 0 : (double)x["TiempoRealRespuesta"],
+        //        IsReadyForWork = Convert.ToBoolean(x["IsReadyForWork"]),
+        //        IsClosed_Timestamp = Convert.IsDBNull(x["IsClosed_Timestamp"]) ? "" : (string)x["IsClosed_Timestamp"],
+        //        Descripcion = Convert.IsDBNull(x["Descripcion"]) ? "" : (string)x["Descripcion"],
+        //        NumImagenesDescp = Convert.IsDBNull(x["NumImagenesDescp"]) ? 0 : (int)x["NumImagenesDescp"],
+        //        Dictamen = Convert.IsDBNull(x["Dictamen"]) ? "" : (string)x["Dictamen"],
+        //        NumImagenesDictamen = Convert.IsDBNull(x["NumImagenesDictamen"]) ? 0 : (int)x["NumImagenesDictamen"],
+        //        IsClosed_UserId = Convert.IsDBNull(x["IsClosed_UserId"]) ? "" : (string)x["IsClosed_UserId"]
+        //    }).ToList();
 
-            return Json(listTicketsEditoriales, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(listTicketsEditoriales, JsonRequestBehavior.AllowGet);
+        //}
 
         public JsonResult GetLevels()
         {
@@ -100,8 +105,24 @@ namespace TicketManagement.Controllers
             DataTable MaestroNiveles = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GetLevels" });
             List<TicketsEditorialesViewModel> listMaestroNiveles = MaestroNiveles.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
-               // PrioridadTicket = Convert.IsDBNull(x["Prioridad"]) ? "" : (string)x["Prioridad"]
-               IdPrioridad = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"] 
+                Maestro_Orden_PrioridadId = Convert.IsDBNull(x["Prioridad"]) ? "" : (string)x["Prioridad"]
+                ,
+                IdPrioridad = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
+
+            }).ToList();
+
+            return Json(listMaestroNiveles, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult GetTipoUser()
+        {
+            SqlData spSql = new SqlData();
+            DataTable MaestroNiveles = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GET_Tipo_Usuario" });
+            List<TicketsEditorialesViewModel> listMaestroNiveles = MaestroNiveles.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                TipoUserName = Convert.IsDBNull(x["Name"]) ? "" : (string)x["Name"]
+                ,
+                TipoUserId = Convert.IsDBNull(x["id"]) ? "" : (string)x["id"]
 
             }).ToList();
 
@@ -109,70 +130,294 @@ namespace TicketManagement.Controllers
 
         }
 
-        public JsonResult GETAreas()
+        public JsonResult AddNewTickets(int idEditoriales, bool IsReadyForWork)
+        {
+            //  var IdUser = User.Identity.GetUserId();
+            var Id = "0";
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Global"].ToString()))
+            {
+                try
+                {
+                    SqlCommand comando = new SqlCommand("[dbo].[Tickets_Editoriales]", con);
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Accion", "AddNewTicket");
+                    comando.Parameters.AddWithValue("@EditorialId", idEditoriales);
+                    comando.Parameters.AddWithValue("@IsReadyForWork", IsReadyForWork);
+                    comando.Parameters.Add("@Identy", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    con.Open();
+                    SqlDataReader reader = comando.ExecuteReader();
+                    if (reader.RecordsAffected >= 1)
+                    {
+                        Id = comando.Parameters["@Identy"].Value.ToString();
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(Id, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+        public JsonResult UpdateLevel(int ordenId, int idPrioridad)
+        {
+            //  var IdUser = User.Identity.GetUserId();
+            var Id = "0";
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Global"].ToString()))
+            {
+                try
+                {
+                    SqlCommand comando = new SqlCommand("[dbo].[Tickets_Editoriales]", con);
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Accion", "Update_Priority");
+                    comando.Parameters.AddWithValue("@prioridadId", idPrioridad);
+                    comando.Parameters.AddWithValue("@TicketId", ordenId);
+                    con.Open();
+                    SqlDataReader reader = comando.ExecuteReader();
+                    if (reader.RecordsAffected >= 1)
+                    {
+                        Id = comando.Parameters["@TicketId"].Value.ToString();
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(Id, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+        public JsonResult GETEditoriales()
         {
             SqlData spSql = new SqlData();
-            DataTable MaestroAreas = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETAreas"});
-            List<TicketsEditorialesViewModel> listMaestroAreas = MaestroAreas.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETEditoriales" });
+            List<TicketsEditorialesViewModel> listMaestroEditoriales = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
             {
-                Nombre_Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                idEditoriales = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
+                ,
+                Maestro_EditorialesId = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
 
             }).ToList();
 
-            return Json(listMaestroAreas, JsonRequestBehavior.AllowGet);
+            return Json(listMaestroEditoriales, JsonRequestBehavior.AllowGet);
 
         }
 
-        //public JsonResult GETEditoriales()
-        //{
-        //    SqlData spSql = new SqlData();
-        //    DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETEditoriales" });
-        //    List<TicketsEditorialesViewModel> listMaestroEditoriales = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
-        //    {
-        //        idEditoriales = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
-        //        ,EntidadTicket = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+        public JsonResult UpdateIsClosed(int ordenId, bool isClosed)
+        {
+            //  var IdUser = User.Identity.GetUserId();
+            var Id = "0";
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Global"].ToString()))
+            {
+                try
+                {
+                    SqlCommand comando = new SqlCommand("[dbo].[Tickets_Editoriales]", con);
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Accion", "Update_IsClosed");
+                    comando.Parameters.AddWithValue("@IsClosed", isClosed);
+                    comando.Parameters.AddWithValue("@TicketId", ordenId);
+                    con.Open();
+                    SqlDataReader reader = comando.ExecuteReader();
+                    if (reader.RecordsAffected >= 1)
+                    {
+                        Id = comando.Parameters["@TicketId"].Value.ToString();
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(Id, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+        public JsonResult UpdateIsClosedSuccessfully(int ordenId, bool isClosedSuccessfully)
+        {
+            //  var IdUser = User.Identity.GetUserId();
+            var Id = "0";
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Global"].ToString()))
+            {
+                try
+                {
+                    SqlCommand comando = new SqlCommand("[dbo].[Tickets_Editoriales]", con);
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Accion", "Update_IsClosed_Successfully");
+                    comando.Parameters.AddWithValue("@IsClosed_Successfully", isClosedSuccessfully);
+                    comando.Parameters.AddWithValue("@TicketId", ordenId);
+                    con.Open();
+                    SqlDataReader reader = comando.ExecuteReader();
+                    if (reader.RecordsAffected >= 1)
+                    {
+                        Id = comando.Parameters["@TicketId"].Value.ToString();
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(Id, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
-        //    }).ToList();
 
-        //    return Json(listMaestroEditoriales, JsonRequestBehavior.AllowGet);
+        public JsonResult UpdateIsTicketCancelled(int ordenId, bool isTicketClosed)
+        {
+            //  var IdUser = User.Identity.GetUserId();
+            var Id = "0";
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Global"].ToString()))
+            {
+                try
+                {
+                    SqlCommand comando = new SqlCommand("[dbo].[Tickets_Editoriales]", con);
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Accion", "Update_IsTicket_Cancelled");
+                    comando.Parameters.AddWithValue("@IsTicket_Cancelled", isTicketClosed);
+                    comando.Parameters.AddWithValue("@TicketId", ordenId);
+                    con.Open();
+                    SqlDataReader reader = comando.ExecuteReader();
+                    if (reader.RecordsAffected >= 1)
+                    {
+                        Id = comando.Parameters["@TicketId"].Value.ToString();
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(Id, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(Id, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
-        //}
-
-        public ActionResult UPDATEPrincipal (int ordenId, int idPrioridad)
+        public JsonResult GetResponsables(string AreasIds)
         {
             SqlData spSql = new SqlData();
-            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_Priority", "@TicketId:" + ordenId, "@prioridadId:" + idPrioridad });
+            DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GetResponsables", "@Responsables:" + AreasIds });
+            List<TicketsEditorialesViewModel> listResponsables = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                ,
+                ResponsableNombre = Convert.IsDBNull(x["UserName"]) ? "" : (string)x["UserName"]
 
-            return RedirectToAction("index");
+                ,
+                IdResponsable = Convert.IsDBNull(x["UserId"]) ? "" : (string)x["UserId"]
+                                ,
+                IdArea = Convert.IsDBNull(x["AreaId"]) ? 0 : (int)x["AreaId"]
+            }).ToList();
+
+            return Json(listResponsables, JsonRequestBehavior.AllowGet);
 
         }
 
-        public ActionResult UpdateIsClosed(int ordenId, bool isClosed )
+        public JsonResult GetResponsablesId(int OrdenId)
         {
-
             SqlData spSql = new SqlData();
-            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_IsClosed", "@TicketId:" + ordenId, "@IsClosed:" + isClosed });
+            DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GetResponsablesId", "@TicketId:" + OrdenId });
+            List<TicketsEditorialesViewModel> listResponsables = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                ,
+                ResponsableNombre = Convert.IsDBNull(x["UserName"]) ? "" : (string)x["UserName"]
+                ,
+                IdResponsable = Convert.IsDBNull(x["UserId"]) ? "" : (string)x["UserId"]
+                ,
+                IdArea = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
 
-            return RedirectToAction("index");
+            }).ToList();
+
+            return Json(listResponsables, JsonRequestBehavior.AllowGet);
+
         }
-        public ActionResult UpdateIsClosedSuccessfully(int ordenId, bool isClosedSuccess)
+
+        public JsonResult GETIncidencias()
         {
-
             SqlData spSql = new SqlData();
-            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_IsClosed_Successfully", "@TicketId:" + ordenId, "@IsClosed_Successfully:" + isClosedSuccess });
+            DataTable MaestroIncidencias = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETIncidencias" });
 
-            return RedirectToAction("index");
+            List<TicketsEditorialesViewModel> listMaestroIncidencias = MaestroIncidencias.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+
+            {
+                IncidenciaNombre = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                ,
+                IdIncidencia = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
+
+            }).ToList();
+
+            return Json(listMaestroIncidencias, JsonRequestBehavior.AllowGet);
+
         }
 
-        public ActionResult UpdateIsTicketCancelled(int ordenId, bool isTicketClosed)
+        public JsonResult GETIncidenciasId(int OrdenId)
         {
-
             SqlData spSql = new SqlData();
-            spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:Update_IsTicket_Cancelled", "@TicketId:" + ordenId, "@IsTicket_Cancelled:" + isTicketClosed });
+            DataTable MaestroIncidencias = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETIncidenciasId", "@TicketId:" + OrdenId });
 
-            return RedirectToAction("index");
+            List<TicketsEditorialesViewModel> listMaestroIncidencias = MaestroIncidencias.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+
+
+            {
+                IncidenciaNombre = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                ,
+                IdIncidencia = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
+
+            }).ToList();
+
+            return Json(listMaestroIncidencias, JsonRequestBehavior.AllowGet);
+
         }
 
+        public JsonResult GETAreas()
+        {
+            SqlData spSql = new SqlData();
+            DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GETAreas" });
+            List<TicketsEditorialesViewModel> listMaestroEditoriales = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                ,
+                IdArea = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
+
+            }).ToList();
+
+            return Json(listMaestroEditoriales, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult GetAreasId(int OrdenId)
+        {
+            SqlData spSql = new SqlData();
+            DataTable MaestroEditoriales = spSql.spGetData("[dbo].[Tickets_Editoriales]", new string[] { "@Accion:GetAreasId", "@TicketId:" + OrdenId });
+            List<TicketsEditorialesViewModel> listMaestroEditoriales = MaestroEditoriales.AsEnumerable().Select(x => new TicketsEditorialesViewModel
+            {
+                Area = Convert.IsDBNull(x["Nombre"]) ? "" : (string)x["Nombre"]
+                ,
+                IdArea = Convert.IsDBNull(x["Id"]) ? 0 : (int)x["Id"]
+
+            }).ToList();
+
+            return Json(listMaestroEditoriales, JsonRequestBehavior.AllowGet);
+
+        }
+        
+        // master details
         public JsonResult GetDataTicketInc(int OrdenId = 0)
         {
             DataTable ds = new DataTable();

@@ -561,7 +561,37 @@
         //grid principal
     $(function () {
         let NivelData = new Array();
-        let AreasData = new Array();
+		let EditorialesData = new Array();
+		let tipoUsuario = new Array();
+		let incidencias = new Array();
+		let AreasIncId = new Array();
+		let ResponsablesId = new Array();
+
+        //Get Levels
+        $.ajax({
+            type: 'GET',
+            url: '/ticketseditoriales/GetTipoUser',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                //console.log(data);
+                tipoUsuario.push(data);
+            }
+        })
+
+        $.ajax({
+            type: 'get',
+            url: '/ticketseditoriales/geteditoriales',
+            datatype: 'json',
+            async: false,
+            success: data => {
+                //console.log(data);
+                EditorialesData.push(data);
+            },
+        }).then(data => {
+            return EditorialesData;
+        });
+
 
         //Get Levels
         $.ajax({
@@ -575,20 +605,6 @@
             },
         }).then(data => {
             return NivelData;
-        });
-
-        $.ajax({
-            type: 'GET',
-            url: '/TicketsEditoriales/GETAreas',
-            async: false,
-            dataType: 'json',
-            success: data => {
-                //console.log(data);
-                AreasData.push(data);
-            }
-        }).then(data => {
-            return AreasData;
-
         });
 
         $("#tabPanel").dxTabPanel({
@@ -1028,39 +1044,170 @@
     });
 
 
-    function UpdateNivel(ordenId, idPrioridad) {
-        $.ajax({
-            type: "POST",
-            url: "/TicketsEditoriales/UPDATEPrincipal",
-            data: { ordenId, idPrioridad }
-        }).done(function (data) {
-            $("#gridContainer").dxDataGrid("instance").refresh();
-            if (data) {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Enhorabuena!',
-                    text: 'Registro editado correctamente.',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-            else {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Enhorabuena!',
-                    text: 'No se edito correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+    $("#btnAgregarTicket").on('click', () => {
+
+
+        //console.log("Hola");
+
+        Swal.fire({
+            title: '<h2><strong>Agregar Nuevo Ticket</strong></h2>',
+            html:
+                `
+
+                <div id="dxSelectEditoriales"></div>
+                <div id="ValidarDato" style="margin: 2rem 0;"></div>
+                <button class="btn btn-success" onclick="AddTicket()">Agregar Ticket</div>
+            `,
+            focusConfirm: false,
+            width: 40 + "%",
+            showConfirmButton: false,
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar &times;',
+            didOpen: () => {
+
+                $("#dxSelectEditoriales").dxLookup({
+                    dataSource: "/TicketsEditoriales/GETEditoriales/",
+                    valueExpr: 'idEditoriales',
+                    displayExpr: 'Maestro_EditorialesId',
+                    searchExpr: 'Maestro_EditorialesId',
+                    placeholder: 'Seleccionar Entidad',
+                    searchPlaceholder: 'Buscar',
+                    stylingMode: "outlined",
+                    searchEnabled: true,
+                    showClearButton: true,
+                    usePopover: true,
+                    showCancelButton: true,
+                    cleanSearchOnOpening: true,
+                    cancelButtonText: "Cancelar",
+                    dropDownOptions: {
+                        showTitle: false,
+                        height: 230,
+                        width: 480,
+                    }
+
+                });
+
+
             }
         })
+    })
+
+    function AddTicket() {
+
+        let IdEditorial = $("#dxSelectEditoriales").dxLookup("instance").option('value');
+
+        if (IdEditorial === null) {
+            const errorAlerta = document.querySelector(".error");
+            if (!errorAlerta) {
+                const ValidarDato = document.querySelector("#ValidarDato");
+                const error = document.createElement('p');
+                error.textContent = "Elija un dato";
+                error.classList.add('alert', 'alert-danger', 'error');
+                ValidarDato.appendChild(error);
+
+            }
+        } else {
+            let data = { idEditoriales: IdEditorial, IsReadyForWork: true };
+            $.ajax({
+                type: "POST",
+                url: "/TicketsEditoriales/AddNewTickets",
+                data: data,
+            }).done(function (data) {
+                console.log(data);
+                if (data > 0) {
+                    let result = CargaDinamica(data, "Add", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + data);
+                    if (result) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Enhorabuena!',
+                            text: 'Se agregó el ticket correctamente',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    } else {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Error al agregar ticket.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: "Error al agregar ticket",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            }).fail(function (xhr) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: "Error al editar Estatus",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            });
+        }
+    }
+
+    function UpdateNivel(ordenId, idPrioridad) {
+
+        //   console.log("Id que mando" + ordenId);
+
+        $.ajax({
+            type: "POST",
+            url: "/TicketsEditoriales/UpdateLevel",
+            data: { ordenId, idPrioridad }
+        }).done(function (data) {
+            console.log(data + " Id que mando a get data tickets");
+            if (data > 0) {
+                let result = CargaDinamica(data, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + data);
+                if (result) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'Se modificó el campo correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Error al modificar el campo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            } else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: "Error al modificar",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }).fail(function (xhr) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: "Error al editar Estatus",
+                showConfirmButton: false,
+                timer: 1500
+            })
+        });
 
     }
 
     function UpdateEditorial(ordenId, idEditorial) {
-        console.log('Editando' + idEditorial);
+        //console.log('Editando' + idEditorial);
 
         $.ajax({
             type: "POST",
@@ -1103,25 +1250,44 @@
             data: data
 
         }).done(function (data) {
-            $("#gridContainer").dxDataGrid("instance").refresh();
-            if (data) {
+            console.log(data + " Id que mando a get data tickets");
+            if (data > 0) {
+                let result = CargaDinamica(data, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + data);
+                if (result) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'Se modificó el campo correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Error al modificar el campo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            } else {
                 Swal.fire({
                     position: 'center',
-                    icon: 'success',
-                    text: 'Registro editado correctamente.',
+                    icon: 'error',
+                    title: "Error al modificar",
                     showConfirmButton: false,
                     timer: 1500
                 })
             }
-            else {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    text: 'No se edito correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
+        }).fail(function (xhr) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: "Error al editar Estatus",
+                showConfirmButton: false,
+                timer: 1500
+            })
         });
 
     }
@@ -1129,33 +1295,52 @@
 
         //console.log("Editando" + ordenId);
         //console.log(check.checked);
-        let data = { ordenId: ordenId, isClosedSuccess: check.checked };
+        let data = { ordenId: ordenId, isClosedSuccessfully: check.checked };
         $.ajax({
             type: "POST",
             url: "/TicketsEditoriales/UpdateIsClosedSuccessfully",
             data: data
 
         }).done(function (data) {
-            $("#gridContainer").dxDataGrid("instance").refresh();
-            if (data) {
+            // console.log(data + " Id que mando a get data tickets");
+            if (data > 0) {
+                let result = CargaDinamica(data, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + data);
+                if (result) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'Se modificó el campo correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Error al modificar el campo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            } else {
                 Swal.fire({
                     position: 'center',
-                    icon: 'success',
-                    text: 'Registro editado correctamente.',
+                    icon: 'error',
+                    title: "Error al modificar",
                     showConfirmButton: false,
                     timer: 1500
                 })
             }
-            else {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    text: 'No se edito correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
+        }).fail(function (xhr) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: "Error al editar Estatus",
+                showConfirmButton: false,
+                timer: 1500
+            })
+        });
     }
     function IsTicketCancelled(ordenId, check) {
 
@@ -1168,29 +1353,351 @@
             data: data
 
         }).done(function (data) {
-            $("#gridContainer").dxDataGrid("instance").refresh();
-            if (data) {
+            // console.log(data + " Id que mando a get data tickets");
+            if (data > 0) {
+                let result = CargaDinamica(data, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + data);
+                if (result) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Enhorabuena!',
+                        text: 'Se modificó el campo correctamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Error al modificar el campo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            } else {
                 Swal.fire({
                     position: 'center',
-                    icon: 'success',
-                    text: 'Registro editado correctamente.',
+                    icon: 'error',
+                    title: "Error al modificar",
                     showConfirmButton: false,
                     timer: 1500
                 })
             }
-            else {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    text: 'No se edito correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
+        }).fail(function (xhr) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: "Error al editar Estatus",
+                showConfirmButton: false,
+                timer: 1500
+            })
+        });
 
 
     }
+
+
+    function addInci(OrdenId) {
+
+
+        swal.fire({
+
+            title: '<h2><strong>Crear Incidencia</strong></h2>',
+            html:
+                `
+     <div class="Tags" >
+
+                 <div class="dx-field">
+                        <div class="dx-field-label">Incidencias</div>
+                        <div class="dx-field-value">
+                              <div id="tagBoxIncidencias"></div>
+                        </div>
+                 </div>
+
+                <div class="dx-field">
+                    <div class="dx-field-label">Areas</div>
+                    <div class="dx-field-value">
+                        <div id="swtagBoxAreas"></div>
+                    </div>
+                </div>
+
+                <div class="dx-field">
+                    <div class="dx-field-label">Responsable</div>
+                    <div class="dx-field-value">
+                        <div id="swtagBoxResponsable"></div>
+                    </div>
+                </div>
+
+                <div id="tagBoxIncidencias1"></div>
+                <div id="ValidarDato" style="margin: 2rem 0;"></div>
+                <button class="btn btn-success" onclick="AddIncidencia(event)">Guardar</div>
+    </div>
+            `,
+            focusConfirm: false,
+            width: 45 + "%",
+            showConfirmButton: false,
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar &times;',
+            willOpen: () => {
+
+                let ArrayResponsables = new Array();
+
+                let IncidenciasId = new Array();
+
+                $.ajax({
+                    type: "GET",
+                    url: "/TicketsEditoriales/GETIncidenciasId?OrdenId=" + OrdenId,
+                    dataType: 'json',
+                    async: false,
+                    success: (data) => {
+                        $.each(data, function (index, value) {
+                            IncidenciasId.push(value);
+                        });
+
+                    },
+                }).then((data) => { });
+
+                //console.log(IncidenciasId);
+
+                let Incidencias = new Array();
+
+                $.ajax({
+                    type: "GET",
+                    url: "/TicketsEditoriales/GETIncidencias/",
+                    dataType: 'json',
+                    async: false,
+                    success: (data) => {
+
+                        $.each(data, function (index, value) {
+                            Incidencias.push(value);
+                        });
+                    },
+                }).then((data) => { });
+
+                //console.log(Incidencias);
+
+                let AreasNombres = new Array();
+                $.ajax({
+                    type: "GET",
+                    url: "/TicketsEditoriales/GETAreas/",
+                    dataType: 'json',
+                    async: false,
+                    success: (data) => {
+
+                        $.each(data, function (index, value) {
+                            AreasNombres.push(value);
+                        });
+                    },
+                }).then((data) => { });
+
+                let AreasIds = new Array();
+                $.ajax({
+                    type: "GET",
+                    url: "/TicketsEditoriales/GetAreasId?OrdenId=" + OrdenId,
+                    dataType: 'json',
+                    async: false,
+                    success: (data) => {
+
+                        $.each(data, function (index, value) {
+                            AreasIds.push(value);
+                        });
+                    },
+                }).then((data) => { });
+
+                let ResponsablesId = new Array();
+                $.ajax({
+                    type: "GET",
+                    url: "/TicketsEditoriales/GetResponsablesId?OrdenId=" + OrdenId,
+                    dataType: 'json',
+                    async: false,
+                    success: (data) => {
+
+                        $.each(data, function (index, value) {
+                            ResponsablesId.push(value);
+                        });
+                    },
+                }).then((data) => { });
+
+                //console.log(ArrayIncidenciasId)
+
+                $("#tagBoxIncidencias").dxTagBox({
+                    dataSource: new DevExpress.data.ArrayStore({
+                        data: Incidencias,
+                        key: "IdIncidencia"
+                    }),
+                    stylingMode: "outlined",
+                    hideSelectedItems: false,
+                    showSelectionControls: true,
+                    searchEnabled: true,
+                    searchExpr: ["IncidenciaNombre"],
+                    value: IncidenciasId,
+                    placeholder: 'Seleccionar Incidencia',
+                    tagTemplate: function (itemData, tagElement) {
+                        return $("<div style='background-color:#607D8B' />")
+                            .addClass("dx-tag-content")
+                            .append(
+                                $("<span class='badges' style='background-color: #607D8B';/>").text(itemData.IncidenciaNombre).css("color", "#000000"),
+                                $("<div/>").addClass("dx-tag-remove-button")
+                            );
+                    },
+                    displayExpr: function (item) {
+                        return item && item.IncidenciaNombre;
+                    },
+                });
+
+                //$("#tagBoxIncidencias").dxTagBox("instance").option("value", IncidenciasId)
+                //$("#tagBoxIncidencias").dxTagBox("instance").option("dataSource", Incidencias)
+
+
+                let ArrayRespo = new Array();
+
+                $("#swtagBoxAreas").dxTagBox({
+                    dataSource: new DevExpress.data.ArrayStore({
+                        data: AreasNombres,
+                        key: "IdArea"
+                    }),
+                    stylingMode: "outlined",
+                    hideSelectedItems: false,
+                    showSelectionControls: true,
+                    searchEnabled: true,
+                    searchExpr: ["Area"],
+                    value: AreasIds,
+                    placeholder: 'Seleccionar Areas',
+                    tagTemplate: function (itemData, tagElement) {
+                        return $("<div style='background-color:#607D8B' />")
+                            .addClass("dx-tag-content")
+                            .append(
+                                $("<span class='badges' style='background-color: #607D8B';/>").text(itemData.Area).css("color", "#000000"),
+                                $("<div/>").addClass("dx-tag-remove-button")
+                            );
+                    },
+                    displayExpr: function (item) {
+                        return item && item.Area;
+                    },
+                    onValueChanged: function (data) {
+
+                        let areas = $("#swtagBoxAreas").dxTagBox("instance").option("selectedItems");
+                        let listaAreas = [];
+                        areas.forEach(function (element) {
+
+                            listaAreas.push(element.IdArea);
+                        });
+
+                        let IdAreasArreglo = listaAreas.join();
+
+                        let arrayAreasIdResponsables = new Array();
+
+                        $.ajax({
+                            type: "GET",
+                            url: "/TicketsEditoriales/GetResponsables?AreasIds=" + IdAreasArreglo,
+                            dataType: 'json',
+                            async: false,
+                            success: (data) => {
+
+                                $.each(data, function (index, value) {
+                                    arrayAreasIdResponsables.push(value);
+                                });
+                            },
+                        })
+
+                        $("#swtagBoxResponsable").dxTagBox("instance").option("dataSource", new DevExpress.data.ArrayStore({
+                            data: arrayAreasIdResponsables,
+                            key: "IdResponsable"
+                        }));
+
+                    },
+
+
+                });
+
+                let areas = $("#swtagBoxAreas").dxTagBox("instance").option("selectedItems");
+                let listaAreas = [];
+                areas.forEach(function (element) {
+
+                    listaAreas.push(element.IdArea);
+                });
+
+                let IdAreasArreglo = listaAreas.join();
+
+                //LeerResponsablesAreas(IdAreasArreglo)
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/TicketsEditoriales/GetResponsables?AreasIds=" + IdAreasArreglo,
+                        dataType: 'json',
+                        async: false,
+                        success: (data) => {
+
+                            $.each(data, function (index, value) {
+                                ArrayRespo.push(value);
+                            });
+                        },
+                    })
+
+
+
+                $("#swtagBoxResponsable").dxTagBox({
+                    dataSource: new DevExpress.data.ArrayStore({
+                        data: ArrayRespo,
+                        key: "IdResponsable"
+                    }),
+                    stylingMode: "outlined",
+                    hideSelectedItems: false,
+                    showSelectionControls: true,
+                    searchEnabled: true,
+                    searchExpr: ["Area", "ResponsableNombre"],
+                    value: ResponsablesId,
+                    placeholder: 'Seleccionar Responsables',
+                    tagTemplate: function (itemData) {
+                        return $("<div style='background-color:#607D8B' />")
+                            .addClass("dx-tag-content")
+                            .append(
+                                $("<span class='badges' style='background-color: #607D8B';/>").text(itemData.Area + ':' + ' ' + itemData.ResponsableNombre).css("color", "#000000"),
+                                $("<div/>").addClass("dx-tag-remove-button")
+                            );
+                    },
+                    displayExpr: function (item) {
+                        return item && item.Area + ": " + item.ResponsableNombre;
+                    },
+                });
+
+            }
+
+        });
+
+    }
+
+
+    function AddIncidencia(event) {
+        event.preventDefault();
+        let IncidenciasValues = $("#tagBoxIncidencias").dxTagBox("instance").option('value');
+        let AreasValues = $("#swtagBoxAreas").dxTagBox("instance").option('value');
+        let RespoValues = $("#swtagBoxResponsable").dxTagBox("instance").option('value');
+        let IdIncidencias = new Array();
+        let IdAreasAsoc = new Array();
+        let IdRespoAsoc = new Array();
+
+
+        $.each(IncidenciasValues, function (key, value) {
+            //console.log(value.IdIncidencia)
+            IdIncidencias.push(value.IdIncidencia);
+        });
+        console.log(IdIncidencias);
+        $.each(AreasValues, function (key, value) {
+            //console.log(value.IdIncidencia)
+            IdAreasAsoc.push(value.IdArea);
+        });
+        console.log(IdAreasAsoc);
+        $.each(RespoValues, function (key, value) {
+            //console.log(value)
+            IdRespoAsoc.push(value.IdResponsable);
+        });
+        console.log(IdRespoAsoc);
+    }
+
+
+
+
 
     function masterDetailTemplate(_, masterDetailOptions) {
 
@@ -1858,7 +2365,7 @@
                         onValueChanged: function (data) {
                             var parameters = { OrdenId: Data1[1], opc: Data1[2], Datos: data.value};
                             $.post("/TicketsEditoriales/UpdateDictamenDescripction/", parameters).done(function (data2) {
-                                CargaDinamica(Data1[1], "Edit", "gridContainer", "/TicketsEditoriales/GetDataTicketId?id=" + Data1[1]);
+                                CargaDinamica(Data1[1], "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + Data1[1]);
                             });
                         }
                     }).dxTextArea("instance");
@@ -1871,13 +2378,13 @@
                             var parameters = { OrdenId: Data1[1], opc: Data1[2], Datos: data.value };
                             $.post("/TicketsEditoriales/UpdateDictamenDescripction/", parameters).done(function (data2) {
                                 //console.log(data2);
-                                CargaDinamica(Data1[1], "Edit", "gridContainer", "/TicketsEditoriales/GetDataTicketId?id=" + Data1[1]);
+                                CargaDinamica(Data1[1], "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + Data1[1]);
                             });
                         }
                     }).dxTextArea("instance");
 
                 }
-            })            
+            })
             //console.log(data.length);
             if (data.length == 0) {
                 $('#descargarImages').hide()
@@ -1990,7 +2497,7 @@
                     var key = dataGrid.keyOf(data);
                     if (Subir === true) {
                         console.log(id);
-                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTicketId?id=" + id);
+                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + id);
                         if (Update) {
                             console.log("RECARGA" + Update);
                         } else {
@@ -2002,7 +2509,7 @@
                 },
                 allowOutsideClick: function () {
                     if (Subir === true) {
-                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTicketId?id=" + id);
+                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + id);
                         if (Update) {
                             console.log("RECARGA" + Update);
                         } else {
@@ -2014,7 +2521,7 @@
                 },
                 willClose: () => {
                     if (Subir === true) {
-                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTicketId?id=" + id);
+                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + id);
                         if (Update) {
                             console.log("RECARGA" + Update);
                         } else {
@@ -2083,7 +2590,7 @@
                     },
                     allowOutsideClick: function () {
 
-                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTicketId?id=" + id);
+                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + id);
 
                         if (Update) {
                             console.log("RECARGA allowOutsideClick");
@@ -2095,7 +2602,7 @@
                         OpenImageByOrden(datos);
                     },
                     willClose: () => {
-                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTicketId?id=" + id);
+                        let Update = CargaDinamica(id, "Edit", "gridContainer", "/TicketsEditoriales/GetDataTickets?id=" + id);
                         if (Update) {
                             console.log("RECARGA willClose");
                         } else {

@@ -34,6 +34,15 @@ namespace TicketManagement.Models.ViewModels
         public string IsClosed_UserId { get; set; }
         public string IsClosed_Successfully_UserId { get; set; }
         public string IsClosed_Successfully_Timestamp { get; set; }
+        public string TipoUserName { get; set; }
+        public string TipoUserId { get; set; }
+        public string IncidenciaNombre { get; set; }
+        public int IdIncidencia { get; set; }
+        public string Area { get; set; }
+        public int IdArea { get; set; }
+        public string NombreResponsable { get; set; }
+        public string ResponsableNombre { get; set; }
+        public string IdResponsable { get; set; }
     }
 
     

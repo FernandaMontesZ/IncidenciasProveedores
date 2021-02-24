@@ -40,13 +40,13 @@
     <!-- Font Awesome -->
     @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" crossorigin="anonymous" />
-
     @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
 
+    <!-- Reporte -->
     @Html.DevExpress().GetStyleSheets(new StyleSheet{ ExtensionType = ExtensionType.WebDocumentViewer },
-                                      new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
-                                      new StyleSheet { ExtensionSuite = ExtensionSuite.Icons })
-    @Html.DevExpress().GetScripts(new Script() { ExtensionType = ExtensionType.WebDocumentViewer })
+                                          new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+                                          new StyleSheet { ExtensionSuite = ExtensionSuite.Icons })
+      @Html.DevExpress().GetScripts(new Script() { ExtensionType = ExtensionType.WebDocumentViewer })
 
     <style>
         .celColor {
